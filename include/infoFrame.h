@@ -1,7 +1,9 @@
 #ifndef __INFOFRAME__
 #define __INFOFRAME__
 
-#include <opencv.h>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 #include <sys/time.h>
 
 using namespace std;
