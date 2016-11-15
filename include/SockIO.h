@@ -23,7 +23,6 @@ int Read (int sock, u_long tam, unsigned char *buffer)
 	//double tiempo;
 
 	//  tiempo = clock()*1.0/CLOCKS_PER_SEC;
-
 	do
 	{
 		// max chuncks of MAXCHUNK bytes

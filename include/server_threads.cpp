@@ -3,16 +3,16 @@
 //g++ server_threads.cpp -o server_threads -lpthread
 
  
-#include<stdio.h>
-#include<string.h>    
-#include<stdlib.h>    
-#include<sys/socket.h>
-#include<arpa/inet.h> //inet_addr
-#include<unistd.h>    //write
-#include<pthread.h> //para los hilos , compilar con -lpthread
-#include<iostream>
-#include<cstdio>
-#include<vector>
+#include <stdio.h>
+#include <string.h>    
+#include <stdlib.h>    
+#include <sys/socket.h>
+#include <arpa/inet.h> //inet_addr
+#include <unistd.h>    //write
+#include <pthread.h> //para los hilos , compilar con -lpthread
+#include <iostream>
+#include <cstdio>
+#include <vector>
 #include <serviceCall.h>
 #include <SockIO.h>
 
@@ -21,23 +21,6 @@
 using namespace std;
  
 //función que atiende a un cliente
-
-struct connectionData
-{
-    int client_socket;
-    connectionData()
-    {
-        client_socket = -1;
-    }
-    connectionData(int cs)
-    {
-        client_socket = cs;
-    }
-};
-
-
-
-
 template <typename X>
 class connServer
 {
@@ -128,51 +111,6 @@ class connServer
         }
 };
 
-typedef union
-{
-    int val;
-    unsigned char cmd[4];
-} Content;
 
 
-//**************
-//Función que atiende a cada cliente
-//**************
-void *connection_handler(void *cd)
-{
-    //Get the socket descriptor
-    connectionData *conD = (connectionData *)cd;
-    int sock = conD->client_socket;
-    Content msg;
-    msg.val = 0;
-    
-    string message; 
-     
-    //Recibe mensaje del cliente
-    do
-    {
-        strncpy ((char *)msg.cmd, "SND", 3);
-        if (!Write(sock, 4, msg.cmd))
-         break;
-        if (!Read(sock, 4, msg.cmd))
-         break;
-        cout << "SRV: Se leyo el valor " << msg.val << endl;
-        msg.val >>= 1;
-        if (!Write(sock, 4, msg.cmd))
-         break;
-    }
-    while(true);
-
-    return 0;
-}
- 
-int main(int argc , char *argv[])
-{
-    connServer<connectionData> cnS(8888, "", connection_handler, 1000); 
-
-    cnS.acceptConnections();
-
-    return 0;
-}
- 
 

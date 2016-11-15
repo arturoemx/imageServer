@@ -5,6 +5,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <sys/time.h>
+#include <iostream>
 
 using namespace std;
 using namespace cv;
@@ -20,6 +21,7 @@ public:
   infoFrame &operator = (const infoFrame &I);
   void copyToinfoFrame(Mat &result);
   void setTime();
+  void setTime(struct timeval &_t);
 };
 
 void infoFrame::setTime(struct timeval &_t)
