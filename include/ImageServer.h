@@ -2,7 +2,7 @@
 #define IMAGE_SERVER_H
 
 #include "SockIO.h"
-#include "server_threads.cpp"
+#include "ConnServer.h"
 
 #include <opencv2/core/core.hpp>
 #include <sys/socket.h>
@@ -50,19 +50,21 @@ typedef union
 class ImageServer {
 private:
 	connServer<connectionData> *serverConnection;
+	static const int MAX_CONNECTIONS = 1000;
+	int port;
+	char *inetAddress;
 
 public: 
-	ImageServer(int port, char* inetAddress);
+	ImageServer(int port, const char* inetAddress);
 	ImageServer();
 
-	void connect();
+	void start();
 	void shutdown();
 
 private:
 	void init();
 	void sendCommand(int cmd);
-	void *connectionHandler(void* cd);
-
+	virtual void *connectionHandler(void* cd);
 
 };
 
