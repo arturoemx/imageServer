@@ -18,13 +18,19 @@ CXXFLAGS += -O2 -Wall -g
 
 
 PHONY: all
+	
 
 all: $(EXAMPLES)
 
 
 $(OBJS): objs/%.o : src/%.cpp include/%.h
 	@echo Compiling obj $@
-	$(CXX) $(CXXFLAGS) -o $@ -c $(CXXFLAGS) $(INCLUDES) $<
+	$(CXX) $(CXXFLAGS) $< -o $@ -c $(CXXFLAGS) $(INCLUDES) 
 
 $(EXAMPLES): % : $(OBJS)
-	$(CXX) -o $@  $(CXXFLAGS) $(LIBDIRS) $< $(LIBS) 
+	@echo $(OBJS)
+	$(CXX) $^ $@.cpp -o $@ $(CXXFLAGS) $(LIBDIRS) $(INCLUDES) $(LIBS) 
+
+
+clean:
+	rm $(OBJS) $(EXAMPLES)
