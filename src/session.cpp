@@ -49,56 +49,79 @@ void Session::connectToSocket() {
 	}
 }
 
-// void Session::connectionHandler() {
-// 	Content message;
-// 	while (true)
-//     {   
-//         // Read message from server
-//         if (!Read(cfd, 4, msg.cmd))
-//             break;
 
-//         // If server responds with SND then start transmission
-//         if (!strncmp((char *)msg.cmd, "SND",3))
-//         {   
-//             // Copy image to message and send
-//             memcpy(msg.image, src.data, WIDTH*HEIGHT);
-//             if (!Write (cfd, WIDTH*HEIGHT, msg.image))
-//                 break;
+int Session::getLastFrame() {
 
-//             cout << "Cliente mando imagen" << endl;
+	char cmd_str[] = "IMG";
 
-//             memset(msg.cmd, 0, 4);
-//             if (!Read(cfd, 4, msg.cmd))
-//                 break;
-//             cout << "Cliente recibio: " << msg.cmd << endl;
-//         }
-//         sleep(1);
-//     }
-// }
+	unsigned char rcmd[4];
+	unsigned char tcmd[4];
+
+	memset(rcmd, 0, 4);
+	memset(tcmd, 0, 4);
+	
+	strncpy((char*)tcmd, cmd_str, 3);
+
+	Mat img(512,512,16);
+	namedWindow("rec", 1);
+	// Read server response
+	if(!Read(cfd, 4, rcmd))
+		return READ_ERR;
+
+	cout << "Cliente recibio: " << rcmd << endl;
+
+	// Check if we can send
+	if(!strncmp((char*)rcmd, "SND", 3)) 
+	{
+		if(!Write(cfd, 4, tcmd))
+			return WRITE_ERR;
+
+		cout << "Cliente mando: " << tcmd << endl;
+
+		unsigned char imageData[512*512];
+
+		// Read image data
+		Read(cfd, 512*512, imageData);
+
+		// Put into Mat
+		img.data = imageData;
+
+		imshow("rec", img);
+
+		cout << "Cliente recibio: " << "IMG" << endl; 
+	}
+
+
+}
 
 int Session::sendCommand(char *cmd_str) {
 
-	unsigned char cmd[4];
-	strncpy((char*)cmd, cmd_str, 3);
+	unsigned char rcmd[4];
+	unsigned char tcmd[4];
+
+	memset(rcmd, 0, 4);
+	memset(tcmd, 0, 4);
+	
+	strncpy((char*)tcmd, cmd_str, 3);
 
 	// Read server response
-	if(!Read(cfd, 4, cmd))
+	if(!Read(cfd, 4, rcmd))
 		return READ_ERR;
 
-	cout << "Cliente recibio: " << cmd << endl;
+	cout << "Cliente recibio: " << rcmd << endl;
 
 	// Check if we can send
-	if(!strncmp((char*)cmd, "SND", 3)) 
+	if(!strncmp((char*)rcmd, "SND", 3)) 
 	{
-		if(!Write(cfd, 4, cmd))
+		if(!Write(cfd, 4, tcmd))
 			return WRITE_ERR;
 
-		cout << "Cliente mando: " << cmd_str << endl;
+		cout << "Cliente mando: " << tcmd << endl;
 
-		memset(cmd, 0, 4);
-		if(!Read(cfd, 4, cmd))
+		memset(rcmd, 0, 4);
+		if(!Read(cfd, 4, rcmd))
 			return READ_ERR;
 		
-		cout << "Cliente recibio: " << cmd << endl; 
+		cout << "Cliente recibio: " << rcmd << endl; 
 	}
 }
