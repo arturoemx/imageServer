@@ -55,12 +55,18 @@ class ImageServer {
 private:
 	static const int MAX_CONNECTIONS = 1000;
 	static const int CMD_LENGTH = 4;
+	RingBuffer<Mat> *imageBuffer;
+	Mat testBuffer; // remove this 
+	pthread_mutex_t bufferMutex;
+	VideoCapture cap;
+	pthread_t captureThread;
 
 	int port;
 	char *inetAddress;
+
 	ConnServer<connectionData> *serverConnection;
-	static VideoCapture *cap;
-	RingBuffer<Mat> *imageBuffer;
+	
+	
 
 public: 
 	ImageServer(int port, const char* inetAddress);
@@ -68,11 +74,14 @@ public:
 
 	void start();
 	void shutdown();
-
+	void getLastFrame(Mat &frame);
 private:
 	void init();
 	void sendCommand(const char* cmd);
 	static void *connectionHandler(void* cd);
+	static void *readFrames(void* data);
+	void frameReader();
+	
 
 };
 
