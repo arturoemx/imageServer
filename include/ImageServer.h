@@ -1,10 +1,11 @@
 #ifndef IMAGE_SERVER_H
 #define IMAGE_SERVER_H
 
-#include "SockIO.h"
 #include "ConnServer.h"
-
+#include "RingBuffer.h"
 #include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>  
+#include <opencv2/highgui/highgui.hpp>
 #include <sys/socket.h>
 #include <unistd.h>
 #include <netinet/in.h>
@@ -19,6 +20,7 @@
 using namespace std;
 using namespace cv;
 
+
 enum CMD {
 	SND,
 	ACK,
@@ -26,6 +28,8 @@ enum CMD {
 	REQ,
 	END
 };
+
+// void *connectionHandler(void* cd);
 
 struct connectionData
 {
@@ -49,10 +53,14 @@ typedef union
 
 class ImageServer {
 private:
-	connServer<connectionData> *serverConnection;
 	static const int MAX_CONNECTIONS = 1000;
+	static const int CMD_LENGTH = 4;
+
 	int port;
 	char *inetAddress;
+	ConnServer<connectionData> *serverConnection;
+	static VideoCapture *cap;
+	RingBuffer<Mat> *imageBuffer;
 
 public: 
 	ImageServer(int port, const char* inetAddress);
@@ -63,8 +71,8 @@ public:
 
 private:
 	void init();
-	void sendCommand(int cmd);
-	virtual void *connectionHandler(void* cd);
+	void sendCommand(const char* cmd);
+	static void *connectionHandler(void* cd);
 
 };
 
