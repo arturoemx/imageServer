@@ -5,6 +5,8 @@
 #include "SockIO.h"
 
 #include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>  
+#include <opencv2/highgui/highgui.hpp>
 #include <sys/socket.h>
 #include <unistd.h>
 #include <netinet/in.h>
@@ -31,7 +33,7 @@ private:
 public:
 	Session(int port, char* address);
 	void configure();
-	Mat getLastFrame();
+	int getLastFrame();
     int sendCommand(char *cmd);
 
 private:

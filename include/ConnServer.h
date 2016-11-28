@@ -14,7 +14,7 @@
 #include <cstdio>
 #include <vector>
 #include <serviceCall.h>
-#include "SockIO.h"
+
 
 #define BACKLOG 5
 
@@ -40,11 +40,11 @@ public:
         accCon = false;
         connection_handler = connHndlr;
         socket_desc = socket(AF_INET , SOCK_STREAM , 0);
-        maxConnections = mxConn;;
+        maxConnections = mxConn;
         nConnections = 0;
         if (socket_desc == -1)
         {
-            perror ("ConnServer Constructor: Creating socket endoint\n");
+            perror ("ConnServer Constructor: Creating socket endpoint\n");
             return;
         }
         port = pt;
@@ -81,6 +81,8 @@ public:
         connData = new X[maxConnections];
         thrIds = new pthread_t[maxConnections];
     }
+
+
     void acceptConnections()
     {
         int clntSocket, sockAddInSize = sizeof(struct sockaddr_in);
