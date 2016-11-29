@@ -89,7 +89,7 @@ class RingCounter
 		RingCounter R (RingSize);
 		int diff = (int)C - (int)n;
 
-		if ( diff > 0 )
+		if ( diff >= 0 )
 			R.C = (C - n) % RingSize;
 		else
 			R.C = RingSize - (-diff % RingSize);
@@ -108,7 +108,7 @@ class RingCounter
 	{
 		int diff = (int)C - (int)n;
 
-		if ( diff > 0 )
+		if ( diff >= 0 )
 			C = (C - n) % RingSize;
 		else
 			C = RingSize - (-diff % RingSize);
