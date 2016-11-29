@@ -4,8 +4,8 @@
 ##
 
 
-LIBS =  -lpthread 
-INCLUDES = -I include/
+LIBS = `pkg-config opencv --libs` -lpthread 
+INCLUDES = -I include/ `pkg-config opencv --cflags`
 .SUFFIXES: .cpp
 
 CXXFLAGS += -O2 -Wall -g $(INCLUDES)
