@@ -13,7 +13,7 @@ INCLUDES=-Iinclude/ $(OPENCV_INC)
 OBJS=$(patsubst $(SRC_PATH)%.cpp, $(OBJ_PATH)%.o, $(SRCS))
 
 EXAMPLES=$(patsubst %.cpp, %, $(wildcard *.cpp))
-CXX=g++
+CXX=clang++
 CXXFLAGS += -O2 -Wall -g
 
 
@@ -25,11 +25,11 @@ all: $(EXAMPLES)
 
 $(OBJS): objs/%.o : src/%.cpp include/%.h
 	@echo Compiling obj $@
-	$(CXX) $(CXXFLAGS) $< -o $@ -c $(CXXFLAGS) $(INCLUDES) 
+	$(CXX) $(CXXFLAGS) -c $(CXXFLAGS) $(INCLUDES) -o $@ $< 
 
 $(EXAMPLES): % : $(OBJS)
-	@echo $(OBJS)
-	$(CXX) $^ $@.cpp -o $@ $(CXXFLAGS) $(LIBDIRS) $(INCLUDES) $(LIBS) 
+	@echo $^
+	$(CXX) $^ $@.cpp $(CXXFLAGS) $(INCLUDES) $(LIBS) -o $@
 
 
 clean:
