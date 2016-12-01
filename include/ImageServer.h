@@ -51,7 +51,7 @@ class ImageServer {
 private:
 	static const int MAX_CONNECTIONS = 1000;
 	static const int CMD_LENGTH = 4;
-	Camera *cam;
+	static Camera *cam;
 
 	int port;
 	char *inetAddress;

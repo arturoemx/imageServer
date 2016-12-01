@@ -1,5 +1,5 @@
-#ifndef SESSION_H
-#define SESSION_H
+#ifndef CLIENT_H
+#define CLIENT_H
 
 
 #include "SockIO.h"
@@ -33,7 +33,7 @@ private:
 public:
 	Client(int port, char* address);
 	void configure();
-	int getLastFrame();
+	int getFrame(Mat &out);
     int sendCommand(char *cmd);
 
 private:

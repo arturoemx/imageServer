@@ -2,6 +2,9 @@
 #include "SockIO.h"
 #include <cstring>
 
+
+Camera *ImageServer::cam;
+
 ImageServer::ImageServer() {
 	ImageServer(8888, "127.0.0.1");
 }
@@ -21,7 +24,7 @@ ImageServer::ImageServer(int port, const char* inetAddress) {
 }
 
 void ImageServer::start() {
-	// serverConnection->acceptConnections();
+	serverConnection->acceptConnections();
 }
 
 void ImageServer::shutdown() {
@@ -33,8 +36,7 @@ void *ImageServer::connectionHandler(void *cd) {
     int sock = conD->client_socket;
     unsigned char msg[4];
     
-    namedWindow("serv", 1);
-    Mat img;    
+     
     //Recibe mensaje del cliente
     do
     {
@@ -51,28 +53,25 @@ void *ImageServer::connectionHandler(void *cd) {
 
         cout << "Servidor recibio: " << msg << endl;
 
-        memset(msg, 0, 4);
-
         // Check what to send
-        if(strncmp((char*)rcmd, "IMG", 3)) {
-            // Get image
-            // cout << cap.read(img) << endl;
-            
+        if(strncmp((char*)msg, "IMG", 3) == 0) {
+            Mat img;
+            img = cam->lastFrame(); // get frame from camera
+
             // Resize image
             Mat dst(512,512, img.type());
             resize(img, dst, dst.size());
 
-            imshow("hg", dst);
-
             // Send data
             uchar *data;
-            data = (uchar*)malloc(512*512);
-            memcpy(data, dst.data, 512*512);
-            Write(sock, dst.cols * dst.rows, data);
+            data = dst.data;
 
-            cout << "Servidor mando IMG" << dst.size() << ": " << dst.type() << endl;
+            int imgSize = dst.total()*dst.elemSize();
+            Write(sock, imgSize, data);
 
-        } else if(strncmp((char*)rcmd, "PLL", 3)) {
+            cout << "Servidor mando IMG" << dst.size() << ": " << dst.type() << " (" << imgSize << ")" << endl;
+
+        } else if(strncmp((char*)msg, "PLL", 3) == 0) {
             // Send ACK
             strncpy ((char *)msg, "ACK", 3);
             if (!Write(sock, 4, msg))
