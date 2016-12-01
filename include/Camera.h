@@ -16,6 +16,12 @@
 using namespace std;
 using namespace cv;
 
+struct ImageInfo {
+		int rows;
+		int cols;
+		int type;
+		int size;
+};
 
 class Camera {
 private:
@@ -27,10 +33,13 @@ private:
 	ImageBuffer *imageBuffer;
 
 public:
-	Mat lastFrame();
+	Mat getLastFrame();
 	Camera(int captureDevice);
 	Camera();
 	~Camera();
+
+	int getID();
+	ImageInfo getInfo();
 
 private:
 	bool initDevice();
