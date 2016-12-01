@@ -49,6 +49,7 @@ void *Camera::readFramesThread(void *camera_ptr) {
         ptr->cap >> frame; // get a new frame from camera
         pthread_mutex_unlock(&(ptr->captureMutex));
 
+        ptr->imageBuffer->advHead();
         ptr->imageBuffer->Queue(frame); // queue frame into buffer
     } while(true);
 }
