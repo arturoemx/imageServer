@@ -67,12 +67,3 @@ Mat Camera::getLastFrame() {
 int Camera::getID() {
 	return deviceID;
 }
-
-ImageInfo Camera::getInfo() {
-	ImageInfo info;
-	Mat sample_frame = getLastFrame();
-	info.rows = sample_frame.rows;
-	info.cols = sample_frame.cols;
-	info.type = sample_frame.type();
-	info.size = sample_frame.total() * sample_frame.elemSize();
-}

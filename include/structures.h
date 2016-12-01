@@ -1,30 +1,19 @@
 #ifndef STRUCTURES_H
 #define STRUCTURES_H
 
-#define WIDTH 512
-#define HEIGHT 512
+#define SEND_FAILURE 0
+#define SEND_SUCCESS 1
 
-#define WRITE_ERR 0
-#define READ_ERR 1
-
-typedef union
-{   
-    unsigned char image[WIDTH*HEIGHT];
-    unsigned char cmd[4];
-} Content;
+#define FORMAT_ERROR 3
 
 
-struct connectionData
-{
-    int client_socket;
-    connectionData()
-    {
-        client_socket = -1;
-    }
-    connectionData(int cs)
-    {
-        client_socket = cs;
-    }
+#define MSG_LENGTH 10
+
+struct ImageInfo {
+        int rows;
+        int cols;
+        int type;
+        int size;
 };
 
 #endif 

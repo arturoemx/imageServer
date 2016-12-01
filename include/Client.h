@@ -3,7 +3,6 @@
 
 
 #include "SockIO.h"
-#include "Camera.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>  
 #include <opencv2/highgui/highgui.hpp>
@@ -13,6 +12,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <iostream>
+#include <string.h>
 #include "structures.h"
 
 using namespace std;
@@ -31,10 +31,10 @@ private:
 
 // Routine declarations
 public:
-	Client(int port, char* address);
+	Client(int port, const char* address);
 	
 	int getFrame(Mat &out);
-    int sendCommand(char *cmd);
+    int sendCommand(const char *cmd);
     void connect();
 
 private:

@@ -28,6 +28,7 @@ void ImageServer::start() {
 }
 
 void ImageServer::shutdown() {
+
 }
 
 
@@ -39,8 +40,11 @@ void *ImageServer::connectionHandler(void *cd) {
      
     //Recibe mensaje del cliente
     do
-    {
+    {   
+
+
         // Pedir al cliente que mande informacion
+        memset(msg, 0, MSG_LENGTH);
         strncpy ((char *)msg, "SND", 3);
         if (!Write(sock, MSG_LENGTH, msg))
             break;
@@ -55,6 +59,8 @@ void *ImageServer::connectionHandler(void *cd) {
 
         // Check what to send
         if(strncmp((char*)msg, "IMG", 3) == 0) {
+            // Send an [IMG]
+
             // Get frame from camera
             Mat img;
             img = cam->getLastFrame();
@@ -67,7 +73,9 @@ void *ImageServer::connectionHandler(void *cd) {
             imgInfo.size = img.total()*img.elemSize();
 
             // send info
-            Write(sock, sizeof(struct ImageInfo), (unsigned char*)&imgInfo);
+            if(!Write(sock, sizeof(struct ImageInfo), (unsigned char*)&imgInfo))
+                break;
+
             // send data
             uchar *data;
             data = img.data;
@@ -77,24 +85,21 @@ void *ImageServer::connectionHandler(void *cd) {
 
         } else if(strncmp((char*)msg, "POLL", 4) == 0) {
             // Send ACK
+            memset(msg, 0, MSG_LENGTH);
             strncpy ((char *)msg, "ACK", 3);
-            if (!Write(sock, 4, msg))
+            if (!Write(sock, MSG_LENGTH, msg))
                 break;
-        } else if(1) {
-            // ROWS
-        } else if(1) {
-            // COLS
-        } else if(1) {
-            // TYPE
         } else {
             // Send ERR
+            memset(msg, 0, MSG_LENGTH);
             strncpy ((char *)msg, "ERR", 3);
-            if (!Write(sock, 4, msg))
+            if (!Write(sock, MSG_LENGTH, msg))
                 break;
         }
     }
     while(true);
 
+    exit(0);
     return (void*)0;
 }
 

@@ -1,6 +1,6 @@
 #include "Client.h"
 
-Client::Client(int port, char *address) {
+Client::Client(int port, const char *address) {
 	this->port = port;
 	strncpy(this->address, address, 255);
 
@@ -56,13 +56,12 @@ void Client::connectToSocket() {
 
 
 int Client::getFrame(Mat &out) {
-	static const int MSG_LENGTH = 10;
 
 	unsigned char msg[MSG_LENGTH];
 
 	// Read server response
 	if(!Read(cfd, MSG_LENGTH, msg))
-		return READ_ERR;
+		return SEND_FAILURE;
 
 	cout << "Cliente recibio: " << msg << endl;
 
@@ -72,7 +71,7 @@ int Client::getFrame(Mat &out) {
 		memset(msg, 0, MSG_LENGTH);
 		memcpy(msg, "IMG", 3);
 		if(!Write(cfd, MSG_LENGTH, msg))
-			return WRITE_ERR;
+			return SEND_FAILURE;
 
 		cout << "Cliente mando: " << msg << endl;
 
@@ -89,7 +88,8 @@ int Client::getFrame(Mat &out) {
 		imageData = new uchar[imgInfo.size];
 
 		// Read image data
-		Read(cfd, imgInfo.size, imageData);
+		if(!Read(cfd, imgInfo.size, imageData))
+			return SEND_FAILURE;
 
 		Mat img(imgInfo.rows, imgInfo.cols, imgInfo.type, (void*)imageData);
 		out = img.clone();
@@ -97,37 +97,39 @@ int Client::getFrame(Mat &out) {
 		cout << "Cliente recibio: " << "[IMG]\n" << endl; 
 	}
 
+	return SEND_SUCCESS;
 
 }
 
-int Client::sendCommand(char *cmd_str) {
+int Client::sendCommand(const char *cmd_str) {
 
-	unsigned char rcmd[4];
-	unsigned char tcmd[4];
+	unsigned char msg[MSG_LENGTH];
+	memset(msg, 0, MSG_LENGTH);
 
-	memset(rcmd, 0, 4);
-	memset(tcmd, 0, 4);
-	
-	strncpy((char*)tcmd, cmd_str, 3);
+	if(strlen(cmd_str) > 10)
+		return FORMAT_ERROR;
 
 	// Read server response
-	if(!Read(cfd, 4, rcmd))
-		return READ_ERR;
+	if(!Read(cfd, MSG_LENGTH, msg))
+		return SEND_FAILURE;
 
-	cout << "Cliente recibio: " << rcmd << endl;
+	cout << "Cliente recibio: " << msg << endl;
 
 	// Check if we can send
-	if(!strncmp((char*)rcmd, "SND", 3)) 
-	{
-		if(!Write(cfd, 4, tcmd))
-			return WRITE_ERR;
+	if(!strncmp((char*)msg, "SND", 3)) 
+	{	
+		strncpy((char*)msg, cmd_str, MSG_LENGTH);
+		if(!Write(cfd, MSG_LENGTH, msg))
+			return SEND_FAILURE;
 
-		cout << "Cliente mando: " << tcmd << endl;
+		cout << "Cliente mando: " << msg << endl;
 
-		memset(rcmd, 0, 4);
-		if(!Read(cfd, 4, rcmd))
-			return READ_ERR;
+		memset(msg, 0, MSG_LENGTH);
+		if(!Read(cfd, MSG_LENGTH, msg))
+			return SEND_FAILURE;
 		
-		cout << "Cliente recibio: " << rcmd << endl; 
+		cout << "Cliente recibio: " << msg << endl; 
 	}
+
+	return SEND_SUCCESS;
 }

@@ -3,12 +3,15 @@
 
 #include "ConnServer.h"
 #include "ImageBuffer.h"
+#include "structures.h"
 #include "Camera.h"
+
 #include <opencv2/opencv.hpp>
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>  
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgcodecs.hpp>
+
 #include <vector>
 #include <sys/socket.h>
 #include <unistd.h>
@@ -41,8 +44,6 @@ struct connectionData
 class ImageServer {
 private:
 	static const int MAX_CONNECTIONS = 1000;
-	static const int MSG_LENGTH = 10;
-
 	static Camera *cam;
 
 	int port;
