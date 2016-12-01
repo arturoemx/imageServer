@@ -45,7 +45,7 @@ void Client::setHost() {
 }
 
 void Client::connectToSocket() {
-	if ((connect (cfd, (struct sockaddr *) & client, sizeof (client))) < 0)
+	if ((::connect (cfd, (struct sockaddr *) & client, sizeof (client))) < 0)
 	{
 		printf ("Falla del cliente %d\n", errno);
 		perror ("cliente");
@@ -92,7 +92,6 @@ int Client::getFrame(Mat &out) {
 		Read(cfd, imgInfo.size, imageData);
 
 		Mat img(imgInfo.rows, imgInfo.cols, imgInfo.type, (void*)imageData);
-		imwrite("rec.png", img);
 		out = img.clone();
 		
 		cout << "Cliente recibio: " << "[IMG]\n" << endl; 
