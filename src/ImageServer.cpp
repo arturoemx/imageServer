@@ -36,8 +36,6 @@ void *ImageServer::connectionHandler(void *cd) {
     connectionData *conD = (connectionData *)cd;
     int sock = conD->client_socket;
     unsigned char msg[MSG_LENGTH];
-
-    
      
     //Recibe mensaje del cliente
     do
@@ -67,7 +65,7 @@ void *ImageServer::connectionHandler(void *cd) {
             imgInfo.cols = img.cols;
             imgInfo.type = img.type();
             imgInfo.size = img.total()*img.elemSize();
-            
+
             // send info
             Write(sock, sizeof(struct ImageInfo), (unsigned char*)&imgInfo);
             // send data
