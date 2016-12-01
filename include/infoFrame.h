@@ -36,7 +36,6 @@ void infoFrame::setTime()
 
 infoFrame::infoFrame()
 {
-    cout<<"Constructor infoFrame"<<endl;
 }
 
 infoFrame::infoFrame (const infoFrame &I)
