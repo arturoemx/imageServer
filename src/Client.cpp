@@ -51,11 +51,12 @@ void Client::connectToSocket() {
 
 
 int Client::getFrame(Mat &out) {
+	static const int MSG_LENGTH = 10;
 
-	unsigned char msg[4];
+	unsigned char msg[MSG_LENGTH];
 
 	// Read server response
-	if(!Read(cfd, 4, msg))
+	if(!Read(cfd, MSG_LENGTH, msg))
 		return READ_ERR;
 
 	cout << "Cliente recibio: " << msg << endl;
@@ -63,24 +64,32 @@ int Client::getFrame(Mat &out) {
 	// Check if we can send
 	if(!strncmp((char*)msg, "SND", 3)) 
 	{
-		memset(msg, 0, 4);
+		memset(msg, 0, MSG_LENGTH);
 		memcpy(msg, "IMG", 3);
-		if(!Write(cfd, 4, msg))
+		if(!Write(cfd, MSG_LENGTH, msg))
 			return WRITE_ERR;
 
 		cout << "Cliente mando: " << msg << endl;
 
+		struct ImageInfo imgInfo;
+
+		Read(cfd, sizeof(struct ImageInfo), (unsigned char*)&imgInfo);
+
+		cout << "rows: " << imgInfo.rows << endl;
+		cout << "cols: " << imgInfo.cols << endl;
+		cout << "type: " << imgInfo.type << endl;
+		cout << "size: " << imgInfo.size << endl;
+
 		uchar *imageData;
-		imageData = new uchar[786432];
+		imageData = new uchar[imgInfo.size];
 
 		// Read image data
-		Read(cfd, 786432, imageData);
+		Read(cfd, imgInfo.size, imageData);
 
-		Mat img(512, 512, 16, (void*)imageData);
+		Mat img(imgInfo.rows, imgInfo.cols, imgInfo.type, (void*)imageData);
 		imwrite("rec.png", img);
 		out = img.clone();
 		
-
 		cout << "Cliente recibio: " << "[IMG]\n" << endl; 
 	}
 

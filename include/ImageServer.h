@@ -25,8 +25,6 @@ using namespace std;
 using namespace cv;
 
 
-// void *connectionHandler(void* cd);
-
 struct connectionData
 {
     int client_socket;
@@ -40,17 +38,11 @@ struct connectionData
     }
 };
 
-typedef union
-{
-    unsigned char image[WIDTH*HEIGHT];
-    unsigned char cmd[4];
-} Content;
-
-
 class ImageServer {
 private:
 	static const int MAX_CONNECTIONS = 1000;
-	static const int CMD_LENGTH = 4;
+	static const int MSG_LENGTH = 10;
+
 	static Camera *cam;
 
 	int port;
