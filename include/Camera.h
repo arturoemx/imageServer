@@ -30,6 +30,7 @@ public:
 	Mat lastFrame();
 	Camera(int captureDevice);
 	Camera();
+	~Camera();
 
 private:
 	bool initDevice();

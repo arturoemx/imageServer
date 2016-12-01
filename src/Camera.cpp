@@ -19,6 +19,11 @@ Camera::Camera(int captureDevice) {
 	initCapture();
 }
 
+Camera::~Camera() {
+	cap.release();
+	delete imageBuffer;
+}
+
 bool Camera::initDevice() {
 	// init capture device
 	cap.open(0);
@@ -45,7 +50,6 @@ void *Camera::readFramesThread(void *camera_ptr) {
         pthread_mutex_unlock(&(ptr->captureMutex));
 
         ptr->imageBuffer->Queue(frame); // queue frame into buffer
-        cout << ptr->imageBuffer->getT() << endl;
     } while(true);
 }
 
