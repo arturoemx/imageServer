@@ -11,9 +11,10 @@ int main() {
 	Mat frame;
 	while(true) {
 		client->getFrame(frame);
-		imwrite("rec.png", frame);
-		client->sendCommand("POLL");
-		sleep(1); // wait one second in between requests
+		imshow("rec", frame);
+		if(waitKey(30) >= 0) break;
+		// client->sendCommand("POLL");
+		// sleep(1); // wait one second in between requests
 	} 
 		
 
