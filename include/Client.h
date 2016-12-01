@@ -32,11 +32,13 @@ private:
 // Routine declarations
 public:
 	Client(int port, char* address);
-	void configure();
+	
 	int getFrame(Mat &out);
     int sendCommand(char *cmd);
+    void connect();
 
 private:
+    void configure();
     void createSocket();
     void setHost();
     void connectToSocket();

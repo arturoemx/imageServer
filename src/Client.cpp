@@ -3,11 +3,16 @@
 Client::Client(int port, char *address) {
 	this->port = port;
 	strncpy(this->address, address, 255);
+
+	configure();
 }
 
 void Client::configure() {
 	createSocket();
 	setHost();
+}
+
+void Client::connect() {
 	connectToSocket();
 }
 
