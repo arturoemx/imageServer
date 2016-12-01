@@ -1,17 +1,17 @@
-#include "session.h"
+#include "Client.h"
 
-Session::Session(int port, char *address) {
+Client::Client(int port, char *address) {
 	this->port = port;
 	strncpy(this->address, address, 255);
 }
 
-void Session::configure() {
+void Client::configure() {
 	createSocket();
 	setHost();
 	connectToSocket();
 }
 
-void Session::createSocket() {
+void Client::createSocket() {
 	if ((cfd = socket (AF_INET, SOCK_STREAM, 0)) < 0)
 	{
 		cerr << "Falla en el socket cliente" <<  errno << endl;
@@ -23,7 +23,7 @@ void Session::createSocket() {
 	client.sin_family = AF_INET;
 }
 
-void Session::setHost() {
+void Client::setHost() {
 	fprintf (stderr, "conectando: %s:%d\n", address,
 				ntohs (client.sin_port));
 
@@ -39,7 +39,7 @@ void Session::setHost() {
 	memcpy (&client.sin_addr.s_addr, hp->h_addr_list[0], hp->h_length);
 }
 
-void Session::connectToSocket() {
+void Client::connectToSocket() {
 	if ((connect (cfd, (struct sockaddr *) & client, sizeof (client))) < 0)
 	{
 		printf ("Falla del cliente %d\n", errno);
@@ -50,7 +50,7 @@ void Session::connectToSocket() {
 }
 
 
-int Session::getLastFrame() {
+int Client::getLastFrame() {
 
 	char cmd_str[] = "IMG";
 
@@ -62,8 +62,6 @@ int Session::getLastFrame() {
 	
 	strncpy((char*)tcmd, cmd_str, 3);
 
-	Mat img(512,512,16);
-	namedWindow("rec", 1);
 	// Read server response
 	if(!Read(cfd, 4, rcmd))
 		return READ_ERR;
@@ -83,18 +81,13 @@ int Session::getLastFrame() {
 		// Read image data
 		Read(cfd, 512*512, imageData);
 
-		// Put into Mat
-		img.data = imageData;
-
-		imshow("rec", img);
-
 		cout << "Cliente recibio: " << "IMG" << endl; 
 	}
 
 
 }
 
-int Session::sendCommand(char *cmd_str) {
+int Client::sendCommand(char *cmd_str) {
 
 	unsigned char rcmd[4];
 	unsigned char tcmd[4];

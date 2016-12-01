@@ -18,7 +18,7 @@
 using namespace std;
 using namespace cv;
 
-class Session {
+class Client {
 
 // Variable declarations
 private:
@@ -31,7 +31,7 @@ private:
 
 // Routine declarations
 public:
-	Session(int port, char* address);
+	Client(int port, char* address);
 	void configure();
 	int getLastFrame();
     int sendCommand(char *cmd);
