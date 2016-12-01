@@ -25,12 +25,11 @@ all: $(EXAMPLES)
 
 $(OBJS): objs/%.o : src/%.cpp include/%.h
 	@echo Compiling obj $@
-	$(CXX) $(CXXFLAGS) -c $(CXXFLAGS) $(INCLUDES) -o $@ $< 
+	$(CXX) $(CXXFLAGS) $< -o $@ -c $(CXXFLAGS) $(INCLUDES) 
 
 $(EXAMPLES): % : $(OBJS)
 	@echo $^
-	$(CXX) $^ $@.cpp $(CXXFLAGS) $(INCLUDES) $(LIBS) -o $@
-
+	$(CXX) $^ $@.cpp -o $@ $(CXXFLAGS) $(INCLUDES) $(LIBS) 
 
 clean:
 	rm $(OBJS) $(EXAMPLES)
