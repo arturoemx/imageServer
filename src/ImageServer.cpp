@@ -7,40 +7,24 @@ ImageServer::ImageServer() {
 }
 
 ImageServer::ImageServer(int port, const char* inetAddress) {
-    // Configure Server
+    // config Server
 	this->port = port;
 
 	this->inetAddress = (char*) malloc( strlen(inetAddress) );
 	strcpy(this->inetAddress, inetAddress);
 
-    // Open capture device and create thread for reading
-    cap.open(0);
-    if(!cap.isOpened()) {
-        perror("Failed to initialize video capture!");
-        return;
-    }
+    // init camera and assign thread to it
+    cam = new Camera(0);
 
-    pthread_mutex_init(&bufferMutex, NULL);
-    pthread_create(&captureThread, NULL, &ImageServer::readFrames, this);
-    pthread_detach(captureThread);
-    
-    // Initialize RingBuffer
-    imageBuffer = new RingBuffer<Mat>(5);
-
-	init();
+    // init connection to server
+    serverConnection = new ConnServer<connectionData>(port, inetAddress, (ImageServer::connectionHandler), MAX_CONNECTIONS);
 }
 
 void ImageServer::start() {
 	// serverConnection->acceptConnections();
-
-}
-
-void ImageServer::init() {
-	serverConnection = new ConnServer<connectionData>(port, inetAddress, (ImageServer::connectionHandler), MAX_CONNECTIONS);
 }
 
 void ImageServer::shutdown() {
-
 }
 
 void *ImageServer::connectionHandler(void *cd) {
@@ -105,27 +89,3 @@ void *ImageServer::connectionHandler(void *cd) {
     return (void*)0;
 }
 
-void *ImageServer::readFrames(void *this_ptr) {
-    ImageServer *ptr = (ImageServer*) this_ptr;
-    ptr->frameReader();
-}
-
-void ImageServer::frameReader() {
-    Mat frame;
-    do {
-        cap >> frame; // get a new frame from camera
-        pthread_mutex_lock(&bufferMutex);
-        testBuffer = frame.clone();
-        // imageBuffer.Queue(frame);
-        pthread_mutex_unlock(&bufferMutex);
-        imshow("kk", frame);
-    }while(true);
-}
-
-void ImageServer::getLastFrame(Mat &frame) {
-    Mat img;
-    pthread_mutex_lock(&bufferMutex);
-    img = testBuffer.clone();
-    pthread_mutex_unlock(&bufferMutex);
-    frame = img;
-}

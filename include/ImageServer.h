@@ -2,10 +2,14 @@
 #define IMAGE_SERVER_H
 
 #include "ConnServer.h"
-#include "RingBuffer.h"
-#include <opencv2/core/core.hpp>
-#include <opencv2/imgproc/imgproc.hpp>  
-#include <opencv2/highgui/highgui.hpp>
+#include "ImageBuffer.h"
+#include "Camera.h"
+#include <opencv2/opencv.hpp>
+#include <opencv2/core.hpp>
+#include <opencv2/imgproc.hpp>  
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <vector>
 #include <sys/socket.h>
 #include <unistd.h>
 #include <netinet/in.h>
@@ -20,14 +24,6 @@
 using namespace std;
 using namespace cv;
 
-
-enum CMD {
-	SND,
-	ACK,
-	ERR,
-	REQ,
-	END
-};
 
 // void *connectionHandler(void* cd);
 
@@ -55,11 +51,7 @@ class ImageServer {
 private:
 	static const int MAX_CONNECTIONS = 1000;
 	static const int CMD_LENGTH = 4;
-	RingBuffer<Mat> *imageBuffer;
-	Mat testBuffer; // remove this 
-	pthread_mutex_t bufferMutex;
-	VideoCapture cap;
-	pthread_t captureThread;
+	Camera *cam;
 
 	int port;
 	char *inetAddress;
@@ -76,12 +68,9 @@ public:
 	void shutdown();
 	void getLastFrame(Mat &frame);
 private:
-	void init();
 	void sendCommand(const char* cmd);
 	static void *connectionHandler(void* cd);
-	static void *readFrames(void* data);
-	void frameReader();
-	
+	void readCamera();
 
 };
 
