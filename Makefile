@@ -18,10 +18,8 @@ CXXFLAGS += -O2 -Wall -g
 
 
 PHONY: all
-	
 
 all: $(EXAMPLES)
-
 
 $(OBJS): objs/%.o : src/%.cpp include/%.h
 	@echo Compiling obj $@
