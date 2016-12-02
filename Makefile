@@ -14,8 +14,8 @@ OBJS=$(patsubst $(SRC_PATH)%.cpp, $(OBJ_PATH)%.o, $(SRCS))
 
 EXAMPLES=$(patsubst %.cpp, %, $(wildcard *.cpp))
 
-#CXX=clang++
-CXX=g++
+CXX=clang++
+# CXX=g++
 CXXFLAGS += -O2 -Wall -g -D"__OCV_VER__=$(OPENCV_VERSION)"
 
 

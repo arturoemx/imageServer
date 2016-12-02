@@ -1,10 +1,11 @@
 #ifndef IMAGE_SERVER_H
 #define IMAGE_SERVER_H
 
-#include <ConnServer.h>
-#include <imageBuffer.h>
-#include <structures.h>
-#include <Camera.h>
+#include "ConnServer.h"
+#include "imageBuffer.h"
+#include "structures.h"
+#include "Camera.h"
+
 #if __OCV_VER__ >= 3
 #include <opencv2/opencv.hpp>
 #include <opencv2/core.hpp>
@@ -63,12 +64,8 @@ public:
 
 	void start();
 	void shutdown();
-	void getLastFrame(Mat &frame);
 private:
-	void sendCommand(const char* cmd);
 	static void *connectionHandler(void* cd);
-	void readCamera();
-
 };
 
 #endif

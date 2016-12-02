@@ -2,7 +2,8 @@
 #define _CAMERA_
 
 
-#include <imageBuffer.h>
+#include "imageBuffer.h"
+
 #if __OCV_VER__ >= 3
 #include <opencv2/opencv.hpp>
 #include <opencv2/core.hpp>
@@ -13,6 +14,7 @@
 #include <cv.h>
 #include <highgui.h>
 #endif
+
 #include <pthread.h>
 #include <unistd.h>
 #include <stdint.h>

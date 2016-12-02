@@ -99,7 +99,6 @@ void *ImageServer::connectionHandler(void *cd) {
     }
     while(true);
 
-    exit(0);
     return (void*)0;
 }
 
