@@ -9,11 +9,12 @@
 
 #define MSG_LENGTH 10
 
-struct ImageInfo {
-        int rows;
-        int cols;
-        int type;
-        int size;
+struct ImageInfo
+{
+	 int rows;
+	 int cols;
+	 int type;
+	 int size;
 };
 
-#endif 
+#endif

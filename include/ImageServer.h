@@ -1,15 +1,15 @@
 #ifndef IMAGE_SERVER_H
 #define IMAGE_SERVER_H
 
-#include "ConnServer.h"
-#include "imageBuffer.h"
-#include "structures.h"
-#include "Camera.h"
+#include <ConnServer.h>
+#include <imageBuffer.h>
+#include <structures.h>
+#include <Camera.h>
 
 #if __OCV_VER__ >= 3
 #include <opencv2/opencv.hpp>
 #include <opencv2/core.hpp>
-#include <opencv2/imgproc.hpp>  
+#include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgcodecs.hpp>
 #else
@@ -35,37 +35,38 @@ using namespace cv;
 
 struct connectionData
 {
-    int client_socket;
-    connectionData()
-    {
-        client_socket = -1;
-    }
-    connectionData(int cs)
-    {
-        client_socket = cs;
-    }
+	 int client_socket;
+	   connectionData ()
+	 {
+			client_socket = -1;
+	 }
+	 connectionData (int cs)
+	 {
+			client_socket = cs;
+	 }
 };
 
-class ImageServer {
-private:
-	static const int MAX_CONNECTIONS = 1000;
-	static Camera *cam;
+class ImageServer
+{
+ private:
+	 static const int MAX_CONNECTIONS = 1000;
+	 static Camera *cam;
 
-	int port;
-	char *inetAddress;
+	 int port;
+	 char *inetAddress;
 
-	ConnServer<connectionData> *serverConnection;
-	
-	
+	   ConnServer < connectionData > *serverConnection;
 
-public: 
-	ImageServer(int port, const char* inetAddress);
-	ImageServer();
 
-	void start();
-	void shutdown();
-private:
-	static void *connectionHandler(void* cd);
+
+ public:
+	   ImageServer (int port, const char *inetAddress);
+	   ImageServer ();
+
+	 void start ();
+	 void shutdown ();
+ private:
+	 static void *connectionHandler (void *cd);
 };
 
 #endif

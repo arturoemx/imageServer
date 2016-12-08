@@ -7,7 +7,7 @@
 #if __OCV_VER__ >= 3
 #include <opencv2/opencv.hpp>
 #include <opencv2/core.hpp>
-#include <opencv2/imgproc.hpp>  
+#include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgcodecs.hpp>
 #else
@@ -24,29 +24,30 @@ using namespace std;
 using namespace cv;
 
 
-class Camera {
-private:
-	int deviceID;
-	VideoCapture cap;
-	pthread_t captureThread;
-	pthread_mutex_t captureMutex;
+class Camera
+{
+ private:
+	 int deviceID;
+	 VideoCapture cap;
+	 pthread_t captureThread;
+	 pthread_mutex_t captureMutex;
 
-	ImageBuffer *imageBuffer;
+	 ImageBuffer *imageBuffer;
 
-public:
-	Mat getLastFrame();
-	Camera(int captureDevice);
-	Camera();
-	~Camera();
+ public:
+	   Mat getLastFrame ();
+	   Camera (int captureDevice);
+	   Camera ();
+	  ~Camera ();
 
-	int getID();
+	 int getID ();
 
-private:
-	bool initDevice();
-	bool initCapture();
+ private:
+	   bool initDevice ();
+	 bool initCapture ();
 
-	static void *readFramesThread(void *ptr);
-	void readFrames(Camera *ptr);
+	 static void *readFramesThread (void *ptr);
+	 void readFrames (Camera * ptr);
 };
 
 

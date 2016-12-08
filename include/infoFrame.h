@@ -12,43 +12,43 @@ using namespace cv;
 
 class infoFrame
 {
-public:
-  Mat frame;
-  struct timeval t;
-public:
-  infoFrame();
-  infoFrame (const infoFrame &I);
-  infoFrame &operator = (const infoFrame &I);
-  void copyToinfoFrame(Mat &result);
-  void setTime();
-  void setTime(struct timeval &_t);
+ public:
+	 Mat frame;
+	 struct timeval t;
+ public:
+	   infoFrame ();
+	   infoFrame (const infoFrame & I);
+	   infoFrame & operator = (const infoFrame & I);
+	 void copyToinfoFrame (Mat & result);
+	 void setTime ();
+	 void setTime (struct timeval &_t);
 };
 
-void infoFrame::setTime(struct timeval &_t)
+void infoFrame::setTime (struct timeval &_t)
 {
-  t = _t;
+	 t = _t;
 }
 
-void infoFrame::setTime()
+void infoFrame::setTime ()
 {
-  gettimeofday (&t, NULL);
+	 gettimeofday (&t, NULL);
 }
 
-infoFrame::infoFrame()
+infoFrame::infoFrame ()
 {
 }
 
-infoFrame::infoFrame (const infoFrame &I)
+infoFrame::infoFrame (const infoFrame & I)
 {
-	I.frame.copyTo(this->frame);
-	this->t = I.t;
+	 I.frame.copyTo (this->frame);
+	 this->t = I.t;
 }
 
-infoFrame &infoFrame::operator = (const infoFrame &I)
+infoFrame & infoFrame::operator = (const infoFrame & I)
 {
-	I.frame.copyTo(this->frame);
-	this->t = I.t;
-	return *this;
+	 I.frame.copyTo (this->frame);
+	 this->t = I.t;
+	 return *this;
 }
 
 #endif

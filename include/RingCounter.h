@@ -28,130 +28,126 @@
 class RingCounter
 {
 
-	size_t C;										 //size_t is the type returned by the sizeof operator and is
-	size_t RingSize;						//widely used in the standard library to represent sizes and counts.
-	public:
+	 size_t C;										//size_t is the type returned by the sizeof operator and is
+	 size_t RingSize;							//widely used in the standard library to represent sizes and counts.
+ public:
 
-	RingCounter ()
-	{
-		RingSize = 0;
-		C = 0;
-	}
+	   RingCounter ()
+	 {
+			RingSize = 0;
+			C = 0;
+	 }
 
-	RingCounter (size_t rz)
-	{
+	 RingCounter (size_t rz)
+	 {
 
-		RingSize = rz;
-		C = 0;
-	}
+			RingSize = rz;
+			C = 0;
+	 }
 
-	RingCounter (const RingCounter &R)
-	{
-		C = R.C;
-		RingSize = R.RingSize;
-	}
+	 RingCounter (const RingCounter & R)
+	 {
+			C = R.C;
+			RingSize = R.RingSize;
+	 }
 
-	void SetRingSize(size_t val)
-	{
-		RingSize = val;
-	}
+	 void SetRingSize (size_t val)
+	 {
+			RingSize = val;
+	 }
 
-	operator size_t()
-	{
-		return C;
-	}
+	 operator   size_t ()
+	 {
+			return C;
+	 }
 
-	RingCounter & operator = (const size_t &v)
-	{
-		C = v % RingSize;
-		return *this;
-	}
+	 RingCounter & operator = (const size_t & v)
+	 {
+			C = v % RingSize;
+			return *this;
+	 }
 
-	RingCounter & operator = (const RingCounter &R)
-	{
-		C = R.C;
-		RingSize = R.RingSize;
-		return *this;
-	}
+	 RingCounter & operator = (const RingCounter & R)
+	 {
+			C = R.C;
+			RingSize = R.RingSize;
+			return *this;
+	 }
 
-	template < typename X >
-	RingCounter  operator + (const X & n)
-	{
-		RingCounter R (RingSize);
+	 template < typename X > RingCounter operator + (const X & n)
+	 {
+			RingCounter R (RingSize);
 
-		R.C = (C + (size_t)n) % RingSize;
-		return R;
-	}
+			R.C = (C + (size_t) n) % RingSize;
+			return R;
+	 }
 
-	template < typename X >
-	RingCounter  operator - (const X & n)
-	{
-		RingCounter R (RingSize);
-		int diff = (int)C - (int)n;
+	 template < typename X > RingCounter operator - (const X & n)
+	 {
+			RingCounter R (RingSize);
+			int diff = (int) C - (int) n;
 
-		if ( diff >= 0 )
-			R.C = (C - n) % RingSize;
-		else
-			R.C = RingSize - (-diff % RingSize);
-		return R;
-	}
+			if (diff >= 0)
+				 R.C = (C - n) % RingSize;
+			else
+				 R.C = RingSize - (-diff % RingSize);
+			return R;
+	 }
 
-	template < typename X>
-	RingCounter & operator += (X & val)
-	{
-		C = (C + (size_t)val) % RingSize;
-		return *this;
-	}
+	 template < typename X > RingCounter & operator += (X & val)
+	 {
+			C = (C + (size_t) val) % RingSize;
+			return *this;
+	 }
 
-	template < typename X >
-	RingCounter & operator -= (const X & n)
-	{
-		int diff = (int)C - (int)n;
+	 template < typename X > RingCounter & operator -= (const X & n)
+	 {
+			int diff = (int) C - (int) n;
 
-		if ( diff >= 0 )
-			C = (C - n) % RingSize;
-		else
-			C = RingSize - (-diff % RingSize);
-		return *this;
-	}
+			if (diff >= 0)
+				 C = (C - n) % RingSize;
+			else
+				 C = RingSize - (-diff % RingSize);
+			return *this;
+	 }
 
-	RingCounter &operator ++()
-	{
-		C = (C + 1) % RingSize;
-		return *this;
-	}
+	 RingCounter & operator ++ ()
+	 {
+			C = (C + 1) % RingSize;
+			return *this;
+	 }
 
-	RingCounter &operator --()
-	{
-		C = !C ? RingSize - 1 : (C - 1) % RingSize;
-		return *this;
-	}
+	 RingCounter & operator -- ()
+	 {
+			C = !C ? RingSize - 1 : (C - 1) % RingSize;
+			return *this;
+	 }
 
-	RingCounter &operator ++(int)
-	{
-		C = (C + 1) % RingSize;
-		return *this;
-	}
+	 RingCounter & operator ++ (int)
+	 {
+			C = (C + 1) % RingSize;
+			return *this;
+	 }
 
-	RingCounter &operator --(int)
-	{
-		C = !C ? RingSize - 1 : (C - 1) % RingSize;
-		return *this;
-	}
+	 RingCounter & operator -- (int)
+	 {
+			C = !C ? RingSize - 1 : (C - 1) % RingSize;
+			return *this;
+	 }
 
-	bool operator == (const RingCounter &R)
-	{
-		if ( C == R.C )
-			return true;
-		return false;
-	}
+	 bool operator == (const RingCounter & R)
+	 {
+			if (C == R.C)
+				 return true;
+			return false;
+	 }
 
-	bool operator != (const RingCounter &R)
-	{
-		if ( C != R.C )
-			return true;
-		return false;
-	}
+	 bool operator != (const RingCounter & R)
+	 {
+			if (C != R.C)
+				 return true;
+			return false;
+	 }
 
 /*	bool operator != (int comp)
 	{
@@ -160,24 +156,24 @@ class RingCounter
 		return false;
 	}*/
 
-	bool operator > (const RingCounter &R)
-	{
-		if ( C > R.C )
-			return true;
-		return false;
-	}
+	 bool operator > (const RingCounter & R)
+	 {
+			if (C > R.C)
+				 return true;
+			return false;
+	 }
 
-	bool operator >= (const RingCounter &R)
-	{
-		if (C > R.C && RingSize == R.RingSize)
-			return true;
-		return false;
-	}
+	 bool operator >= (const RingCounter & R)
+	 {
+			if (C > R.C && RingSize == R.RingSize)
+				 return true;
+			return false;
+	 }
 
-	size_t getC()
-	{
-		return C;
-	}
+	 size_t getC ()
+	 {
+			return C;
+	 }
 };
 
 

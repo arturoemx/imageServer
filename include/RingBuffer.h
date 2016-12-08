@@ -26,91 +26,92 @@
 #include <pthread.h>
 #include <stdint.h>
 
-template < typename X >
-class RingBuffer
+template < typename X > class RingBuffer
 {
-	protected:
-		uint32_t RBF_Size; //The size of the RingBuffer;
-		X *R;
-		RingCounter H, T;//Incrementa T cuando se inserta un elemento a la cola
-		//Incrementa H cuando se saca un elemento de la cola
-		pthread_mutex_t RB_mutex;
-	public:
-		RingBuffer(uint32_t N)
-		{
-			pthread_mutex_init(&RB_mutex, NULL);//initialises the mutex referenced by mutex with attributes specified by attr.
-			pthread_mutex_lock(&RB_mutex);
+ protected:
+	 uint32_t RBF_Size;						//The size of the RingBuffer;
+	 X *R;
+	 RingCounter H, T;						//Incrementa T cuando se inserta un elemento a la cola
+	 //Incrementa H cuando se saca un elemento de la cola
+	 pthread_mutex_t RB_mutex;
+ public:
+	 RingBuffer (uint32_t N)
+	 {
+			pthread_mutex_init (&RB_mutex, NULL);	//initialises the mutex referenced by mutex with attributes specified by attr.
+			pthread_mutex_lock (&RB_mutex);
 			RBF_Size = N;
 			if (RBF_Size > 1)
 			{
-				R = new X[RBF_Size];//Reserva memoria dinamica para la cola
+				 R = new X[RBF_Size];		//Reserva memoria dinamica para la cola
 			}
 			else
-				R = 0;
+				 R = 0;
 			H.SetRingSize (RBF_Size);
 			T.SetRingSize (RBF_Size);
 			H = T = 0;
-			pthread_mutex_unlock(&RB_mutex);
-		}
-		~RingBuffer()
-		{
-			pthread_mutex_lock(&RB_mutex);
+			pthread_mutex_unlock (&RB_mutex);
+	 }
+	 ~RingBuffer ()
+	 {
+			pthread_mutex_lock (&RB_mutex);
 			if (R)
-				delete[] R;
-			pthread_mutex_unlock(&RB_mutex);
-		}
-		virtual int Queue(const X &e)
-		{
-			pthread_mutex_lock(&RB_mutex);
-			if (T + 1  != H)//Compara T.C con H.C
+				 delete[]R;
+			pthread_mutex_unlock (&RB_mutex);
+	 }
+	 virtual int Queue (const X & e)
+	 {
+			pthread_mutex_lock (&RB_mutex);
+			if (T + 1 != H)						//Compara T.C con H.C
 			{
-				R[(uint32_t)T] = e;
-				T++;//T indica cuantos elementos hay en la cola
-				pthread_mutex_unlock(&RB_mutex);
-				return 0;
+				 R[(uint32_t) T] = e;
+				 T++;										//T indica cuantos elementos hay en la cola
+				 pthread_mutex_unlock (&RB_mutex);
+				 return 0;
 			}
-			pthread_mutex_unlock(&RB_mutex);
+			pthread_mutex_unlock (&RB_mutex);
 			return -1;
-		}
+	 }
 
-		virtual int Dequeue(X &e)
-		{
-			pthread_mutex_lock(&RB_mutex);
+	 virtual int Dequeue (X & e)
+	 {
+			pthread_mutex_lock (&RB_mutex);
 			if (H != T)
 			{
-				e = R[(uint32_t)H];
-				H++;
-				pthread_mutex_unlock(&RB_mutex);
-				return 0;
+				 e = R[(uint32_t) H];
+				 H++;
+				 pthread_mutex_unlock (&RB_mutex);
+				 return 0;
 			}
-			pthread_mutex_unlock(&RB_mutex);
+			pthread_mutex_unlock (&RB_mutex);
 			return -1;
-		}
-		virtual size_t getT()
-		{
-			return T.getC();
-		}
+	 }
+	 virtual size_t getT ()
+	 {
+			return T.getC ();
+	 }
 
-		virtual int getH()
-		{
-			return H.getC();
-		}
+	 virtual int getH ()
+	 {
+			return H.getC ();
+	 }
 
-		virtual bool QueueIsEmpty()
-		{
-			if(T==H) return true;
-			else return false;
-		}
+	 virtual bool QueueIsEmpty ()
+	 {
+			if (T == H)
+				 return true;
+			else
+				 return false;
+	 }
 
-		virtual void Init_Elements(const X &e)
-		{
+	 virtual void Init_Elements (const X & e)
+	 {
 			uint32_t i;
-			pthread_mutex_lock(&RB_mutex);
-			H = T = 0;//Asigna la C y RingSize de T a H
+			pthread_mutex_lock (&RB_mutex);
+			H = T = 0;								//Asigna la C y RingSize de T a H
 			for (i = 0; i < RBF_Size; ++i)
-				R[i] = e;
-			pthread_mutex_unlock(&RB_mutex);
-		}
+				 R[i] = e;
+			pthread_mutex_unlock (&RB_mutex);
+	 }
 };
 
 #endif
