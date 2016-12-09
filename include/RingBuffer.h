@@ -22,7 +22,7 @@
 #ifndef __RINGBUFFER__
 #define __RINGBUFFER__
 
-#include "RingCounter.h"
+#include <RingCounter.h>
 #include <pthread.h>
 #include <stdint.h>
 

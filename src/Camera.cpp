@@ -11,8 +11,7 @@ Camera::Camera (int captureDevice)
 	 deviceID = captureDevice;
 
 	 // Init buffer
-	 imageBuffer = new ImageBuffer ();
-	 imageBuffer->setBufferSize (5);
+	 imageBuffer.setBufferSize (5);
 
 	 // Open capture
 	 initDevice ();
@@ -24,7 +23,6 @@ Camera::Camera (int captureDevice)
 Camera::~Camera ()
 {
 	 cap.release ();
-	 delete imageBuffer;
 }
 
 bool Camera::initDevice ()
@@ -39,7 +37,7 @@ bool Camera::initDevice ()
 	 return true;
 }
 
-bool Camera::initCapture ()
+void Camera::initCapture ()
 {
 	 // init threads
 	 pthread_mutex_init (&captureMutex, NULL);
@@ -57,8 +55,8 @@ void *Camera::readFramesThread (void *camera_ptr)
 			ptr->cap >> frame;				// get a new frame from camera
 			pthread_mutex_unlock (&(ptr->captureMutex));
 
-			ptr->imageBuffer->advHead ();
-			ptr->imageBuffer->Queue (frame);	// queue frame into buffer
+			ptr->imageBuffer.advHead ();
+			ptr->imageBuffer.Queue (frame);	// queue frame into buffer
 	 }
 	 while (true);
 }
@@ -67,7 +65,7 @@ void *Camera::readFramesThread (void *camera_ptr)
 Mat Camera::getLastFrame ()
 {
 	 Mat frame;
-	 imageBuffer->getLast (frame);
+	 imageBuffer.getLast (frame);
 
 	 if (frame.empty ())
 			return Mat::zeros (1, 1, frame.type ());

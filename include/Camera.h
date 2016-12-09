@@ -2,7 +2,7 @@
 #define _CAMERA_
 
 
-#include "imageBuffer.h"
+#include <imageBuffer.h>
 
 #if __OCV_VER__ >= 3
 #include <opencv2/opencv.hpp>
@@ -32,7 +32,7 @@ class Camera
 	 pthread_t captureThread;
 	 pthread_mutex_t captureMutex;
 
-	 ImageBuffer *imageBuffer;
+	 ImageBuffer imageBuffer;
 
  public:
 	   Mat getLastFrame ();
@@ -43,8 +43,8 @@ class Camera
 	 int getID ();
 
  private:
-	   bool initDevice ();
-	 bool initCapture ();
+	 bool initDevice ();
+	 void initCapture ();
 
 	 static void *readFramesThread (void *ptr);
 	 void readFrames (Camera * ptr);
