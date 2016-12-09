@@ -9,9 +9,6 @@ from remoteFrame import *
 port = 8888
 address = '127.0.0.1'
 
-
-
-
 argc = len (sys.argv)
 if argc > 1:
     address = sys.argv[1]

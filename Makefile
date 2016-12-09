@@ -1,7 +1,7 @@
 OPENCV_INC=`pkg-config --cflags opencv`
 OPENCV_LIBS=`pkg-config --libs opencv`
 OPENCV_VERSION=`pkg-config --modversion opencv | sed 's/^\(.\).*/\1/'`
-LIBS=$(OPENCV_LIBS)
+LIBS=$(OPENCV_LIBS) -lpthread
 
 OBJ_PATH=objs/
 SRC_PATH=src/
@@ -14,8 +14,8 @@ OBJS=$(patsubst $(SRC_PATH)%.cpp, $(OBJ_PATH)%.o, $(SRCS))
 
 EXAMPLES=$(patsubst %.cpp, %, $(wildcard *.cpp))
 
-CXX=clang++
-# CXX=g++
+#CXX=clang++
+CXX=g++
 CXXFLAGS += -O2 -Wall -g -D"__OCV_VER__=$(OPENCV_VERSION)"
 
 
