@@ -51,16 +51,17 @@ class ImageServer
  private:
 	 static const int MAX_CONNECTIONS = 1000;
 	 static Camera *cam;
+	 static Mat *Hrv, *Hmv, *Maze;
 
 	 int port;
 	 char *inetAddress;
 
-	   ConnServer < connectionData > *serverConnection;
+	 ConnServer < connectionData > *serverConnection;
 
 
 
  public:
-	   ImageServer (int port, const char *inetAddress);
+	   ImageServer (int port, const char *inetAddress, Mat *hrv, Mat *hmv, Mat *Mz);
 	   ImageServer ();
 
 	 void start ();

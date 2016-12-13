@@ -19,7 +19,6 @@ CXX=g++
 CXXFLAGS += -O2 -Wall -g -D"__OCV_VER__=$(OPENCV_VERSION)"
 
 
-PHONY: all
 
 all: $(EXAMPLES)
 

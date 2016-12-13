@@ -2,15 +2,23 @@
 #include <SockIO.h>
 #include <cstring>
 
-
 Camera *ImageServer::cam;
+Mat *ImageServer::Hrv;
+Mat *ImageServer::Hmv;
+Mat *ImageServer::Maze;
 
 ImageServer::ImageServer ()
 {
-	 ImageServer (8888, "127.0.0.1");
+     Hrv = new Mat;
+     Hmv = new Mat;
+     Maze = new Mat;
+     *Hrv = Mat::eye(3,3,CV_32FC1);
+     *Hmv = Mat::eye(3,3,CV_32FC1);
+     *Maze = Mat::ones(480,640,CV_32FC1);
+	 ImageServer (8888, "127.0.0.1", Hrv, Hmv, Maze);
 }
 
-ImageServer::ImageServer (int port, const char *inetAddress)
+ImageServer::ImageServer (int port, const char *inetAddress, Mat *hrv, Mat *hmv, Mat *Mz)
 {
 	 // config Server
 	 this->port = port;
@@ -20,12 +28,17 @@ ImageServer::ImageServer (int port, const char *inetAddress)
 
 	 // init camera and assign thread to it
 	 cam = new Camera (0);
+     Hrv = new Mat;
+     Hmv = new Mat;
+     Maze = new Mat;
+	 hrv->copyTo(*Hrv);
+	 hmv->copyTo(*Hmv);
+	 Mz->copyTo(*Maze);
+     warpPerspective(*Maze, *Maze, *Hmv, Size(Maze->cols, Maze->rows), INTER_LINEAR, BORDER_CONSTANT);
 
 	 // init connection to server
 	 serverConnection =
-			new ConnServer < connectionData > (port, inetAddress,
-																				 (ImageServer::connectionHandler),
-																				 MAX_CONNECTIONS);
+			new ConnServer < connectionData > (port, inetAddress, (ImageServer::connectionHandler), MAX_CONNECTIONS);
 }
 
 void ImageServer::start ()
@@ -62,15 +75,17 @@ void *ImageServer::connectionHandler (void *cd)
 				 // Send an [IMG]
 
 				 // Get frame from camera
-				 Mat img;
+				 Mat img, mImg;
 				 img = cam->getLastFrame ();
+				 warpPerspective(img, mImg, *Hrv, Size(img.cols, img.rows), INTER_LINEAR, BORDER_CONSTANT);
+				 mImg += *Maze;
 
 				 // Get info
 				 struct ImageInfo imgInfo;
-				 imgInfo.rows = img.rows;
-				 imgInfo.cols = img.cols;
-				 imgInfo.type = img.type ();
-				 imgInfo.size = img.total () * img.elemSize ();
+				 imgInfo.rows = mImg.rows;
+				 imgInfo.cols = mImg.cols;
+				 imgInfo.type = mImg.type ();
+				 imgInfo.size = mImg.total () * mImg.elemSize ();
 
 				 // send info
 				 if (!Write
@@ -79,7 +94,7 @@ void *ImageServer::connectionHandler (void *cd)
 
 				 // send data
 				 uchar *data;
-				 data = img.data;
+				 data = mImg.data;
 				 Write (sock, imgInfo.size, data);
 
 				 cout << "Servidor mando IMG[" << imgInfo.
