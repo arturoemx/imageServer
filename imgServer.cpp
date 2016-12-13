@@ -87,27 +87,33 @@ void findMapping(int source, Point2f *vP, Mat &H)
 
 int main (int argc, char **argv)
 {
-	 int port = 8888;
+	 int port = 8888, camId = 0;
 	 char ipAddress[64] = "127.0.0.1";
 	 Point2f vP[4], mP[4];
      Mat Hrv, Hmv, Maze;
 
-	 if (argc < 2)
-	    return -1;
-     else
-        Maze = imread(argv[1]);
-	 if (argc > 2)
+	 if (argc < 3)
 	 {
-			strncpy (ipAddress, argv[2], 63);
-			if (argc > 3)
-			    port = atoi (argv[2]);
+	    cerr << "Uso: imgServer Maze camId ipAddress port" << endl;
+	    return -1;
+     }
+     else
+     {
+        Maze = imread(argv[1], CV_LOAD_IMAGE_GRAYSCALE);
+        camId = atoi(argv[2]);
+	 }
+	 if (argc > 3)
+	 {
+			strncpy (ipAddress, argv[3], 63);
+			if (argc > 4)
+			    port = atoi (argv[4]);
 	 }
     
      vP[0].x = 0; vP[0].y = 0;
      vP[1].x = 639; vP[1].y = 0;
      vP[2].x = 639; vP[2].y = 479;
      vP[3].x = 0; vP[3].y = 479;
-     findMapping(0, vP, Hrv);
+     findMapping(camId, vP, Hrv);
      cout << "Calculamos la Hrv como:"<< endl << Hrv << endl;
 
      mP[0].x = 0; mP[0].y = 0;
@@ -118,7 +124,7 @@ int main (int argc, char **argv)
      cout << "[" << Maze.cols << ", " << Maze.rows << "]" << endl;
      cout << "Calculamos la Hmv como:"<< endl << Hmv << endl;
 
-	 ImageServer *imS = new ImageServer (port, ipAddress, &Hrv, &Hmv, &Maze);
+	 ImageServer *imS = new ImageServer (camId, port, ipAddress, &Hrv, &Hmv, &Maze);
 
 	 imS->start ();
 

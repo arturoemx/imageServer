@@ -28,7 +28,7 @@ Camera::~Camera ()
 bool Camera::initDevice ()
 {
 	 // init capture device
-	 cap.open (0);
+	 cap.open (1);
 	 if (!cap.isOpened ())
 	 {
 			perror ("Failed to initialize video capture!");

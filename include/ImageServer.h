@@ -52,16 +52,14 @@ class ImageServer
 	 static const int MAX_CONNECTIONS = 1000;
 	 static Camera *cam;
 	 static Mat *Hrv, *Hmv, *Maze;
+	 Vec3b wall;
 
-	 int port;
+	 int port, camId;
 	 char *inetAddress;
 
 	 ConnServer < connectionData > *serverConnection;
-
-
-
  public:
-	   ImageServer (int port, const char *inetAddress, Mat *hrv, Mat *hmv, Mat *Mz);
+	   ImageServer (int cid, int port, const char *inetAddress, Mat *hrv, Mat *hmv, Mat *Mz);
 	   ImageServer ();
 
 	 void start ();

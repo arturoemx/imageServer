@@ -9,25 +9,28 @@ Mat *ImageServer::Maze;
 
 ImageServer::ImageServer ()
 {
+     camId = 0;
      Hrv = new Mat;
      Hmv = new Mat;
      Maze = new Mat;
      *Hrv = Mat::eye(3,3,CV_32FC1);
      *Hmv = Mat::eye(3,3,CV_32FC1);
      *Maze = Mat::ones(480,640,CV_32FC1);
-	 ImageServer (8888, "127.0.0.1", Hrv, Hmv, Maze);
+	 ImageServer (0, 8888, "127.0.0.1", Hrv, Hmv, Maze);
 }
 
-ImageServer::ImageServer (int port, const char *inetAddress, Mat *hrv, Mat *hmv, Mat *Mz)
+ImageServer::ImageServer (int cid, int port, const char *inetAddress, Mat *hrv, Mat *hmv, Mat *Mz)
 {
-	 // config Server
+    camId = cid;
+
+    // config Server
 	 this->port = port;
 
 	 this->inetAddress = (char *) malloc (strlen (inetAddress));
 	 strcpy (this->inetAddress, inetAddress);
 
 	 // init camera and assign thread to it
-	 cam = new Camera (0);
+	 cam = new Camera (camId);
      Hrv = new Mat;
      Hmv = new Mat;
      Maze = new Mat;
@@ -51,6 +54,24 @@ void ImageServer::shutdown ()
 
 }
 
+void maskImage (Mat &I, Mat &Mask, Vec3b &val)
+{
+    int i, j;
+    Vec3b *ptrI; 
+    unsigned char *ptrM;
+
+    for (i=0;i<I.rows;++i)
+    {
+        ptrI = I.ptr<Vec3b>(i);
+        ptrM = Mask.ptr<unsigned char>(i);
+        for (j=0;j<I.cols;++j,++ptrI,++ptrM)
+            if (*ptrM)
+                *ptrI = val;
+            else
+                *ptrI = *ptrI;
+    }
+}
+
 
 void *ImageServer::connectionHandler (void *cd)
 {
@@ -58,7 +79,7 @@ void *ImageServer::connectionHandler (void *cd)
 	 connectionData *conD = (connectionData *) cd;
 	 int sock = conD->client_socket;
 	 unsigned char msg[MSG_LENGTH];
-
+     Vec3b wall = Vec3b(255,0,0);
 	 //Recibe mensaje del cliente
 	 do
 	 {
@@ -78,7 +99,8 @@ void *ImageServer::connectionHandler (void *cd)
 				 Mat img, mImg;
 				 img = cam->getLastFrame ();
 				 warpPerspective(img, mImg, *Hrv, Size(img.cols, img.rows), INTER_LINEAR, BORDER_CONSTANT);
-				 mImg += *Maze;
+
+                maskImage(mImg, *Maze, wall);
 
 				 // Get info
 				 struct ImageInfo imgInfo;
