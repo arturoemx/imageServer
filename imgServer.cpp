@@ -31,14 +31,19 @@ void dibujaPuntos (Mat &frame, Point2f *p, int n,  Scalar color=Scalar(0,0,255))
         circle(frame, Point((int)p[i].x, (int)p[i].y), 5, color);
 }
 
-void capturaPuntos (const char *Name, Mat & Frame, Point2f *P)
+void capturaPuntos (const char *Name, VideoCapture &cap , Point2f *P)
 {
     cornerData cD;
+    Mat Frame;
 
-    imshow(Name, Frame);
     setMouseCallback(Name, onMouseEvent, (void*) &cD);
+    cD.cont = 0;
     while (cD.cont < 4)
     {
+        cap >> Frame;
+        if (Frame.empty())
+            cerr << "capturaPuntos: Error capturando el Frame" << endl;
+        imshow(Name, Frame);
         dibujaPuntos (Frame, cD.crn, cD.cont);   
         if (waitKey(30) >= 0)
             break;
@@ -48,6 +53,7 @@ void capturaPuntos (const char *Name, Mat & Frame, Point2f *P)
       cerr << "La captura de puntos se aborto." << endl;
     for (int i=0;i<4;++i)
         P[i] = cD.crn[i];
+    cap.release();
 }
 
 void findMapping(int source, Point2f *vP, Mat &H)
@@ -63,19 +69,8 @@ void findMapping(int source, Point2f *vP, Mat &H)
         return;
     }
 
-    while (true)
-    {
-        cap >> Frame;
-        if (Frame.empty())
-            cerr << "Error capturando el Frame No. " << i << endl;
-        else
-            ++i;
-        if (waitKey(33)  != 0)
-            break;
-    }
-
     namedWindow("Introduce esquinas");
-    capturaPuntos("Introduce esquinas", Frame, rP);
+    capturaPuntos("Introduce esquinas", cap, rP);
     cout << "Se capturaron los siguientes puntos:" << endl;
     for (i=0;i<4;++i)
         cout << "(" << rP[i].x << ", " << rP[i].y << ")" << endl;
@@ -99,7 +94,7 @@ int main (int argc, char **argv)
      }
      else
      {
-        Maze = imread(argv[1], CV_LOAD_IMAGE_GRAYSCALE);
+        Maze = imread(argv[1], CV_LOAD_IMAGE_COLOR);
         camId = atoi(argv[2]);
 	 }
 	 if (argc > 3)

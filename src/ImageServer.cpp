@@ -54,21 +54,19 @@ void ImageServer::shutdown ()
 
 }
 
-void maskImage (Mat &I, Mat &Mask, Vec3b &val)
+void paintMaze(Mat &I, Mat &Mask)
 {
     int i, j;
-    Vec3b *ptrI; 
-    unsigned char *ptrM;
+    Vec3b *ptrI, *ptrM; 
+    Vec3b val(255,255,255);
 
     for (i=0;i<I.rows;++i)
     {
         ptrI = I.ptr<Vec3b>(i);
-        ptrM = Mask.ptr<unsigned char>(i);
+        ptrM = Mask.ptr<Vec3b>(i);
         for (j=0;j<I.cols;++j,++ptrI,++ptrM)
-            if (*ptrM)
-                *ptrI = val;
-            else
-                *ptrI = *ptrI;
+            if (*ptrM != val)
+                *ptrI = *ptrM;
     }
 }
 
@@ -79,7 +77,6 @@ void *ImageServer::connectionHandler (void *cd)
 	 connectionData *conD = (connectionData *) cd;
 	 int sock = conD->client_socket;
 	 unsigned char msg[MSG_LENGTH];
-     Vec3b wall = Vec3b(255,0,0);
 	 //Recibe mensaje del cliente
 	 do
 	 {
@@ -100,7 +97,7 @@ void *ImageServer::connectionHandler (void *cd)
 				 img = cam->getLastFrame ();
 				 warpPerspective(img, mImg, *Hrv, Size(img.cols, img.rows), INTER_LINEAR, BORDER_CONSTANT);
 
-                maskImage(mImg, *Maze, wall);
+                paintMaze(mImg, *Maze);
 
 				 // Get info
 				 struct ImageInfo imgInfo;

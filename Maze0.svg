@@ -27,11 +27,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.94"
-     inkscape:cx="449.29905"
-     inkscape:cy="360.39409"
+     inkscape:zoom="0.45"
+     inkscape:cx="135.44413"
+     inkscape:cy="264.61359"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer3"
      showgrid="false"
      inkscape:window-width="1050"
      inkscape:window-height="1625"
@@ -46,45 +46,93 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Capa 0"
+     sodipodi:insensitive="true">
+    <rect
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       id="rect3774"
+       width="640"
+       height="480"
+       x="0"
+       y="-2.8421709e-14" />
+  </g>
+  <g
      inkscape:label="Capa 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-572.36218)">
+     transform="translate(0,-572.36218)" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Capa 2">
     <g
-       id="g3852">
-      <rect
-         y="574.02686"
-         x="1.6646538"
-         height="476.67068"
-         width="26.670692"
-         id="rect3753"
-         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:3.32930756000000017;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
-      <rect
-         y="572.36218"
-         x="610"
-         height="480"
-         width="30"
-         id="rect3753-3"
-         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none" />
-      <rect
-         y="1022.3622"
-         x="0"
-         height="30"
-         width="640"
-         id="rect3753-3-6"
-         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none" />
-      <rect
-         y="572.36218"
-         x="0"
-         height="30"
-         width="640"
-         id="rect3753-3-6-7"
-         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+       id="g3827">
+      <g
+         id="g3812"
+         transform="translate(0,-572.36218)">
+        <rect
+           style="fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+           id="rect3753"
+           width="30"
+           height="480"
+           x="0"
+           y="572.36218" />
+        <rect
+           style="fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+           id="rect3753-3"
+           width="30"
+           height="480"
+           x="610"
+           y="572.36218" />
+        <rect
+           style="fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+           id="rect3753-3-6"
+           width="640"
+           height="30"
+           x="0"
+           y="1022.3622" />
+        <rect
+           style="fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+           id="rect3753-3-6-7"
+           width="640"
+           height="30"
+           x="0"
+           y="572.36218" />
+      </g>
+      <g
+         id="g3818">
+        <path
+           sodipodi:type="arc"
+           style="fill:#21c116;fill-opacity:1;fill-rule:evenodd;stroke:none"
+           id="path3792"
+           sodipodi:cx="368.5484"
+           sodipodi:cy="333.2258"
+           sodipodi:rx="34.677418"
+           sodipodi:ry="46.774193"
+           d="m 403.22582,333.2258 a 34.677418,46.774193 0 1 1 -69.35484,0 34.677418,46.774193 0 1 1 69.35484,0 z"
+           transform="matrix(0.57674421,0,0,0.42758621,307.44184,217.51724)"
+           inkscape:transform-center-x="122.58065"
+           inkscape:transform-center-y="-20" />
+        <path
+           sodipodi:type="arc"
+           style="fill:#d516c9;fill-opacity:1;fill-rule:evenodd;stroke:none"
+           id="path3792-3"
+           sodipodi:cx="368.5484"
+           sodipodi:cy="333.2258"
+           sodipodi:rx="34.677418"
+           sodipodi:ry="46.774193"
+           d="m 403.22582,333.2258 a 34.677418,46.774193 0 1 1 -69.35484,0 34.677418,46.774193 0 1 1 69.35484,0 z"
+           transform="matrix(0.57674421,0,0,0.42758621,-92.558156,-22.482757)"
+           inkscape:transform-center-x="122.58065"
+           inkscape:transform-center-y="-20" />
+      </g>
     </g>
   </g>
 </svg>
