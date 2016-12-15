@@ -84,6 +84,14 @@ template < typename X > class ConnServer
 			thrIds = new pthread_t[maxConnections];
 	 }
 
+	 ~ConnServer()
+	 {
+	    if (connData)
+	        delete[] connData;
+	    if (thrIds)
+	        delete[] thrIds;
+	 }
+
 
 	 void acceptConnections ()
 	 {
@@ -113,7 +121,12 @@ template < typename X > class ConnServer
 
 							 }
 							 else
+							 {
 									nConnections++;
+									cout << "Se acaba de hacer una nueva conexión: " 
+									     << nConnections << endl;
+								    cout.flush();
+						     }
 						}
 				 }
 			}

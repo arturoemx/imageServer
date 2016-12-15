@@ -14,10 +14,6 @@
 #include <netdb.h>
 #include <iostream>
 
-
-#define WIDTH 512
-#define HEIGHT 512
-
 using namespace std;
 using namespace cv;
 
@@ -38,7 +34,7 @@ struct connectionData
 class ImageServer
 {
  private:
-	 static const int MAX_CONNECTIONS = 1000;
+	 static const int MAX_CONNECTIONS = 10000;
 	 static Camera *cam;
 	 static Mat *Hrv, *Hmv, *Maze;
 	 Vec3b wall;

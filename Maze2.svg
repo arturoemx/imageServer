@@ -46,7 +46,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -73,7 +73,7 @@
      id="layer3"
      inkscape:label="Capa 2">
     <g
-       id="g4030">
+       id="g3267">
       <g
          id="g4024">
         <rect
@@ -105,18 +105,6 @@
            x="0"
            y="2.6171874e-06" />
       </g>
-      <path
-         inkscape:transform-center-y="-20"
-         inkscape:transform-center-x="122.58065"
-         transform="matrix(0.57674421,0,0,0.42758621,309.66406,97.517246)"
-         d="m 403.22582,333.2258 a 34.677418,46.774193 0 1 1 -69.35484,0 34.677418,46.774193 0 1 1 69.35484,0 z"
-         sodipodi:ry="46.774193"
-         sodipodi:rx="34.677418"
-         sodipodi:cy="333.2258"
-         sodipodi:cx="368.5484"
-         id="path3792"
-         style="fill:#21c116;fill-opacity:1;fill-rule:evenodd;stroke:none"
-         sodipodi:type="arc" />
       <path
          inkscape:transform-center-y="-20"
          inkscape:transform-center-x="122.58065"

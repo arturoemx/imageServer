@@ -6,7 +6,6 @@
 
 #define FORMAT_ERROR 3
 
-
 #define MSG_LENGTH 10
 
 struct ImageInfo

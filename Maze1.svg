@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.5 r10040"
-   sodipodi:docname="Maze0.svg"
+   sodipodi:docname="Maze1.svg"
    inkscape:export-filename="/home/arturoe/src/imageServer_VirtualMaze/Maze0.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
@@ -46,7 +46,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -73,7 +73,7 @@
      id="layer3"
      inkscape:label="Capa 2">
     <g
-       id="g3827">
+       id="g3169">
       <g
          id="g3812"
          transform="translate(0,-572.36218)">
@@ -106,40 +106,25 @@
            x="0"
            y="572.36218" />
       </g>
-      <g
-         id="g3818">
-        <path
-           sodipodi:type="arc"
-           style="fill:#21c116;fill-opacity:1;fill-rule:evenodd;stroke:none"
-           id="path3792"
-           sodipodi:cx="368.5484"
-           sodipodi:cy="333.2258"
-           sodipodi:rx="34.677418"
-           sodipodi:ry="46.774193"
-           d="m 403.22582,333.2258 a 34.677418,46.774193 0 1 1 -69.35484,0 34.677418,46.774193 0 1 1 69.35484,0 z"
-           transform="matrix(0.57674421,0,0,0.42758621,307.44184,217.51724)"
-           inkscape:transform-center-x="122.58065"
-           inkscape:transform-center-y="-20" />
-        <path
-           sodipodi:type="arc"
-           style="fill:#d516c9;fill-opacity:1;fill-rule:evenodd;stroke:none"
-           id="path3792-3"
-           sodipodi:cx="368.5484"
-           sodipodi:cy="333.2258"
-           sodipodi:rx="34.677418"
-           sodipodi:ry="46.774193"
-           d="m 403.22582,333.2258 a 34.677418,46.774193 0 1 1 -69.35484,0 34.677418,46.774193 0 1 1 69.35484,0 z"
-           transform="matrix(0.57674421,0,0,0.42758621,-92.558156,-22.482757)"
-           inkscape:transform-center-x="122.58065"
-           inkscape:transform-center-y="-20" />
-      </g>
+      <path
+         inkscape:transform-center-y="-20"
+         inkscape:transform-center-x="122.58065"
+         transform="matrix(0.57674421,0,0,0.42758621,-92.558156,-22.482757)"
+         d="m 403.22582,333.2258 a 34.677418,46.774193 0 1 1 -69.35484,0 34.677418,46.774193 0 1 1 69.35484,0 z"
+         sodipodi:ry="46.774193"
+         sodipodi:rx="34.677418"
+         sodipodi:cy="333.2258"
+         sodipodi:cx="368.5484"
+         id="path3792-3"
+         style="fill:#d516c9;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         sodipodi:type="arc" />
+      <rect
+         y="150"
+         x="290"
+         height="180"
+         width="60"
+         id="rect3837"
+         style="fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:none" />
     </g>
-    <rect
-       style="fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:none"
-       id="rect3837"
-       width="60"
-       height="180"
-       x="290"
-       y="150" />
   </g>
 </svg>

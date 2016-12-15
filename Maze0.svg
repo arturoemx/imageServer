@@ -73,7 +73,7 @@
      id="layer3"
      inkscape:label="Capa 2">
     <g
-       id="g3827">
+       id="g3004">
       <g
          id="g3812"
          transform="translate(0,-572.36218)">
@@ -106,33 +106,18 @@
            x="0"
            y="572.36218" />
       </g>
-      <g
-         id="g3818">
-        <path
-           sodipodi:type="arc"
-           style="fill:#21c116;fill-opacity:1;fill-rule:evenodd;stroke:none"
-           id="path3792"
-           sodipodi:cx="368.5484"
-           sodipodi:cy="333.2258"
-           sodipodi:rx="34.677418"
-           sodipodi:ry="46.774193"
-           d="m 403.22582,333.2258 a 34.677418,46.774193 0 1 1 -69.35484,0 34.677418,46.774193 0 1 1 69.35484,0 z"
-           transform="matrix(0.57674421,0,0,0.42758621,307.44184,217.51724)"
-           inkscape:transform-center-x="122.58065"
-           inkscape:transform-center-y="-20" />
-        <path
-           sodipodi:type="arc"
-           style="fill:#d516c9;fill-opacity:1;fill-rule:evenodd;stroke:none"
-           id="path3792-3"
-           sodipodi:cx="368.5484"
-           sodipodi:cy="333.2258"
-           sodipodi:rx="34.677418"
-           sodipodi:ry="46.774193"
-           d="m 403.22582,333.2258 a 34.677418,46.774193 0 1 1 -69.35484,0 34.677418,46.774193 0 1 1 69.35484,0 z"
-           transform="matrix(0.57674421,0,0,0.42758621,-92.558156,-22.482757)"
-           inkscape:transform-center-x="122.58065"
-           inkscape:transform-center-y="-20" />
-      </g>
+      <path
+         inkscape:transform-center-y="-20"
+         inkscape:transform-center-x="122.58065"
+         transform="matrix(0.57674421,0,0,0.42758621,-92.558156,-22.482757)"
+         d="m 403.22582,333.2258 a 34.677418,46.774193 0 1 1 -69.35484,0 34.677418,46.774193 0 1 1 69.35484,0 z"
+         sodipodi:ry="46.774193"
+         sodipodi:rx="34.677418"
+         sodipodi:cy="333.2258"
+         sodipodi:cx="368.5484"
+         id="path3792-3"
+         style="fill:#d516c9;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         sodipodi:type="arc" />
     </g>
   </g>
 </svg>

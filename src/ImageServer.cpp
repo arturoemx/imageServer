@@ -89,7 +89,6 @@ void *ImageServer::connectionHandler (void *cd)
 			if (!Read (sock, MSG_LENGTH, msg))
 				 break;
 
-
 			// Check what to send
 			if (strncmp ((char *) msg, "IMG", 3) == 0)
 			{
@@ -129,6 +128,19 @@ void *ImageServer::connectionHandler (void *cd)
 				 if (!Write (sock, MSG_LENGTH, msg))
 						break;
 			}
+			else if (strncmp ((char *) msg, "QUIT", 4) == 0)
+			{
+				 // Send ACK
+                 cout << "Recibimos QUIT" << endl;
+                 cout.flush();
+				 memset (msg, 0, MSG_LENGTH);
+				 strncpy ((char *) msg, "BYE", 3);
+				 if (!Write (sock, MSG_LENGTH, msg))
+						break;
+                 cout << "Enviamos BYE" << endl;
+                 cout.flush();
+				break;
+			}
 			else
 			{
 				 // Send ERR
@@ -139,6 +151,8 @@ void *ImageServer::connectionHandler (void *cd)
 			}
 	 }
 	 while (true);
+	 cout << "Cliente con id: " << conD->client_socket << " Teminó"<< endl;
+     cout.flush();
 
 	 return (void *) 0;
 }

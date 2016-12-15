@@ -23,6 +23,14 @@ class remoteFrame:
             self.Mask = Mask & ~self.where
         else:
             self.Mask = None
+    def __del__ (self):
+        msg="QUIT      "
+        self.cl.sendall(msg)
+        msg = self.cl.recv(10)
+        if msg[:3] != "BYE":
+            print 'No se recibió "BYE" :-(, se recibió |'+msg+'| '
+        else:
+            print 'remoteFrame: Cerrando conexión'
     def getFrame(self):
         msg="IMG       "
         self.cl.sendall(msg)
