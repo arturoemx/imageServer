@@ -83,14 +83,8 @@ int Client::getFrame (Mat & out)
 			return SEND_FAILURE;
 
 
-	 cout << "Cliente mando: " << msg << endl;
 
 	 Read (cfd, sizeof (struct ImageInfo), (unsigned char *) &imgInfo);
-
-	 cout << "rows: " << imgInfo.rows << endl;
-	 cout << "cols: " << imgInfo.cols << endl;
-	 cout << "type: " << imgInfo.type << endl;
-	 cout << "size: " << imgInfo.size << endl;
 
 	 if (imgInfo.size > MAXIMAGESIZE)
 	 {
@@ -105,7 +99,6 @@ int Client::getFrame (Mat & out)
 	 Mat img (imgInfo.rows, imgInfo.cols, imgInfo.type, (void *) imageData);
 	 out = img.clone ();
 
-	 cout << "Cliente recibio: " << "[IMG]\n" << endl;
 
 	 return SEND_SUCCESS;
 
@@ -124,7 +117,6 @@ int Client::sendCommand (const char *cmd_str)
 	 if (!Read (cfd, MSG_LENGTH, msg))
 			return SEND_FAILURE;
 
-	 cout << "Cliente recibio: " << msg << endl;
 
 	 // Check if we can send
 	 if (!strncmp ((char *) msg, "SND", 3))
@@ -133,13 +125,11 @@ int Client::sendCommand (const char *cmd_str)
 			if (!Write (cfd, MSG_LENGTH, msg))
 				 return SEND_FAILURE;
 
-			cout << "Cliente mando: " << msg << endl;
 
 			memset (msg, 0, MSG_LENGTH);
 			if (!Read (cfd, MSG_LENGTH, msg))
 				 return SEND_FAILURE;
 
-			cout << "Cliente recibio: " << msg << endl;
 	 }
 
 	 return SEND_SUCCESS;

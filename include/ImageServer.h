@@ -6,17 +6,6 @@
 #include <structures.h>
 #include <Camera.h>
 
-#if __OCV_VER__ >= 3
-#include <opencv2/opencv.hpp>
-#include <opencv2/core.hpp>
-#include <opencv2/imgproc.hpp>
-#include <opencv2/highgui.hpp>
-#include <opencv2/imgcodecs.hpp>
-#else
-#include <cv.h>
-#include <highgui.h>
-#endif
-
 #include <vector>
 #include <sys/socket.h>
 #include <unistd.h>

@@ -8,14 +8,17 @@ from remoteFrame import *
 
 port = 8888
 address = '127.0.0.1'
+Mask = None
 
 argc = len (sys.argv)
 if argc > 1:
     address = sys.argv[1]
     if argc > 2:
         port = int(sys.argv[2])
+        if argc > 3:
+            Mask = cv2.imread(sys.argv[3])
 
-rF=remoteFrame(address, port)
+rF=remoteFrame(address, port, Mask)
 
 cv2.namedWindow('MyWindow')
 

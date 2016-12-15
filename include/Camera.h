@@ -26,7 +26,6 @@ using namespace cv;
 
 class Camera
 {
- private:
 	 int deviceID;
 	 VideoCapture cap;
 	 pthread_t captureThread;
@@ -35,10 +34,10 @@ class Camera
 	 ImageBuffer imageBuffer;
 
  public:
-	   Mat getLastFrame ();
 	   Camera (int captureDevice);
 	   Camera ();
 	  ~Camera ();
+       int getLastFrame (infoFrame &iF);
 
 	 int getID ();
 

@@ -2,16 +2,12 @@
 #define __IMAGEBUFFER__
 
 #include <RingBuffer.h>
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
+#include <infoFrame.h>
 
-using namespace cv;
-
-class ImageBuffer:public RingBuffer < Mat >
+class ImageBuffer:public RingBuffer < infoFrame >
 {
  public:
-	 ImageBuffer ():RingBuffer < Mat > (0)
+	 ImageBuffer ():RingBuffer < infoFrame > (0)
 	 {
 	 }
 	 void setBufferSize (int N)
@@ -22,7 +18,7 @@ class ImageBuffer:public RingBuffer < Mat >
 
 			this->RBF_Size = N;
 			if (this->RBF_Size > 1)
-				 this->R = new Mat[this->RBF_Size];	//Reserva memoria dinamica para la cola
+				 this->R = new infoFrame[this->RBF_Size];	//Reserva memoria dinamica para la cola
 			else
 				 this->R = 0;
 			this->H.SetRingSize (this->RBF_Size);
@@ -35,17 +31,17 @@ class ImageBuffer:public RingBuffer < Mat >
 			return this->RBF_Size;
 	 }
 
-	 int Queue (const Mat & e)
+	 int Queue (const infoFrame &e)
 	 {
-			return RingBuffer < Mat >::Queue (e);
+			return RingBuffer < infoFrame >::Queue (e);
 	 }
 
-	 int Dequeue (Mat & e)
+	 int Dequeue (infoFrame &e)
 	 {
-			return RingBuffer < Mat >::Dequeue (e);
+			return RingBuffer < infoFrame >::Dequeue (e);
 	 }
 
-	 int getLast (Mat & e)
+	 int getLast (infoFrame &e)
 	 {
 			pthread_mutex_lock (&this->RB_mutex);
 			if (this->T != this->H)

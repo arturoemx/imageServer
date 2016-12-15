@@ -6,12 +6,23 @@ import numpy as np
 import cv2
 
 class remoteFrame:
-    def __init__(self, address='127.0.0.1', port=8888):
+    def __init__(self, address='127.0.0.1', port=8888, Mask=None):
         self.address = address
         self.port = port
         self.cl = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.cl.connect((self.address, self.port))
         self.msgLength = 10
+        if Mask != None:
+            b, g, r = cv2.split(Mask)
+            self.where = b & 255
+            self.where &= g & 255
+            self.where &= r & 255
+            self.where = 255-self.where
+            self.where = 255 - self.where
+            self.where=cv2.merge((self.where,self.where,self.where))
+            self.Mask = Mask & ~self.where
+        else:
+            self.Mask = None
     def getFrame(self):
         msg="IMG       "
         self.cl.sendall(msg)
@@ -28,4 +39,7 @@ class remoteFrame:
             recibidos -= len(buff)
             img += buff
         I=np.array(bytearray(img)).reshape(rows,cols,3)
+        if self.Mask != None:
+            I = (I & self.where) + self.Mask
+
         return I

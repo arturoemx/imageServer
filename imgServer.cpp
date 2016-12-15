@@ -87,22 +87,24 @@ int main (int argc, char **argv)
 	 Point2f vP[4], mP[4];
      Mat Hrv, Hmv, Maze;
 
-	 if (argc < 3)
+	 Maze = 255 * Mat::ones(Size(640,480), CV_8UC3);
+	 if (argc < 2)
 	 {
-	    cerr << "Uso: imgServer Maze camId ipAddress port" << endl;
+	    cerr << "Uso: imgServer camId ipAddress port Maze" << endl;
 	    return -1;
      }
      else
-     {
-        Maze = imread(argv[1], CV_LOAD_IMAGE_COLOR);
-        camId = atoi(argv[2]);
-	 }
-	 if (argc > 3)
+        camId = atoi(argv[1]);
+	 if (argc > 2)
 	 {
-			strncpy (ipAddress, argv[3], 63);
-			if (argc > 4)
-			    port = atoi (argv[4]);
-	 }
+			strncpy (ipAddress, argv[2], 63);
+			if (argc > 3)
+			{
+			    port = atoi (argv[3]);
+			    if (argc > 4)
+			        Maze = imread(argv[4]);
+	        }
+	}
     
      vP[0].x = 0; vP[0].y = 0;
      vP[1].x = 639; vP[1].y = 0;

@@ -1,10 +1,14 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
+#if __OCV_VER__ >= 3
+#include <opencv2/opencv.hpp>
+#else
+#include <cv.h>
+#endif
+
+
 #include <SockIO.h>
-#include <opencv2/core/core.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
 #include <sys/socket.h>
 #include <unistd.h>
 #include <netinet/in.h>

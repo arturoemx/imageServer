@@ -28,7 +28,7 @@ Camera::~Camera ()
 bool Camera::initDevice ()
 {
 	 // init capture device
-	 cap.open (1);
+	 cap.open (deviceID);
 	 if (!cap.isOpened ())
 	 {
 			perror ("Failed to initialize video capture!");
@@ -48,11 +48,11 @@ void Camera::initCapture ()
 void *Camera::readFramesThread (void *camera_ptr)
 {
 	 Camera *ptr = (Camera *) camera_ptr;
-	 Mat frame;
+	 infoFrame frame;
 	 do
 	 {
 			pthread_mutex_lock (&(ptr->captureMutex));
-			ptr->cap >> frame;				// get a new frame from camera
+			ptr->cap >> frame.frame; // get a new frame from camera
 			pthread_mutex_unlock (&(ptr->captureMutex));
 
 			ptr->imageBuffer.advHead ();
@@ -62,15 +62,14 @@ void *Camera::readFramesThread (void *camera_ptr)
 }
 
 
-Mat Camera::getLastFrame ()
+int Camera::getLastFrame (infoFrame &iF)
 {
-	 Mat frame;
-	 imageBuffer.getLast (frame);
+	 imageBuffer.getLast (iF);
 
-	 if (frame.empty ())
-			return Mat::zeros (1, 1, frame.type ());
+	 if (iF.frame.empty ())
+	    return -1;
 	 else
-			return frame;
+	    return 0;
 }
 
 int Camera::getID ()

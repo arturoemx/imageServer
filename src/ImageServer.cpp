@@ -22,6 +22,7 @@ ImageServer::ImageServer ()
 ImageServer::ImageServer (int cid, int port, const char *inetAddress, Mat *hrv, Mat *hmv, Mat *Mz)
 {
     camId = cid;
+    Mat tmp;
 
     // config Server
 	 this->port = port;
@@ -37,8 +38,11 @@ ImageServer::ImageServer (int cid, int port, const char *inetAddress, Mat *hrv, 
 	 hrv->copyTo(*Hrv);
 	 hmv->copyTo(*Hmv);
 	 Mz->copyTo(*Maze);
-     warpPerspective(*Maze, *Maze, *Hmv, Size(Maze->cols, Maze->rows), INTER_LINEAR, BORDER_CONSTANT);
 
+	 //Se utilizó una varianble temporal para evitar Bug en openCv en la version 2.3.1 que estaba instalada en el servidor que estamos ocupando.
+	 tmp=Mat::zeros(Maze->size(), Maze->type());
+     warpPerspective(*Maze, tmp, *Hmv, Size(Maze->cols, Maze->rows), INTER_LINEAR, BORDER_CONSTANT);
+    tmp.copyTo(*Maze);
 	 // init connection to server
 	 serverConnection =
 			new ConnServer < connectionData > (port, inetAddress, (ImageServer::connectionHandler), MAX_CONNECTIONS);
@@ -85,7 +89,6 @@ void *ImageServer::connectionHandler (void *cd)
 			if (!Read (sock, MSG_LENGTH, msg))
 				 break;
 
-			cout << "Servidor recibio: " << msg << endl;
 
 			// Check what to send
 			if (strncmp ((char *) msg, "IMG", 3) == 0)
@@ -93,9 +96,10 @@ void *ImageServer::connectionHandler (void *cd)
 				 // Send an [IMG]
 
 				 // Get frame from camera
-				 Mat img, mImg;
-				 img = cam->getLastFrame ();
-				 warpPerspective(img, mImg, *Hrv, Size(img.cols, img.rows), INTER_LINEAR, BORDER_CONSTANT);
+				 infoFrame iF;
+				 Mat mImg;
+				 cam->getLastFrame (iF);
+				 warpPerspective(iF.frame, mImg, *Hrv, Size(iF.frame.cols, iF.frame.rows), INTER_LINEAR, BORDER_CONSTANT);
 
                 paintMaze(mImg, *Maze);
 
@@ -114,12 +118,8 @@ void *ImageServer::connectionHandler (void *cd)
 				 // send data
 				 uchar *data;
 				 data = mImg.data;
-				 Write (sock, imgInfo.size, data);
-
-				 cout << "Servidor mando IMG[" << imgInfo.
-						rows << " x " << imgInfo.cols << "]: " << imgInfo.
-						type << " (" << imgInfo.size << ")" << endl;
-
+				 if (!Write (sock, imgInfo.size, data))
+				    break;
 			}
 			else if (strncmp ((char *) msg, "POLL", 4) == 0)
 			{
