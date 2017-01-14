@@ -5,44 +5,50 @@ Camera::Camera ()
 	 Camera (0);
 }
 
-Camera::Camera (int captureDevice)
+Camera::Camera (int captureDevice, unsigned long capPer, bool autoCapt)
 {
 	 // Set device ID
 	 deviceID = captureDevice;
 
 	 // Init buffer
-	 imageBuffer.setBufferSize (5);
+	 buffer.setBufferSize (5);
 
-	 // Open capture
-	 initDevice ();
+	 capture = autoCapt;
 
-	 // Start capture
-	 initCapture ();
-}
+	 capturePeriod = capPer;
 
-Camera::~Camera ()
-{
-	 cap.release ();
-}
-
-bool Camera::initDevice ()
-{
 	 // init capture device
 	 cap.open (deviceID);
 	 if (!cap.isOpened ())
 	 {
-			perror ("Failed to initialize video capture!");
-			return false;
+			perror ("Camera::Failed to initialize video capture!");
+			return;
 	 }
-	 return true;
+	 
+	 //Launch capture thread.
+	 if (pthread_create (&captureThread, NULL, Camera::readFramesThread, this))
+	 {
+	    perror ("Camera::Couldn't start capture thread.");
+	    return;
+	 }
+
+	 // Start capture
+	 capture = autoCapt;
+
 }
 
-void Camera::initCapture ()
+Camera::~Camera ()
 {
-	 // init threads
-	 pthread_mutex_init (&captureMutex, NULL);
-	 pthread_create (&captureThread, NULL, Camera::readFramesThread, this);
-	 pthread_detach (captureThread);
+     void *ret;
+
+     for (int cont = 0; pthread_cancel(captureThread)!=0 && cont < 10; cont++)
+     {
+        perror ("Camera::~Camera: Couldn't finish capture thread on exit");
+        usleep(100000);
+     }
+     if (pthread_join(captureThread, &ret) != 0)
+        perror ("Camera::~Camera: Couldn't joint capture thread");
+	 cap.release ();
 }
 
 void *Camera::readFramesThread (void *camera_ptr)
@@ -51,12 +57,14 @@ void *Camera::readFramesThread (void *camera_ptr)
 	 infoFrame frame;
 	 do
 	 {
-			pthread_mutex_lock (&(ptr->captureMutex));
+	    if (ptr->capture)
+		{
 			ptr->cap >> frame.frame; // get a new frame from camera
-			pthread_mutex_unlock (&(ptr->captureMutex));
 
-			ptr->imageBuffer.advHead ();
-			ptr->imageBuffer.Queue (frame);	// queue frame into buffer
+			ptr->buffer.advHead ();
+			ptr->buffer.Queue (frame);	// queue frame into buffer
+	    }
+	    usleep (ptr->capturePeriod);
 	 }
 	 while (true);
 }
@@ -64,7 +72,7 @@ void *Camera::readFramesThread (void *camera_ptr)
 
 int Camera::getLastFrame (infoFrame &iF)
 {
-	 imageBuffer.getLast (iF);
+	 buffer.getLast (iF);
 
 	 if (iF.frame.empty ())
 	    return -1;
