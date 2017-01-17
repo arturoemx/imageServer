@@ -1,3 +1,8 @@
+/*!
+\file Client.h
+\brief 
+*/
+
 #ifndef IMAGE_SERVER_H
 #define IMAGE_SERVER_H
 

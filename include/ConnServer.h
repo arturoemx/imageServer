@@ -1,7 +1,7 @@
-// Server que atiende varios clientes mediante threads
-// por cada cliente que se conecta se crea un hilo para atenderlo
-//g++ server_threads.cpp -o server_threads -lpthread
-
+/*!
+\file connServer.h
+\brief Este archivo contiene la definicion de la clase ConnServerm que crea un socket y proporciona la infraestructura para atender a multiples clientes de manera concurrente. 
+*/
 
 #include <stdio.h>
 #include <string.h>
@@ -13,25 +13,29 @@
 #include <iostream>
 #include <cstdio>
 #include <vector>
-#include <serviceCall.h>
 
 
 #define BACKLOG 5
 
 using namespace std;
 
-//función que atiende a un cliente
+/*!
+ \class template <typename X> class ConnServer
+ \brief Esta clase crea un socket y lo asocia a una direccion IP y un puerto, y provee servicios básicos para atender de manera concurrente a multiples clientes.
+*/
 template < typename X > class ConnServer
 {
  private:
-	 int maxConnections, nConnections;
-	 int socket_desc, port;
-	 struct sockaddr_in server, client;
-	 string ipAddress;
-	 bool accCon;
-	 void *(*connection_handler) (void *);
-	 X *connData;
-	 pthread_t *thrIds;
+	 int maxConnections; ///< Número máximo de conexiones permitidas.
+	 int nConnections; ///< Número de conecciones realizadas
+	 int socketDesc; ///< descriptor del socket.
+	 int port; ///< Puerto que se va usar para la comunicación
+	 struct sockaddr_in server; ///< Estructura en donde se almacena la informacion de conexión del servidor.
+	 string ipAddress; ///< Cadena que contienen la direccion ip que se va a asociar al servidor.
+	 bool accCon; ///< Bandera que se va a utilizar para controla cuando el servidor acepta conexiones.
+	 void *(*connection_handler) (void *); ///< Funcion que se invoca para atender cada conexión.
+	 X *connData; ///< Datos que se comparten a cada instancia que atiende al cliente. 
+	 pthread_t *thrIds; ///< Apuntador a arreglo que contiene los identificadores de de cada hebra en ejecución.
 
  public:
 	 ConnServer (int pt, const char *ipa, void *(*connHndlr) (void *),
@@ -39,10 +43,10 @@ template < typename X > class ConnServer
 	 {
 			accCon = false;
 			connection_handler = connHndlr;
-			socket_desc = socket (AF_INET, SOCK_STREAM, 0);
+			socketDesc = socket (AF_INET, SOCK_STREAM, 0);
 			maxConnections = mxConn;
 			nConnections = 0;
-			if (socket_desc == -1)
+			if (socketDesc == -1)
 			{
 				 perror ("ConnServer Constructor: Creating socket endpoint\n");
 				 return;
@@ -67,14 +71,14 @@ template < typename X > class ConnServer
 			}
 			server.sin_port = htons (port);
 
-			if (bind (socket_desc, (struct sockaddr *) &server, sizeof (server)) <
+			if (bind (socketDesc, (struct sockaddr *) &server, sizeof (server)) <
 					0)
 			{
 				 perror ("ConnServer Constructor: binding socket endpoint\n");
 				 return;
 			}
 
-			if (listen (socket_desc, BACKLOG) == -1)
+			if (listen (socketDesc, BACKLOG) == -1)
 			{
 				 perror ("ConnServer Constructor: error on listen.");
 				 return;
@@ -96,13 +100,14 @@ template < typename X > class ConnServer
 	 void acceptConnections ()
 	 {
 			int clntSocket, sockAddInSize = sizeof (struct sockaddr_in);
+	        struct sockaddr_in client;
 
 			while (accCon)
 			{
 				 if (nConnections < maxConnections)
 				 {
 						clntSocket =
-							 accept (socket_desc, (struct sockaddr *) &client,
+							 accept (socketDesc, (struct sockaddr *) &client,
 											 (socklen_t *) & sockAddInSize);
 						if (clntSocket == -1)
 						{

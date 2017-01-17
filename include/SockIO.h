@@ -1,3 +1,8 @@
+/*!
+\file Client.h
+\brief 
+*/
+
 #ifndef __SOCKIO__
 #define __SOCKIO__
 

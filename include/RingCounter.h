@@ -1,3 +1,7 @@
+/*!
+\file Client.h
+\brief 
+*/
 /*
   	RingCounter.h - A header file that defines a class of a modular arithmetic
 	 counter.

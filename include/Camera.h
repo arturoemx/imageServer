@@ -29,7 +29,10 @@ Al instanciar un objeto de esta clase, se genera para asegurar la ejecución con
 using namespace std;
 using namespace cv;
 
-
+/*!
+\class Camera
+\brief Esta clase permite capturar imágenes de una cámara, utilizando los métodos provisto por la biblioteca highgui. Las imagenes capturadas son almacenadas en una cola. Se proveen mecanismos de sincronización para el acceso concurrente a dicha cola.
+*/
 class Camera
 {
 	 int deviceID; ///< Identificador del dispositivo de captura.  
@@ -78,24 +81,16 @@ class Camera
        int getLastFrame (infoFrame &iF);
 
        /*!
-       \func
-       \brief
+       \func void startCapture();
+       \brief Inicia la captura de imágenes y su almacenamiento en el buffer.
        */
        void startCapture() {capture = true;}
 
        /*!
-       \func
-       \brief
+       \func void stopCapture();
+       \brief Detiene la captura de imágenes y su almacenamiento en el buffer.
        */
        void stopCapture() {capture = false;}
-       /*!
-       \func
-       \brief
-       \param
-       */
-	   int getID ();
-
- private:
 };
 
 

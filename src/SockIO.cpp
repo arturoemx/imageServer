@@ -1,3 +1,8 @@
+/*!
+\file Client.h
+\brief 
+*/
+
 #include <SockIO.h>
 
 int Read (int sock, u_long tam, unsigned char *buffer)

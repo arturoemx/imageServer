@@ -1,3 +1,8 @@
+/*!
+\file Client.h
+\brief 
+*/
+
 #ifndef __INFOFRAME__
 #define __INFOFRAME__
 

@@ -1,3 +1,8 @@
+/*!
+\file Client.h
+\brief 
+*/
+
 /*
   RingBuffer.h  - header file of the implementation of a Ringbuffer.
 

@@ -1,3 +1,7 @@
+/*!
+\file Client.h
+\brief 
+*/
 #ifndef __IMAGEBUFFER__
 #define __IMAGEBUFFER__
 

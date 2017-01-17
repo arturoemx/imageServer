@@ -1,3 +1,8 @@
+/*!
+\file Client.h
+\brief 
+*/
+
 #include <Client.h>
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -16,7 +21,7 @@ int main (int argc, char **argv)
 	 }
 
 	 Client *client = new Client (port, ipAddress);
-	 client->connect ();
+	 client->connectSocket ();
 
 	 Mat frame;
 	 while (true)
@@ -25,8 +30,6 @@ int main (int argc, char **argv)
 			imshow ("rec", frame);
 			if (waitKey (30) >= 0)
 				 break;
-			// client->sendCommand("POLL");
-			// sleep(1); // wait one second in between requests
 	 }
 
 

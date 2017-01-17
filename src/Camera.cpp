@@ -1,3 +1,8 @@
+/*!
+\file Client.h
+\brief 
+*/
+
 #include <Camera.h>
 
 Camera::Camera ()
@@ -78,9 +83,4 @@ int Camera::getLastFrame (infoFrame &iF)
 	    return -1;
 	 else
 	    return 0;
-}
-
-int Camera::getID ()
-{
-	 return deviceID;
 }

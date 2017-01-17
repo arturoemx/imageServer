@@ -1,3 +1,8 @@
+/*!
+\file Client.h
+\brief 
+*/
+
 #include <ImageServer.h>
 #include <cstring>
 
