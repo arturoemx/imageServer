@@ -22,22 +22,57 @@
 using namespace std;
 using namespace cv;
 
+#define MAX_CONNECTIONS 1000
+
+/*!
+\class ImageServer
+\brief Objetos instanciados de esta clase, capturan imágenes de una cámara y las almacena en un buffer, y permite la conexión via sockets de clientes a quienes provee de dichas imágenes.
+*/
 class ImageServer
 {
-	 static const int MAX_CONNECTIONS = 10000;
-	 static Camera *cam;
-	 static Mat *Hrv, *Hmv, *Maze;
+	 int maxConnections; ///< El número máximo de conexiones permitidas.
+	 static Camera *cam; ///< Apuntador a objeto de la lcase Camera.
+	 static Mat *Hrv; ///< Apuntador a matriz de 3x3 que describe la transformación proyectiva que se aplica a las imágenes capturadas. 
+	 static Mat *Hmv; ///< Apuntador a matriz de 3x3 que describe la transformación proyectiva que se aplica a la Máscara para ajustarla al tamáño de las imágenes capturadas. 
+	 static Mat *Maze; ///< Apuntador a matriz que contiene la imagen de la máscara que se aplica a cada imagen capturada.
 
-	 int port, camId;
-	 char *inetAddress;
+	 char *inetAddress; ///< Apuntador a arreglo de caracteres que contiene la dirección IP que se va a asociar al socket.
+	 int port; ///< Puerto que se va a asociar al socket donde el servidor recibirá solicitudes.
+	 int camId; ///< Numero que identifica la cámara que se va a utilizar.
 
-	 ConnServer *serverConnection;
-	 static void *connectionHandler (void *cd);
+	 ConnServer *serverConnection; ///< Apuntador al objeto del tipo ConnServer que administra el servicios.
+	 static void *connectionHandler (void *cd); ///< Funcion que atiene a los clientes que se conectan al servicio.
  public:
-	 ImageServer (int cid, int port, const char *inetAddress, Mat *hrv, Mat *hmv, Mat *Mz);
+
+     /*!
+     \fn ImageServer (int cid, int port, const char *inetAddress, Mat *hrv, Mat *hmv, Mat *Mz, int mxConn = MAX_CONNECTIONS)
+     \brief Constructor del objeto.
+     \param int cid
+     \param int port
+     \param const char *inetAddress
+     \param Mat *hrv
+     \param Mat *hmv
+     \param Mat *Mz
+     \param int mxConn
+     */
+	 ImageServer (int cid, int port, const char *inetAddress, Mat *hrv, Mat *hmv, Mat *Mz, int mxConn = MAX_CONNECTIONS);
+
+     /*!
+     \fn ImageServer ();
+     \brief
+     */
 	 ImageServer ();
 
+     /*!
+     \fn void start ();
+     \brief
+     */
 	 void start ();
+
+     /*!
+     \fn void shutdown ();
+     \brief
+     */
 	 void shutdown ();
 };
 

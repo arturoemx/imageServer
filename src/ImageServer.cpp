@@ -14,6 +14,7 @@ Mat *ImageServer::Maze;
 
 ImageServer::ImageServer ()
 {
+     maxConnections = MAX_CONNECTIONS;
      camId = 0;
      Hrv = new Mat;
      Hmv = new Mat;
@@ -21,10 +22,10 @@ ImageServer::ImageServer ()
      *Hrv = Mat::eye(3,3,CV_32FC1);
      *Hmv = Mat::eye(3,3,CV_32FC1);
      *Maze = Mat::ones(480,640,CV_32FC1);
-	 ImageServer (0, 8888, "127.0.0.1", Hrv, Hmv, Maze);
+	 ImageServer (0, 8888, "127.0.0.1", Hrv, Hmv, Maze, maxConnections);
 }
 
-ImageServer::ImageServer (int cid, int port, const char *inetAddress, Mat *hrv, Mat *hmv, Mat *Mz)
+ImageServer::ImageServer (int cid, int port, const char *inetAddress, Mat *hrv, Mat *hmv, Mat *Mz, int mxConn)
 {
     camId = cid;
     Mat tmp;
@@ -36,6 +37,7 @@ ImageServer::ImageServer (int cid, int port, const char *inetAddress, Mat *hrv, 
 	 strcpy (this->inetAddress, inetAddress);
 
 	 // init camera and assign thread to it
+	 
 	 cam = new Camera (camId);
      Hrv = new Mat;
      Hmv = new Mat;
@@ -47,10 +49,10 @@ ImageServer::ImageServer (int cid, int port, const char *inetAddress, Mat *hrv, 
 	 //Se utilizó una variable temporal para evitar Bug en openCv en la version 2.3.1 que estaba instalada en el servidor que estamos ocupando.
 	 tmp=Mat::zeros(Maze->size(), Maze->type());
      warpPerspective(*Maze, tmp, *Hmv, Size(Maze->cols, Maze->rows), INTER_LINEAR, BORDER_CONSTANT);
-    tmp.copyTo(*Maze);
+     tmp.copyTo(*Maze);
 	 // init connection to server
 	 serverConnection =
-			new ConnServer (port, inetAddress, (ImageServer::connectionHandler), MAX_CONNECTIONS);
+			new ConnServer (port, inetAddress, (ImageServer::connectionHandler), maxConnections);
 }
 
 void ImageServer::start ()
