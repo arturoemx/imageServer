@@ -1,0 +1,4 @@
+*Se eliminaron Mutexes de la clase cámara
+(no son necesarios pues no se espera que mas de un proceso accdea a la cámara).
+
+Se convirtió la clase CopnnServer en una clase normal, no una template class (no tenia caso).

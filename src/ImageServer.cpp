@@ -44,13 +44,13 @@ ImageServer::ImageServer (int cid, int port, const char *inetAddress, Mat *hrv, 
 	 hmv->copyTo(*Hmv);
 	 Mz->copyTo(*Maze);
 
-	 //Se utilizó una varianble temporal para evitar Bug en openCv en la version 2.3.1 que estaba instalada en el servidor que estamos ocupando.
+	 //Se utilizó una variable temporal para evitar Bug en openCv en la version 2.3.1 que estaba instalada en el servidor que estamos ocupando.
 	 tmp=Mat::zeros(Maze->size(), Maze->type());
      warpPerspective(*Maze, tmp, *Hmv, Size(Maze->cols, Maze->rows), INTER_LINEAR, BORDER_CONSTANT);
     tmp.copyTo(*Maze);
 	 // init connection to server
 	 serverConnection =
-			new ConnServer < connectionData > (port, inetAddress, (ImageServer::connectionHandler), MAX_CONNECTIONS);
+			new ConnServer (port, inetAddress, (ImageServer::connectionHandler), MAX_CONNECTIONS);
 }
 
 void ImageServer::start ()
@@ -82,9 +82,7 @@ void paintMaze(Mat &I, Mat &Mask)
 
 void *ImageServer::connectionHandler (void *cd)
 {
-	 //Get the socket descriptor
-	 connectionData *conD = (connectionData *) cd;
-	 int sock = conD->client_socket;
+	 int sock = *((int *)cd);
 	 unsigned char msg[MSG_LENGTH];
 	 //Recibe mensaje del cliente
 	 do
@@ -156,7 +154,7 @@ void *ImageServer::connectionHandler (void *cd)
 			}
 	 }
 	 while (true);
-	 cout << "Cliente con id: " << conD->client_socket << " Teminó"<< endl;
+	 cout << "Cliente con id: " << sock<< " Teminó"<< endl;
      cout.flush();
 
 	 return (void *) 0;

@@ -1,0 +1,5 @@
+Cuando una conexion termina, no se libera el espacio en el servidor (ConnServer.h). Para esto, debería ser muy conveniente que ImageServer sea una clase que herede de ConnServer. (17/I/2017)
+
+ImageServer debe ser una clase que herede de ConnServer.
+
+
