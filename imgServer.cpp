@@ -1,21 +1,54 @@
 /*!
-\file Client.h
-\brief 
+\file imgServer.h
+\brief Este es el programa principal del servidor de imágenes. El programa captura imágenes de una cámara y las ofrece a multiples cliente a traves de una conexion vía sockets. Las imagenes se les aplica una transformación proyectiva de tal manera que una región de un plano en la escena se ajuste perfectamente a la imagen capturada. Tambien a cada imagen se le puede aplicar una mascara, esta máscara se puede utilizar para añadir información predeterminada a cada imagen capturada.
+
+Este programa es el componente principal del sistema, mismo que fue diseñado como una herramienta para la teleoperación de robots móviles, y su uso principal es en labores de investigación y docencia.
+
+
+Uso:
+
+ imgServer camId ipAddress port Maze
+
+El programa puede recibir hasta 4 parámetros, mismos que se detallan a continuacion:
+
+  camId     :  Identificador numérico de la cámara que se va a utilizar para
+                 la captura.
+  ipAddress :  Direccion IP (IPV4) en donde el servidor va a ofrecer las
+                 imagenes.
+  port      :  Puerto del servidor.
+  Maze      :  Archivo de imagen que contiene la codificación del archivo de
+                 máscara que se va a utilizar. El archivo debe ser una imagen
+                 a color. La codificación del archivo es como sigue: las
+                 regiones blancas son regiones no enmascaradas, y las regiones
+                 no-blancas sustituyen a las imagenes capturadas. 
 */
 
 #include <ImageServer.h>
 #include <cstring>
 
+/*!
+\struct cornerData
+\brief Esta estructura contiene información de esquinas que se utiliza durante la captura de posiciones en la pantalla usando el raton.
+*/
 struct cornerData
 {
-    Point2f crn[4];
-    int cont;
+    Point2f crn[4]; ///< Arreglo de 4 objetos tipo Point2f en donde se almacenaran las esquinas.
+    int cont; ///< Contador.
+
+    /*!
+    \fn cornerData()
+    \brief Constructor del objeto.
+    */
     cornerData()
     {
         cont = 0;
     }
 };
 
+/*!
+\fn void onMouseEvent(int event, int x, int y, int flags, void *data)
+\brief Funcion que atiende evantos generados por el ratón. Esta funcion es invocada automáticamnete por el sistema cuando se registra usando la función setMouseCallback de la biblioteca highgui.
+*/
 void onMouseEvent(int event, int x, int y, int flags, void *data)
 {
     cornerData *cD;
@@ -29,6 +62,14 @@ void onMouseEvent(int event, int x, int y, int flags, void *data)
     }
 }
 
+/*!
+\fn void dibujaPuntos (Mat &frame, Point2f *p, int n,  Scalar color=Scalar(0,0,255))
+\brief Esta función dibuja una lista de puntos en una imagen.
+\param Mat &frame Imagen en donde se van a dibujar los puntos.
+\param Point2f *p Apuntador al arreglo de objetos de tipo Point2f que contiene las coordenadas de los puntos a dibujar.
+\param int n Cantidad de puntos a dibujar.
+\param Scalar color Objeto de tipo scalar que codifica en fomrto BGR el color de los puntos a dibujar.
+*/
 void dibujaPuntos (Mat &frame, Point2f *p, int n,  Scalar color=Scalar(0,0,255))
 {
 
@@ -36,36 +77,18 @@ void dibujaPuntos (Mat &frame, Point2f *p, int n,  Scalar color=Scalar(0,0,255))
         circle(frame, Point((int)p[i].x, (int)p[i].y), 5, color);
 }
 
-void capturaPuntos (const char *Name, VideoCapture &cap , Point2f *P)
-{
-    cornerData cD;
-    Mat Frame;
-
-    setMouseCallback(Name, onMouseEvent, (void*) &cD);
-    cD.cont = 0;
-    while (cD.cont < 4)
-    {
-        cap >> Frame;
-        if (Frame.empty())
-            cerr << "capturaPuntos: Error capturando el Frame" << endl;
-        imshow(Name, Frame);
-        dibujaPuntos (Frame, cD.crn, cD.cont);   
-        if (waitKey(30) >= 0)
-            break;
-    }
-    cvSetMouseCallback(Name, 0, 0);
-    if (cD.cont < 4)
-      cerr << "La captura de puntos se aborto." << endl;
-    for (int i=0;i<4;++i)
-        P[i] = cD.crn[i];
-    cap.release();
-}
-
+/*!
+\fn void findMapping(int source, Point2f *vP, Mat &H)
+\brief Esta funcion se utiliza para obtener la información necesaria para rectificar las imagenes que el servidor va a capturar. La funcion captura imágenes de la fuente de video "source", permite que usuario capture 4 coordenadas en la imagen utilizando el mouse, y a partir de esas cuatro coordenadas, calcula la transformación proyectiva que describe la transformación de esas 4 coordenadas al plano de la imagen. Se presume que el usuario va a elegir cuatro esquinas que yacen en un plano en la escena, y que la tranformación producida, permitira dedicar la atención de esa región únicamente.
+\param int source El identificador de la cámara que se va a utilizar.
+\paramn Point2f *vp
+*/
 void findMapping(int source, Point2f *vP, Mat &H)
 {
     Point2f rP[4];
     Mat Frame;
     VideoCapture cap(source);
+    cornerData cD;
     int i = 0;
 
     if (!cap.isOpened())
@@ -75,14 +98,30 @@ void findMapping(int source, Point2f *vP, Mat &H)
     }
 
     namedWindow("Introduce esquinas");
-    capturaPuntos("Introduce esquinas", cap, rP);
+    setMouseCallback("Introduce esquinas", onMouseEvent, (void*) &cD);
+    cD.cont = 0;
+    while (cD.cont < 4)
+    {
+        cap >> Frame;
+        if (Frame.empty())
+            cerr << "capturaPuntos: Error capturando el Frame" << endl;
+        imshow("Introduce esquinas", Frame);
+        dibujaPuntos (Frame, cD.crn, cD.cont);   
+        if (waitKey(30) >= 0)
+            break;
+    }
+    cvSetMouseCallback("Introduce esquinas", 0, 0);
+    if (cD.cont < 4)
+      cerr << "La captura de puntos se aborto." << endl;
+    for (int i=0;i<4;++i)
+        rP[i] = cD.crn[i];
+    cap.release();
+
     cout << "Se capturaron los siguientes puntos:" << endl;
     for (i=0;i<4;++i)
         cout << "(" << rP[i].x << ", " << rP[i].y << ")" << endl;
     H = getPerspectiveTransform(rP, vP);
     destroyWindow("Introduce esquinas");
-    
-    
 }
 
 int main (int argc, char **argv)

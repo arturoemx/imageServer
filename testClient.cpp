@@ -1,6 +1,6 @@
 /*!
-\file Client.h
-\brief 
+\file testClient.h
+\brief Este es un programa de ejemplo en donde se muestra como un programa puede recibir imágenes del servidor y mostrarlas en una ventana.
 */
 
 #include <Client.h>

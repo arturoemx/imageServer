@@ -1,3 +1,8 @@
+/*!
+\file ConnServer.cpp
+\brief Este archivo contiene el código que de los métodos de la clase ConnServer.cpp
+*/
+
 #include <ConnServer.h>
 
 

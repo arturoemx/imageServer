@@ -1,6 +1,6 @@
 /*!
-\file Client.h
-\brief 
+\file SockIO.cpp
+\brief Este archivo contiene el código que de los funciones Read y Write definidias en SockIO.h.
 */
 
 #include <SockIO.h>

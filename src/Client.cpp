@@ -1,6 +1,6 @@
 /*!
-\file Client.h
-\brief 
+\file Client.cpp
+\brief Este archivo contiene el código que de los métodos de la clase Client.
 */
 
 #include <Client.h>

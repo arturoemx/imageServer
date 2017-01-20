@@ -1,6 +1,6 @@
 /*!
-\file Client.h
-\brief 
+\file imageServer.cpp
+\brief Este archivo contiene el código que de los métodos de la clase imageServer.cpp
 */
 
 #include <ImageServer.h>
