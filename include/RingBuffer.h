@@ -1,6 +1,6 @@
 /*!
-\file Client.h
-\brief 
+\file RingBuffer.h
+\brief  Archivo de encabezado en donde se define ela clase RingBuffer.
 */
 
 /*
@@ -31,15 +31,26 @@
 #include <pthread.h>
 #include <stdint.h>
 
+/*!
+\class template < typename X > class RingBuffer
+\brief Esta clase define una cola finita a partir de un arreglo. Depende del objeto RingCounter para manejar indices circulares. La clase se construye como un plantilla, y se espera que los objetos quw consitituyan la cola tengan sobrecargado el operador de copia. La clase provee métodos para añadir un objeto al final de la cola, sacar del frente de la cola. La clase cuenta con pthread_mutexes para sincronizar acceso cuando se utiliza en un ambiente multihebras.
+*/
 template < typename X > class RingBuffer
 {
  protected:
-	 uint32_t RBF_Size;						//The size of the RingBuffer;
-	 X *R;
-	 RingCounter H, T;						//Incrementa T cuando se inserta un elemento a la cola
+	 uint32_t RBF_Size;	///< El tamaño del Buffer
+	 X *R;              ///< Apuntador al arreglo que consitituye el area de almacenamiento del buffer.
+	 RingCounter H; ///< Indice circular que indica la cabeza de la cola. Se incrementa cuando se saca un objeto de la cola.
+	 RingCounter T; ///< Indice circular que indica el final de la cola. Se incrementa cuando se inserta un objeto de la cola.
 	 //Incrementa H cuando se saca un elemento de la cola
-	 pthread_mutex_t RB_mutex;
+	 pthread_mutex_t RB_mutex; ///< pthread_mutex que permite controlar el acceso cundo múltiples hebras operan sobre el objeto.
  public:
+
+    /*!
+    \fn RingBuffer (uint32_t N)
+    \brief Constructor de la clase
+    \param int N Tamaño del arreglo que se utiliza para almacenar la cola; la cola así creada puede almacenar hasta N-1 elementos.
+    */
 	 RingBuffer (uint32_t N)
 	 {
 			pthread_mutex_init (&RB_mutex, NULL);	//initialises the mutex referenced by mutex with attributes specified by attr.
@@ -56,6 +67,11 @@ template < typename X > class RingBuffer
 			H = T = 0;
 			pthread_mutex_unlock (&RB_mutex);
 	 }
+
+    /*!
+    \fn ~RingBuffer ()
+    \brief Destructor del objeto.
+    */
 	 ~RingBuffer ()
 	 {
 			pthread_mutex_lock (&RB_mutex);
@@ -63,6 +79,13 @@ template < typename X > class RingBuffer
 				 delete[]R;
 			pthread_mutex_unlock (&RB_mutex);
 	 }
+
+    /*!
+    \fn virtual int Queue (const X & e)
+    \brief Método virtual que inserta un elemento en la cola.
+    \param cont X & e Elemento a ser insertado en la cola.
+    \return El método regresa 0 en caso de éxito, y 1 en caso de que la cola se encuentre llena.
+    */
 	 virtual int Queue (const X & e)
 	 {
 			pthread_mutex_lock (&RB_mutex);
@@ -77,6 +100,13 @@ template < typename X > class RingBuffer
 			return -1;
 	 }
 
+
+    /*!
+    \fn virtual int Dequeue (const X & e)
+    \brief Método virtual que saca un elemento de la cabeza la cola.
+    \param cont X & e Objeto en donde se regresa una copia del objeto que se encuentra en la cabeza de la cola.
+    \return El método regresa 0 en caso de éxito, y 1 en caso de que la cola se encuentre vacia.
+    */
 	 virtual int Dequeue (X & e)
 	 {
 			pthread_mutex_lock (&RB_mutex);
@@ -90,16 +120,34 @@ template < typename X > class RingBuffer
 			pthread_mutex_unlock (&RB_mutex);
 			return -1;
 	 }
+
+    /*!
+    \fn virtual size_t getT ()
+    \brief Método que regresa el índice en el buffer donde se va a insertar un objeto cuando se invoque el método Queue. Esto es, el final de la cola.
+    \return El índice que referencia al final de la cola.
+    */
 	 virtual size_t getT ()
 	 {
 			return T.getC ();
 	 }
 
+
+    /*!
+    \fn virtual int getH ()
+    \brief Método que regresa el índice en el buffer donde se extraerá un objeto de la cola cuando se invoque método Dequeu. Esto es, la cabeza de la cola. 
+    \return El índice que referencía la cabeza de la cola.
+    */
 	 virtual int getH ()
 	 {
 			return H.getC ();
 	 }
 
+
+    /*!
+    \fn virtual bool QueueIsEmpty ()
+    \brief Metodo que se utiliza para determinar si la cola esta vacia.
+    \return El método regresa verdadero en caso de que la cosa este vacia, y falso en caso contrario.
+    */
 	 virtual bool QueueIsEmpty ()
 	 {
 			if (T == H)
@@ -108,6 +156,12 @@ template < typename X > class RingBuffer
 				 return false;
 	 }
 
+
+    /*!
+    \fn virtual void Init_Elements (const X & e)
+    \brief Inicializa el buffer con el objeto que se pasa por referencia.
+    \param const X & e Objeto que se va a copiar a todos los elementos del buffer.
+    */
 	 virtual void Init_Elements (const X & e)
 	 {
 			uint32_t i;

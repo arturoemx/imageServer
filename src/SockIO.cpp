@@ -29,7 +29,7 @@ int Read (int sock, u_long tam, unsigned char *buffer)
 				 // close(sock);
 				 /* no necesariamente hay que cerrar */
 				 printf ("Error, Didn`t read all the bytes");
-				 return 0;							//  exit(5);
+				 return -1;							//  exit(5);
 			}
 			else
 			{
@@ -37,7 +37,7 @@ int Read (int sock, u_long tam, unsigned char *buffer)
 			}
 	 }
 	 while (leeidos < tam);
-	 return 1;
+	 return 0;
 }
 
 int Write (int sock, u_long tam, unsigned char *buffer)
@@ -59,7 +59,7 @@ int Write (int sock, u_long tam, unsigned char *buffer)
 				 // close(sock);
 				 /* no necesariamente hay que cerrar */
 				 printf ("Error, Didn`t write all the bytes");
-				 return 0;							//  exit(5);
+				 return -1;							//  exit(5);
 			}
 			else
 			{
@@ -67,5 +67,5 @@ int Write (int sock, u_long tam, unsigned char *buffer)
 			}
 	 }
 	 while (escritos < tam);
-	 return 1;
+	 return 0;
 }

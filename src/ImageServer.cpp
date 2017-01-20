@@ -60,17 +60,13 @@ void ImageServer::start ()
 	 serverConnection->acceptConnections ();
 }
 
-void ImageServer::shutdown ()
-{
-
-}
-
 void paintMaze(Mat &I, Mat &Mask)
 {
     int i, j;
     Vec3b *ptrI, *ptrM; 
     Vec3b val(255,255,255);
 
+    assert (I.rows == Mask.rows && I.cols == Mask.cols);
     for (i=0;i<I.rows;++i)
     {
         ptrI = I.ptr<Vec3b>(i);
@@ -91,7 +87,7 @@ void *ImageServer::connectionHandler (void *cd)
 	 {
 			// Leer comando
 			memset (msg, 0, MSG_LENGTH);
-			if (!Read (sock, MSG_LENGTH, msg))
+			if (Read (sock, MSG_LENGTH, msg) < 0)
 				 break;
 
 			// Check what to send
@@ -115,14 +111,14 @@ void *ImageServer::connectionHandler (void *cd)
 				 imgInfo.size = mImg.total () * mImg.elemSize ();
 
 				 // send info
-				 if (!Write
-						 (sock, sizeof (struct ImageInfo), (unsigned char *) &imgInfo))
+				 if (Write
+						 (sock, sizeof (struct ImageInfo), (unsigned char *) &imgInfo) < 0)
 						break;
 
 				 // send data
 				 uchar *data;
 				 data = mImg.data;
-				 if (!Write (sock, imgInfo.size, data))
+				 if (Write (sock, imgInfo.size, data) < 0 )
 				    break;
 			}
 			else if (strncmp ((char *) msg, "POLL", 4) == 0)
@@ -130,7 +126,7 @@ void *ImageServer::connectionHandler (void *cd)
 				 // Send ACK
 				 memset (msg, 0, MSG_LENGTH);
 				 strncpy ((char *) msg, "ACK", 3);
-				 if (!Write (sock, MSG_LENGTH, msg))
+				 if (Write (sock, MSG_LENGTH, msg) < 0)
 						break;
 			}
 			else if (strncmp ((char *) msg, "QUIT", 4) == 0)
@@ -140,7 +136,7 @@ void *ImageServer::connectionHandler (void *cd)
                  cout.flush();
 				 memset (msg, 0, MSG_LENGTH);
 				 strncpy ((char *) msg, "BYE", 3);
-				 if (!Write (sock, MSG_LENGTH, msg))
+				 if (Write (sock, MSG_LENGTH, msg) < 0)
 						break;
                  cout << "Enviamos BYE" << endl;
                  cout.flush();
@@ -151,7 +147,7 @@ void *ImageServer::connectionHandler (void *cd)
 				 // Send ERR
 				 memset (msg, 0, MSG_LENGTH);
 				 strncpy ((char *) msg, "ERR", 3);
-				 if (!Write (sock, MSG_LENGTH, msg))
+				 if (Write (sock, MSG_LENGTH, msg) < 0)
 						break;
 			}
 	 }

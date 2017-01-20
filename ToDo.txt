@@ -2,4 +2,6 @@ Cuando una conexion termina, no se libera el espacio en el servidor (ConnServer.
 
 ImageServer debe ser una clase que herede de ConnServer.
 
+Hace falta tener una funcion shutdown en ImageServer.
+
 

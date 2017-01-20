@@ -47,33 +47,36 @@ class ImageServer
      /*!
      \fn ImageServer (int cid, int port, const char *inetAddress, Mat *hrv, Mat *hmv, Mat *Mz, int mxConn = MAX_CONNECTIONS)
      \brief Constructor del objeto.
-     \param int cid
-     \param int port
-     \param const char *inetAddress
-     \param Mat *hrv
-     \param Mat *hmv
-     \param Mat *Mz
-     \param int mxConn
+     \param int cid Identificador de la cámara que se va a usar.
+     \param int port Puerto que se va a asociar al servidor.
+     \param const char *inetAddress Apuntador a la cadena de caracteres que contiene la dirección IP a la que se va a asociar el servidor.
+     \param Mat *hrv Apuntador a Matriz que describe transformación proyectiva entre la región rectangular en el piso a observar y la imagen.
+     \param Mat *hmv Apuntador a la matriz que descrive la transformación proyectiva (usualmente una similitud), entre la imagen capturada, y la máscara.
+     \param Mat *Mz Apuntador a matriz que contiene la imagen que contiene el laberinto/Mascara.
+     \param int mxConn Número máximo de conexiones permitidas.
      */
 	 ImageServer (int cid, int port, const char *inetAddress, Mat *hrv, Mat *hmv, Mat *Mz, int mxConn = MAX_CONNECTIONS);
 
      /*!
      \fn ImageServer ();
-     \brief
+     \brief Constructor por defecto del objeto.
      */
 	 ImageServer ();
 
      /*!
      \fn void start ();
-     \brief
+     \brief Pone al servidor en un estado en donde puede aceptar conexiones de clientes.
      */
 	 void start ();
-
-     /*!
-     \fn void shutdown ();
-     \brief
-     */
-	 void shutdown ();
 };
+
+/*!
+\fn void paintMaze(Mat &I, Mat &Mask)
+\brief Aplica una mascara a color a una imagen. En aquellos pixeles de la máscara son diferentes a RGB[255,255,255] (color blanco), el pixel correspondiente de la imagen se sustituye por el valor de la máscara. De caso contrario, el valor original del pixel, se preserva,
+\param Mat &I Matriz que contiene la imagen a Enmascarar.
+\param Mat &Mask Mascara que se debe a plicar a la imagen I.
+*/
+void paintMaze(Mat &I, Mat &Mask);
+
 
 #endif

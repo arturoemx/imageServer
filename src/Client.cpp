@@ -74,7 +74,7 @@ int Client::getFrame (Mat & out)
 	 struct ImageInfo imgInfo;
 
 	 strncpy ((char *) msg, "IMG", MSG_LENGTH);
-	 if (!Write (cfd, MSG_LENGTH, msg))
+	 if (Write (cfd, MSG_LENGTH, msg) < 0)
 			return SEND_FAILURE;
 
 	 Read (cfd, sizeof (struct ImageInfo), (unsigned char *) &imgInfo);
@@ -86,7 +86,7 @@ int Client::getFrame (Mat & out)
 			return SEND_FAILURE;
 	 }
 	 // Read image data
-	 if (!Read (cfd, imgInfo.size, msgData))
+	 if (Read (cfd, imgInfo.size, msgData) < 0)
 			return SEND_FAILURE;
 
 	 Mat img (imgInfo.rows, imgInfo.cols, imgInfo.type, (void *) msgData);
