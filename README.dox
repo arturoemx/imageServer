@@ -1,0 +1,9 @@
+/*!
+\mainpage Paquete Computacional "imageServer"
+
+A través de éste paquete se implementa un sistema capaz de capturar, adecuar, enmascarar y transmitir imágenes en tiempo-real de manera simultanea a multiples usuarios.
+
+El paquete se desarrollo con miras de que funciones como una aplicación util para labores de investigación y docencia, y esta enfocádo principalmente a su uso en actividades de teleoperación de robots moviles que realizan tareas en areas delimitadas.
+
+El sistema captura las imágenes, corrige posibles distorsiones lineales provocadas por la orientación de la cámara con respecto al area de exploración y añade información virtual a las imagenes, para simular problemas a resolver. 
+*/
