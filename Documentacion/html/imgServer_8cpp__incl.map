@@ -1,0 +1,10 @@
+<map id="imgServer.cpp" name="imgServer.cpp">
+<area shape="rect" id="node2" href="$ImageServer_8h.html" title="Este archivo contiene las definición de la clase ImageServer. Objetos instanciados de esta clase capt..." alt="" coords="775,80,882,107"/>
+<area shape="rect" id="node3" href="$ConnServer_8h.html" title="ConnServer.h" alt="" coords="476,155,579,181"/>
+<area shape="rect" id="node14" href="$imageBuffer_8h.html" title="imageBuffer.h" alt="" coords="1163,229,1265,256"/>
+<area shape="rect" id="node22" href="$structures_8h.html" title="En este archivo se define la estructura ImageInfo, que se utiliza en el servidor de imagenes..." alt="" coords="970,155,1061,181"/>
+<area shape="rect" id="node23" href="$Camera_8h.html" title="Archivo de encabezado donde se define la clase Camera. Esta Clase tiene como función capturar imágene..." alt="" coords="867,155,945,181"/>
+<area shape="rect" id="node15" href="$RingBuffer_8h.html" title="Archivo de encabezado en donde se define ela clase RingBuffer. " alt="" coords="1005,304,1100,331"/>
+<area shape="rect" id="node19" href="$infoFrame_8h.html" title="En este archivo se encuentra la defincion de la estructura infoFrame, que se utiliza para almacenar u..." alt="" coords="1175,304,1266,331"/>
+<area shape="rect" id="node16" href="$RingCounter_8h.html" title="Este archivo contiene la definición de un contador módular. " alt="" coords="1025,379,1131,405"/>
+</map>

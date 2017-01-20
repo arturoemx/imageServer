@@ -20,7 +20,7 @@
 using namespace std;
 
 /*!
- \class class ConnServer
+ \class ConnServer
  \brief Esta clase crea un "stream socket" y lo asocia a una direccion IP y un puerto, y provee servicios básicos para atender de manera concurrente a multiples clientes.
 */
 class ConnServer

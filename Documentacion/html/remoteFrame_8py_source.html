@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.8"/>
+<title>imageServer: Fichero Fuente remoteFrame.py</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">imageServer
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+   <div id="projectbrief">Este paquete implementa un servidor de imágenes. Docho paquete cuenta con un programa que captura imágenes de una cámara y las ofrece a multiples cliente a traves de una conexion vía sockets. Las imagenes se les aplica una transformación proyectiva de tal manera que una región de un plano en la escena se ajuste perfectamente a la imagen capturada. Tambien a cada imagen se le puede aplicar una mascara, esta máscara se puede utilizar para añadir información predeterminada a cada imagen capturada.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.8.8 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Buscar');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Página&#160;principal</span></a></li>
+      <li><a href="pages.html"><span>Páginas&#160;relacionadas</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li><a href="annotated.html"><span>Clases</span></a></li>
+      <li class="current"><a href="files.html"><span>Archivos</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Lista&#160;de&#160;archivos</span></a></li>
+      <li><a href="globals.html"><span>Miembros&#160;de&#160;los&#160;ficheros</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Todo</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Clases</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Archivos</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Funciones</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>&apos;defines&apos;</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Páginas</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">remoteFrame.py</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="remoteFrame_8py.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="line" href="namespaceremoteFrame.html">    1</a></span>&#160;<span class="comment">#! /usr/bin/env python</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">#encoding: utf-8</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">import</span> socket</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">import</span> cv2</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classremoteFrame_1_1remoteFrame.html">    8</a></span>&#160;<span class="keyword">class </span><a class="code" href="classremoteFrame_1_1remoteFrame.html">remoteFrame</a>:</div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="classremoteFrame_1_1remoteFrame.html#ac775ee34451fdfa742b318538164070e">    9</a></span>&#160;    <span class="keyword">def </span><a class="code" href="classremoteFrame_1_1remoteFrame.html#ac775ee34451fdfa742b318538164070e">__init__</a>(self, address=&#39;127.0.0.1&#39;, port=8888, Mask=None):</div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classremoteFrame_1_1remoteFrame.html#ade5a18d52133ef21f211020ceb464c07">   10</a></span>&#160;        self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#ade5a18d52133ef21f211020ceb464c07">address</a> = address</div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="classremoteFrame_1_1remoteFrame.html#af8fb0f45ee0195c7422a49e6a8d72369">   11</a></span>&#160;        self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#af8fb0f45ee0195c7422a49e6a8d72369">port</a> = port</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classremoteFrame_1_1remoteFrame.html#a60d28e417cda8ed5b817c14e537c5629">   12</a></span>&#160;        self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#a60d28e417cda8ed5b817c14e537c5629">cl</a> = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        self.cl.connect((self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#ade5a18d52133ef21f211020ceb464c07">address</a>, self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#af8fb0f45ee0195c7422a49e6a8d72369">port</a>))</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classremoteFrame_1_1remoteFrame.html#a643996cc8d402d1005166f956adfe0da">   14</a></span>&#160;        self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#a643996cc8d402d1005166f956adfe0da">msgLength</a> = 10</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keywordflow">if</span> Mask != <span class="keywordtype">None</span>:</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;            b, g, r = cv2.split(Mask)</div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classremoteFrame_1_1remoteFrame.html#aec4a6f499c74a3d34d4dfe9930c9e115">   17</a></span>&#160;            self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#aec4a6f499c74a3d34d4dfe9930c9e115">where</a> = b &amp; 255</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#aec4a6f499c74a3d34d4dfe9930c9e115">where</a> &amp;= g &amp; 255</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#aec4a6f499c74a3d34d4dfe9930c9e115">where</a> &amp;= r &amp; 255</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#aec4a6f499c74a3d34d4dfe9930c9e115">where</a> = 255-self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#aec4a6f499c74a3d34d4dfe9930c9e115">where</a></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#aec4a6f499c74a3d34d4dfe9930c9e115">where</a> = 255 - self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#aec4a6f499c74a3d34d4dfe9930c9e115">where</a></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#aec4a6f499c74a3d34d4dfe9930c9e115">where</a>=cv2.merge((self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#aec4a6f499c74a3d34d4dfe9930c9e115">where</a>,self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#aec4a6f499c74a3d34d4dfe9930c9e115">where</a>,self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#aec4a6f499c74a3d34d4dfe9930c9e115">where</a>))</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classremoteFrame_1_1remoteFrame.html#a291536e8bf5e2f42dec8ed3f82b13487">   23</a></span>&#160;            self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#a291536e8bf5e2f42dec8ed3f82b13487">Mask</a> = Mask &amp; ~self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#aec4a6f499c74a3d34d4dfe9930c9e115">where</a></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#a291536e8bf5e2f42dec8ed3f82b13487">Mask</a> = <span class="keywordtype">None</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classremoteFrame_1_1remoteFrame.html#afa251912978c7d5ccf7e5a027a4d12ee">   26</a></span>&#160;    <span class="keyword">def </span><a class="code" href="classremoteFrame_1_1remoteFrame.html#afa251912978c7d5ccf7e5a027a4d12ee">__del__</a> (self):</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        msg=<span class="stringliteral">&quot;QUIT      &quot;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        self.cl.sendall(msg)</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        msg = self.cl.recv(10)</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keywordflow">if</span> msg[:3] != <span class="stringliteral">&quot;BYE&quot;</span>:</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <span class="keywordflow">print</span> <span class="stringliteral">&#39;No se recibió &quot;BYE&quot; :-(, se recibió |&#39;</span>+msg+<span class="stringliteral">&#39;| &#39;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            <span class="keywordflow">print</span> <span class="stringliteral">&#39;remoteFrame: Cerrando conexión&#39;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classremoteFrame_1_1remoteFrame.html#af9458ce42581fff9b03a7e20c1e333d0">   34</a></span>&#160;    <span class="keyword">def </span><a class="code" href="classremoteFrame_1_1remoteFrame.html#af9458ce42581fff9b03a7e20c1e333d0">getFrame</a>(self):</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        msg=<span class="stringliteral">&quot;IMG       &quot;</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        self.cl.sendall(msg)</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        msg = self.cl.recv(16)</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        msgb = map(ord, msg)</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        rows =(msgb[1]&lt;&lt;8)+msgb[0]+(((msgb[3]&lt;&lt;8)+msgb[2])&lt;&lt;16)</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        cols =(msgb[5]&lt;&lt;8)+msgb[4]+(((msgb[7]&lt;&lt;8)+msgb[6])&lt;&lt;16)</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        itype =(msgb[9]&lt;&lt;8)+msgb[8]+(((msgb[11]&lt;&lt;8)+msgb[10])&lt;&lt;16)</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        size =(msgb[13]&lt;&lt;8)+msgb[12]+(((msgb[15]&lt;&lt;8)+msgb[14])&lt;&lt;16)</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        recibidos = size</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        img=[]</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordflow">while</span> (recibidos != 0):</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            buff = self.cl.recv(recibidos)</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            recibidos -= len(buff)</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            img += buff</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        I=np.array(bytearray(img)).reshape(rows,cols,3)</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordflow">if</span> self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#a291536e8bf5e2f42dec8ed3f82b13487">Mask</a> != <span class="keywordtype">None</span>:</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            I = (I &amp; self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#aec4a6f499c74a3d34d4dfe9930c9e115">where</a>) + self.<a class="code" href="classremoteFrame_1_1remoteFrame.html#a291536e8bf5e2f42dec8ed3f82b13487">Mask</a></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordflow">return</span> I</div>
+<div class="ttc" id="classremoteFrame_1_1remoteFrame_html_a291536e8bf5e2f42dec8ed3f82b13487"><div class="ttname"><a href="classremoteFrame_1_1remoteFrame.html#a291536e8bf5e2f42dec8ed3f82b13487">remoteFrame.remoteFrame.Mask</a></div><div class="ttdeci">Mask</div><div class="ttdef"><b>Definition:</b> <a href="remoteFrame_8py_source.html#l00023">remoteFrame.py:23</a></div></div>
+<div class="ttc" id="classremoteFrame_1_1remoteFrame_html_afa251912978c7d5ccf7e5a027a4d12ee"><div class="ttname"><a href="classremoteFrame_1_1remoteFrame.html#afa251912978c7d5ccf7e5a027a4d12ee">remoteFrame.remoteFrame.__del__</a></div><div class="ttdeci">def __del__</div><div class="ttdef"><b>Definition:</b> <a href="remoteFrame_8py_source.html#l00026">remoteFrame.py:26</a></div></div>
+<div class="ttc" id="classremoteFrame_1_1remoteFrame_html_af9458ce42581fff9b03a7e20c1e333d0"><div class="ttname"><a href="classremoteFrame_1_1remoteFrame.html#af9458ce42581fff9b03a7e20c1e333d0">remoteFrame.remoteFrame.getFrame</a></div><div class="ttdeci">def getFrame</div><div class="ttdef"><b>Definition:</b> <a href="remoteFrame_8py_source.html#l00034">remoteFrame.py:34</a></div></div>
+<div class="ttc" id="classremoteFrame_1_1remoteFrame_html_a60d28e417cda8ed5b817c14e537c5629"><div class="ttname"><a href="classremoteFrame_1_1remoteFrame.html#a60d28e417cda8ed5b817c14e537c5629">remoteFrame.remoteFrame.cl</a></div><div class="ttdeci">cl</div><div class="ttdef"><b>Definition:</b> <a href="remoteFrame_8py_source.html#l00012">remoteFrame.py:12</a></div></div>
+<div class="ttc" id="classremoteFrame_1_1remoteFrame_html_ac775ee34451fdfa742b318538164070e"><div class="ttname"><a href="classremoteFrame_1_1remoteFrame.html#ac775ee34451fdfa742b318538164070e">remoteFrame.remoteFrame.__init__</a></div><div class="ttdeci">def __init__</div><div class="ttdef"><b>Definition:</b> <a href="remoteFrame_8py_source.html#l00009">remoteFrame.py:9</a></div></div>
+<div class="ttc" id="classremoteFrame_1_1remoteFrame_html_af8fb0f45ee0195c7422a49e6a8d72369"><div class="ttname"><a href="classremoteFrame_1_1remoteFrame.html#af8fb0f45ee0195c7422a49e6a8d72369">remoteFrame.remoteFrame.port</a></div><div class="ttdeci">port</div><div class="ttdef"><b>Definition:</b> <a href="remoteFrame_8py_source.html#l00011">remoteFrame.py:11</a></div></div>
+<div class="ttc" id="classremoteFrame_1_1remoteFrame_html_aec4a6f499c74a3d34d4dfe9930c9e115"><div class="ttname"><a href="classremoteFrame_1_1remoteFrame.html#aec4a6f499c74a3d34d4dfe9930c9e115">remoteFrame.remoteFrame.where</a></div><div class="ttdeci">where</div><div class="ttdef"><b>Definition:</b> <a href="remoteFrame_8py_source.html#l00017">remoteFrame.py:17</a></div></div>
+<div class="ttc" id="classremoteFrame_1_1remoteFrame_html"><div class="ttname"><a href="classremoteFrame_1_1remoteFrame.html">remoteFrame.remoteFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="remoteFrame_8py_source.html#l00008">remoteFrame.py:8</a></div></div>
+<div class="ttc" id="classremoteFrame_1_1remoteFrame_html_a643996cc8d402d1005166f956adfe0da"><div class="ttname"><a href="classremoteFrame_1_1remoteFrame.html#a643996cc8d402d1005166f956adfe0da">remoteFrame.remoteFrame.msgLength</a></div><div class="ttdeci">msgLength</div><div class="ttdef"><b>Definition:</b> <a href="remoteFrame_8py_source.html#l00014">remoteFrame.py:14</a></div></div>
+<div class="ttc" id="classremoteFrame_1_1remoteFrame_html_ade5a18d52133ef21f211020ceb464c07"><div class="ttname"><a href="classremoteFrame_1_1remoteFrame.html#ade5a18d52133ef21f211020ceb464c07">remoteFrame.remoteFrame.address</a></div><div class="ttdeci">address</div><div class="ttdef"><b>Definition:</b> <a href="remoteFrame_8py_source.html#l00010">remoteFrame.py:10</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado el Jueves, 19 de Enero de 2017 23:10:13 para imageServer por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.8
+</small></address>
+</body>
+</html>

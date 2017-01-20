@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.8"/>
+<title>imageServer: Fichero Fuente imgServer.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">imageServer
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+   <div id="projectbrief">Este paquete implementa un servidor de imágenes. Docho paquete cuenta con un programa que captura imágenes de una cámara y las ofrece a multiples cliente a traves de una conexion vía sockets. Las imagenes se les aplica una transformación proyectiva de tal manera que una región de un plano en la escena se ajuste perfectamente a la imagen capturada. Tambien a cada imagen se le puede aplicar una mascara, esta máscara se puede utilizar para añadir información predeterminada a cada imagen capturada.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.8.8 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Buscar');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Página&#160;principal</span></a></li>
+      <li><a href="pages.html"><span>Páginas&#160;relacionadas</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li><a href="annotated.html"><span>Clases</span></a></li>
+      <li class="current"><a href="files.html"><span>Archivos</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Lista&#160;de&#160;archivos</span></a></li>
+      <li><a href="globals.html"><span>Miembros&#160;de&#160;los&#160;ficheros</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Todo</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Clases</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Archivos</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Funciones</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>&apos;defines&apos;</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Páginas</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">imgServer.cpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="imgServer_8cpp.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="ImageServer_8h.html">ImageServer.h</a>&gt;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;cstring&gt;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="structcornerData.html">   33</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structcornerData.html">cornerData</a></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;{</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="structcornerData.html#a6d9e631d38806edbc61499fd4794baea">   35</a></span>&#160;    Point2f <a class="code" href="structcornerData.html#a6d9e631d38806edbc61499fd4794baea">crn</a>[4]; </div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="structcornerData.html#a961800bf60ff693820efbf7f4bc72788">   36</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structcornerData.html#a961800bf60ff693820efbf7f4bc72788">cont</a>; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="structcornerData.html#a9f4acaee1021cd3fae7619a520f2da33">   42</a></span>&#160;    <a class="code" href="structcornerData.html#a9f4acaee1021cd3fae7619a520f2da33">cornerData</a>()</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        cont = 0;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    }</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;};</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="imgServer_8cpp.html#a7c3f9a47b1a00ee638ccc26d9f00be4f">   52</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="imgServer_8cpp.html#a7c3f9a47b1a00ee638ccc26d9f00be4f">onMouseEvent</a>(<span class="keywordtype">int</span> event, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> flags, <span class="keywordtype">void</span> *data)</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;{</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="structcornerData.html">cornerData</a> *cD;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    cD = (<a class="code" href="structcornerData.html">cornerData</a> *)data;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordflow">if</span> (event == CV_EVENT_LBUTTONDOWN)</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    {</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        cD-&gt;<a class="code" href="structcornerData.html#a6d9e631d38806edbc61499fd4794baea">crn</a>[cD-&gt;<a class="code" href="structcornerData.html#a961800bf60ff693820efbf7f4bc72788">cont</a>].x = x;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        cD-&gt;<a class="code" href="structcornerData.html#a6d9e631d38806edbc61499fd4794baea">crn</a>[cD-&gt;<a class="code" href="structcornerData.html#a961800bf60ff693820efbf7f4bc72788">cont</a>].y = y;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        cD-&gt;<a class="code" href="structcornerData.html#a961800bf60ff693820efbf7f4bc72788">cont</a>++;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="imgServer_8cpp.html#a88e627368216f68e8ef03490c3802020">   73</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="imgServer_8cpp.html#a88e627368216f68e8ef03490c3802020">dibujaPuntos</a> (Mat &amp;frame, Point2f *p, <span class="keywordtype">int</span> n,  Scalar color=Scalar(0,0,255))</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;{</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0;i&lt;n; ++i)</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        circle(frame, Point((<span class="keywordtype">int</span>)p[i].x, (<span class="keywordtype">int</span>)p[i].y), 5, color);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="imgServer_8cpp.html#ae6717d2afae0afa7db4f2fd217501ef4">   86</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="imgServer_8cpp.html#ae6717d2afae0afa7db4f2fd217501ef4">findMapping</a>(<span class="keywordtype">int</span> source, Point2f *vP, Mat &amp;H)</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;{</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    Point2f rP[4];</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    Mat Frame;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    VideoCapture cap(source);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <a class="code" href="structcornerData.html">cornerData</a> cD;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordtype">int</span> i = 0;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordflow">if</span> (!cap.isOpened())</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    {</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        cerr &lt;&lt; <span class="stringliteral">&quot;no se pudo abrir la cámara&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    }</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    namedWindow(<span class="stringliteral">&quot;Introduce esquinas&quot;</span>);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    setMouseCallback(<span class="stringliteral">&quot;Introduce esquinas&quot;</span>, <a class="code" href="imgServer_8cpp.html#a7c3f9a47b1a00ee638ccc26d9f00be4f">onMouseEvent</a>, (<span class="keywordtype">void</span>*) &amp;cD);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    cD.<a class="code" href="structcornerData.html#a961800bf60ff693820efbf7f4bc72788">cont</a> = 0;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordflow">while</span> (cD.<a class="code" href="structcornerData.html#a961800bf60ff693820efbf7f4bc72788">cont</a> &lt; 4)</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    {</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        cap &gt;&gt; Frame;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keywordflow">if</span> (Frame.empty())</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            cerr &lt;&lt; <span class="stringliteral">&quot;capturaPuntos: Error capturando el Frame&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        imshow(<span class="stringliteral">&quot;Introduce esquinas&quot;</span>, Frame);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <a class="code" href="imgServer_8cpp.html#a88e627368216f68e8ef03490c3802020">dibujaPuntos</a> (Frame, cD.<a class="code" href="structcornerData.html#a6d9e631d38806edbc61499fd4794baea">crn</a>, cD.<a class="code" href="structcornerData.html#a961800bf60ff693820efbf7f4bc72788">cont</a>);   </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keywordflow">if</span> (waitKey(30) &gt;= 0)</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    }</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    cvSetMouseCallback(<span class="stringliteral">&quot;Introduce esquinas&quot;</span>, 0, 0);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="keywordflow">if</span> (cD.<a class="code" href="structcornerData.html#a961800bf60ff693820efbf7f4bc72788">cont</a> &lt; 4)</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      cerr &lt;&lt; <span class="stringliteral">&quot;La captura de puntos se aborto.&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0;i&lt;4;++i)</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        rP[i] = cD.<a class="code" href="structcornerData.html#a6d9e631d38806edbc61499fd4794baea">crn</a>[i];</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    cap.release();</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    cout &lt;&lt; <span class="stringliteral">&quot;Se capturaron los siguientes puntos:&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keywordflow">for</span> (i=0;i&lt;4;++i)</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        cout &lt;&lt; <span class="stringliteral">&quot;(&quot;</span> &lt;&lt; rP[i].x &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; rP[i].y &lt;&lt; <span class="stringliteral">&quot;)&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    H = getPerspectiveTransform(rP, vP);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    destroyWindow(<span class="stringliteral">&quot;Introduce esquinas&quot;</span>);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;}</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
+<div class="line"><a name="l00127"></a><span class="lineno"><a class="line" href="imgServer_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">  127</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="imgServer_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (<span class="keywordtype">int</span> <a class="code" href="namespacetestClient.html#aad55a8f6b73a60a17d26dfc0d628f89a">argc</a>, <span class="keywordtype">char</span> **argv)</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;{</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;         <span class="keywordtype">int</span> <a class="code" href="namespacetestClient.html#a1aadf525515ecfcf662c2aa51a503763">port</a> = 8888, camId = 0;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;         <span class="keywordtype">char</span> ipAddress[64] = <span class="stringliteral">&quot;127.0.0.1&quot;</span>;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;         Point2f vP[4], mP[4];</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;     Mat Hrv, Hmv, Maze;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;         Maze = 255 * Mat::ones(Size(640,480), CV_8UC3);</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;         <span class="keywordflow">if</span> (argc &lt; 2)</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;         {</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            cerr &lt;&lt; <span class="stringliteral">&quot;Uso: imgServer camId ipAddress port Maze&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;            <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;     }</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;     <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        camId = atoi(argv[1]);</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;         <span class="keywordflow">if</span> (argc &gt; 2)</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;         {</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;                        strncpy (ipAddress, argv[2], 63);</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;                        <span class="keywordflow">if</span> (argc &gt; 3)</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;                        {</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;                            port = atoi (argv[3]);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;                            <span class="keywordflow">if</span> (argc &gt; 4)</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;                                Maze = imread(argv[4]);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;                }</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        }</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    </div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;     vP[0].x = 0; vP[0].y = 0;</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;     vP[1].x = 639; vP[1].y = 0;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;     vP[2].x = 639; vP[2].y = 479;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;     vP[3].x = 0; vP[3].y = 479;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;     <a class="code" href="imgServer_8cpp.html#ae6717d2afae0afa7db4f2fd217501ef4">findMapping</a>(camId, vP, Hrv);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;     cout &lt;&lt; <span class="stringliteral">&quot;Calculamos la Hrv como:&quot;</span>&lt;&lt; endl &lt;&lt; Hrv &lt;&lt; endl;</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;     mP[0].x = 0; mP[0].y = 0;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;     mP[1].x = Maze.cols; mP[1].y = 0;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;     mP[2].x = Maze.cols; mP[2].y = Maze.rows;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;     mP[3].x = 0; mP[3].y = Maze.rows;</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;     Hmv = getPerspectiveTransform(mP, vP);</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;     cout &lt;&lt; <span class="stringliteral">&quot;[&quot;</span> &lt;&lt; Maze.cols &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; Maze.rows &lt;&lt; <span class="stringliteral">&quot;]&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;     cout &lt;&lt; <span class="stringliteral">&quot;Calculamos la Hmv como:&quot;</span>&lt;&lt; endl &lt;&lt; Hmv &lt;&lt; endl;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;         <a class="code" href="classImageServer.html">ImageServer</a> *imS = <span class="keyword">new</span> <a class="code" href="classImageServer.html">ImageServer</a> (camId, port, ipAddress, &amp;Hrv, &amp;Hmv, &amp;Maze);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;         imS-&gt;<a class="code" href="classImageServer.html#a60de64d75454385b23995437f1d72669">start</a> ();</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;         sleep (3);                                                                             <span class="comment">// wait for server to init</span></div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;         <span class="keywordflow">do</span></div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;         {</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;         }</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;         <span class="keywordflow">while</span> (<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;         <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;}</div>
+<div class="ttc" id="classImageServer_html"><div class="ttname"><a href="classImageServer.html">ImageServer</a></div><div class="ttdoc">Objetos instanciados de esta clase, capturan imágenes de una cámara y las almacena en un buffer...</div><div class="ttdef"><b>Definition:</b> <a href="ImageServer_8h_source.html#l00031">ImageServer.h:31</a></div></div>
+<div class="ttc" id="imgServer_8cpp_html_ae6717d2afae0afa7db4f2fd217501ef4"><div class="ttname"><a href="imgServer_8cpp.html#ae6717d2afae0afa7db4f2fd217501ef4">findMapping</a></div><div class="ttdeci">void findMapping(int source, Point2f *vP, Mat &amp;H)</div><div class="ttdoc">Esta funcion se utiliza para obtener la información necesaria para rectificar las imagenes que el ser...</div><div class="ttdef"><b>Definition:</b> <a href="imgServer_8cpp_source.html#l00086">imgServer.cpp:86</a></div></div>
+<div class="ttc" id="imgServer_8cpp_html_a7c3f9a47b1a00ee638ccc26d9f00be4f"><div class="ttname"><a href="imgServer_8cpp.html#a7c3f9a47b1a00ee638ccc26d9f00be4f">onMouseEvent</a></div><div class="ttdeci">void onMouseEvent(int event, int x, int y, int flags, void *data)</div><div class="ttdoc">Funcion que atiende evantos generados por el ratón. Esta funcion es invocada automáticamnete por el s...</div><div class="ttdef"><b>Definition:</b> <a href="imgServer_8cpp_source.html#l00052">imgServer.cpp:52</a></div></div>
+<div class="ttc" id="structcornerData_html_a6d9e631d38806edbc61499fd4794baea"><div class="ttname"><a href="structcornerData.html#a6d9e631d38806edbc61499fd4794baea">cornerData::crn</a></div><div class="ttdeci">Point2f crn[4]</div><div class="ttdoc">Arreglo de 4 objetos tipo Point2f en donde se almacenaran las esquinas. </div><div class="ttdef"><b>Definition:</b> <a href="imgServer_8cpp_source.html#l00035">imgServer.cpp:35</a></div></div>
+<div class="ttc" id="namespacetestClient_html_aad55a8f6b73a60a17d26dfc0d628f89a"><div class="ttname"><a href="namespacetestClient.html#aad55a8f6b73a60a17d26dfc0d628f89a">testClient.argc</a></div><div class="ttdeci">tuple argc</div><div class="ttdef"><b>Definition:</b> <a href="testClient_8py_source.html#l00013">testClient.py:13</a></div></div>
+<div class="ttc" id="structcornerData_html_a961800bf60ff693820efbf7f4bc72788"><div class="ttname"><a href="structcornerData.html#a961800bf60ff693820efbf7f4bc72788">cornerData::cont</a></div><div class="ttdeci">int cont</div><div class="ttdoc">Contador. </div><div class="ttdef"><b>Definition:</b> <a href="imgServer_8cpp_source.html#l00036">imgServer.cpp:36</a></div></div>
+<div class="ttc" id="namespacetestClient_html_a1aadf525515ecfcf662c2aa51a503763"><div class="ttname"><a href="namespacetestClient.html#a1aadf525515ecfcf662c2aa51a503763">testClient.port</a></div><div class="ttdeci">int port</div><div class="ttdef"><b>Definition:</b> <a href="testClient_8py_source.html#l00009">testClient.py:9</a></div></div>
+<div class="ttc" id="structcornerData_html"><div class="ttname"><a href="structcornerData.html">cornerData</a></div><div class="ttdoc">Esta estructura contiene información de esquinas que se utiliza durante la captura de posiciones en l...</div><div class="ttdef"><b>Definition:</b> <a href="imgServer_8cpp_source.html#l00033">imgServer.cpp:33</a></div></div>
+<div class="ttc" id="structcornerData_html_a9f4acaee1021cd3fae7619a520f2da33"><div class="ttname"><a href="structcornerData.html#a9f4acaee1021cd3fae7619a520f2da33">cornerData::cornerData</a></div><div class="ttdeci">cornerData()</div><div class="ttdoc">Constructor del objeto. </div><div class="ttdef"><b>Definition:</b> <a href="imgServer_8cpp_source.html#l00042">imgServer.cpp:42</a></div></div>
+<div class="ttc" id="imgServer_8cpp_html_a88e627368216f68e8ef03490c3802020"><div class="ttname"><a href="imgServer_8cpp.html#a88e627368216f68e8ef03490c3802020">dibujaPuntos</a></div><div class="ttdeci">void dibujaPuntos(Mat &amp;frame, Point2f *p, int n, Scalar color=Scalar(0, 0, 255))</div><div class="ttdoc">Esta función dibuja una lista de puntos en una imagen. </div><div class="ttdef"><b>Definition:</b> <a href="imgServer_8cpp_source.html#l00073">imgServer.cpp:73</a></div></div>
+<div class="ttc" id="classImageServer_html_a60de64d75454385b23995437f1d72669"><div class="ttname"><a href="classImageServer.html#a60de64d75454385b23995437f1d72669">ImageServer::start</a></div><div class="ttdeci">void start()</div><div class="ttdoc">Pone al servidor en un estado en donde puede aceptar conexiones de clientes. </div><div class="ttdef"><b>Definition:</b> <a href="ImageServer_8cpp_source.html#l00058">ImageServer.cpp:58</a></div></div>
+<div class="ttc" id="imgServer_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="imgServer_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="imgServer_8cpp_source.html#l00127">imgServer.cpp:127</a></div></div>
+<div class="ttc" id="ImageServer_8h_html"><div class="ttname"><a href="ImageServer_8h.html">ImageServer.h</a></div><div class="ttdoc">Este archivo contiene las definición de la clase ImageServer. Objetos instanciados de esta clase capt...</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado el Jueves, 19 de Enero de 2017 23:10:13 para imageServer por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.8
+</small></address>
+</body>
+</html>

@@ -1,0 +1,237 @@
+\hypertarget{imgServer_8cpp}{\section{Referencia del Archivo img\+Server.\+cpp}
+\label{imgServer_8cpp}\index{img\+Server.\+cpp@{img\+Server.\+cpp}}
+}
+{\ttfamily \#include $<$Image\+Server.\+h$>$}\\*
+{\ttfamily \#include $<$cstring$>$}\\*
+Dependencia gráfica adjunta para img\+Server.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{imgServer_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{Clases}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structcornerData}{corner\+Data}
+\begin{DoxyCompactList}\small\item\em Esta estructura contiene información de esquinas que se utiliza durante la captura de posiciones en la pantalla usando el raton. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Funciones}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{imgServer_8cpp_a88e627368216f68e8ef03490c3802020}{dibuja\+Puntos} (Mat \&frame, Point2f $\ast$p, int n, Scalar color=Scalar(0, 0, 255))
+\begin{DoxyCompactList}\small\item\em Esta función dibuja una lista de puntos en una imagen. \end{DoxyCompactList}\item 
+void \hyperlink{imgServer_8cpp_ae6717d2afae0afa7db4f2fd217501ef4}{find\+Mapping} (int source, Point2f $\ast$v\+P, Mat \&H)
+\begin{DoxyCompactList}\small\item\em Esta funcion se utiliza para obtener la información necesaria para rectificar las imagenes que el servidor va a capturar. La funcion captura imágenes de la fuente de video \char`\"{}source\char`\"{}, permite que usuario capture 4 coordenadas en la imagen utilizando el mouse, y a partir de esas cuatro coordenadas, calcula la transformación proyectiva que describe la transformación de esas 4 coordenadas al plano de la imagen. Se presume que el usuario va a elegir cuatro esquinas que yacen en un plano en la escena, y que la tranformación producida, permitira dedicar la atención de esa región únicamente. \end{DoxyCompactList}\item 
+int \hyperlink{imgServer_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\item 
+void \hyperlink{imgServer_8cpp_a7c3f9a47b1a00ee638ccc26d9f00be4f}{on\+Mouse\+Event} (int event, int x, int y, int flags, void $\ast$data)
+\begin{DoxyCompactList}\small\item\em Funcion que atiende evantos generados por el ratón. Esta funcion es invocada automáticamnete por el sistema cuando se registra usando la función set\+Mouse\+Callback de la biblioteca highgui. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Documentación de las funciones}
+\hypertarget{imgServer_8cpp_a88e627368216f68e8ef03490c3802020}{\index{img\+Server.\+cpp@{img\+Server.\+cpp}!dibuja\+Puntos@{dibuja\+Puntos}}
+\index{dibuja\+Puntos@{dibuja\+Puntos}!img\+Server.\+cpp@{img\+Server.\+cpp}}
+\subsubsection[{dibuja\+Puntos}]{\setlength{\rightskip}{0pt plus 5cm}void dibuja\+Puntos (
+\begin{DoxyParamCaption}
+\item[{Mat \&}]{frame, }
+\item[{Point2f $\ast$}]{p, }
+\item[{int}]{n, }
+\item[{Scalar}]{color = {\ttfamily Scalar(0,0,255)}}
+\end{DoxyParamCaption}
+)}}\label{imgServer_8cpp_a88e627368216f68e8ef03490c3802020}
+
+
+Esta función dibuja una lista de puntos en una imagen. 
+
+
+\begin{DoxyParams}{Parámetros}
+{\em Mat} & \&frame Imagen en donde se van a dibujar los puntos. \\
+\hline
+{\em Point2f} & $\ast$p Apuntador al arreglo de objetos de tipo Point2f que contiene las coordenadas de los puntos a dibujar. \\
+\hline
+{\em int} & n Cantidad de puntos a dibujar. \\
+\hline
+{\em Scalar} & color Objeto de tipo scalar que codifica en fomrto B\+G\+R el color de los puntos a dibujar. \\
+\hline
+\end{DoxyParams}
+
+
+Definición en la línea 73 del archivo img\+Server.\+cpp.
+
+
+\begin{DoxyCode}
+74 \{
+75 
+76     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i=0;i<n; ++i)
+77         circle(frame, Point((\textcolor{keywordtype}{int})p[i].x, (\textcolor{keywordtype}{int})p[i].y), 5, color);
+78 \}
+\end{DoxyCode}
+\hypertarget{imgServer_8cpp_ae6717d2afae0afa7db4f2fd217501ef4}{\index{img\+Server.\+cpp@{img\+Server.\+cpp}!find\+Mapping@{find\+Mapping}}
+\index{find\+Mapping@{find\+Mapping}!img\+Server.\+cpp@{img\+Server.\+cpp}}
+\subsubsection[{find\+Mapping}]{\setlength{\rightskip}{0pt plus 5cm}void find\+Mapping (
+\begin{DoxyParamCaption}
+\item[{int}]{source, }
+\item[{Point2f $\ast$}]{v\+P, }
+\item[{Mat \&}]{H}
+\end{DoxyParamCaption}
+)}}\label{imgServer_8cpp_ae6717d2afae0afa7db4f2fd217501ef4}
+
+
+Esta funcion se utiliza para obtener la información necesaria para rectificar las imagenes que el servidor va a capturar. La funcion captura imágenes de la fuente de video \char`\"{}source\char`\"{}, permite que usuario capture 4 coordenadas en la imagen utilizando el mouse, y a partir de esas cuatro coordenadas, calcula la transformación proyectiva que describe la transformación de esas 4 coordenadas al plano de la imagen. Se presume que el usuario va a elegir cuatro esquinas que yacen en un plano en la escena, y que la tranformación producida, permitira dedicar la atención de esa región únicamente. 
+
+
+\begin{DoxyParams}{Parámetros}
+{\em int} & source El identificador de la cámara que se va a utilizar.  Point2f $\ast$vp \\
+\hline
+\end{DoxyParams}
+
+
+Definición en la línea 86 del archivo img\+Server.\+cpp.
+
+
+\begin{DoxyCode}
+87 \{
+88     Point2f rP[4];
+89     Mat Frame;
+90     VideoCapture cap(source);
+91     \hyperlink{structcornerData}{cornerData} cD;
+92     \textcolor{keywordtype}{int} i = 0;
+93 
+94     \textcolor{keywordflow}{if} (!cap.isOpened())
+95     \{
+96         cerr << \textcolor{stringliteral}{"no se pudo abrir la cámara"} << endl;
+97         \textcolor{keywordflow}{return};
+98     \}
+99 
+100     namedWindow(\textcolor{stringliteral}{"Introduce esquinas"});
+101     setMouseCallback(\textcolor{stringliteral}{"Introduce esquinas"}, \hyperlink{imgServer_8cpp_a7c3f9a47b1a00ee638ccc26d9f00be4f}{onMouseEvent}, (\textcolor{keywordtype}{void}*) &cD);
+102     cD.\hyperlink{structcornerData_a961800bf60ff693820efbf7f4bc72788}{cont} = 0;
+103     \textcolor{keywordflow}{while} (cD.\hyperlink{structcornerData_a961800bf60ff693820efbf7f4bc72788}{cont} < 4)
+104     \{
+105         cap >> Frame;
+106         \textcolor{keywordflow}{if} (Frame.empty())
+107             cerr << \textcolor{stringliteral}{"capturaPuntos: Error capturando el Frame"} << endl;
+108         imshow(\textcolor{stringliteral}{"Introduce esquinas"}, Frame);
+109         \hyperlink{imgServer_8cpp_a88e627368216f68e8ef03490c3802020}{dibujaPuntos} (Frame, cD.\hyperlink{structcornerData_a6d9e631d38806edbc61499fd4794baea}{crn}, cD.\hyperlink{structcornerData_a961800bf60ff693820efbf7f4bc72788}{cont});   
+110         \textcolor{keywordflow}{if} (waitKey(30) >= 0)
+111             \textcolor{keywordflow}{break};
+112     \}
+113     cvSetMouseCallback(\textcolor{stringliteral}{"Introduce esquinas"}, 0, 0);
+114     \textcolor{keywordflow}{if} (cD.\hyperlink{structcornerData_a961800bf60ff693820efbf7f4bc72788}{cont} < 4)
+115       cerr << \textcolor{stringliteral}{"La captura de puntos se aborto."} << endl;
+116     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i=0;i<4;++i)
+117         rP[i] = cD.\hyperlink{structcornerData_a6d9e631d38806edbc61499fd4794baea}{crn}[i];
+118     cap.release();
+119 
+120     cout << \textcolor{stringliteral}{"Se capturaron los siguientes puntos:"} << endl;
+121     \textcolor{keywordflow}{for} (i=0;i<4;++i)
+122         cout << \textcolor{stringliteral}{"("} << rP[i].x << \textcolor{stringliteral}{", "} << rP[i].y << \textcolor{stringliteral}{")"} << endl;
+123     H = getPerspectiveTransform(rP, vP);
+124     destroyWindow(\textcolor{stringliteral}{"Introduce esquinas"});
+125 \}
+\end{DoxyCode}
+\hypertarget{imgServer_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{\index{img\+Server.\+cpp@{img\+Server.\+cpp}!main@{main}}
+\index{main@{main}!img\+Server.\+cpp@{img\+Server.\+cpp}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}}\label{imgServer_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Definición en la línea 127 del archivo img\+Server.\+cpp.
+
+
+\begin{DoxyCode}
+128 \{
+129          \textcolor{keywordtype}{int} \hyperlink{namespacetestClient_a1aadf525515ecfcf662c2aa51a503763}{port} = 8888, camId = 0;
+130          \textcolor{keywordtype}{char} ipAddress[64] = \textcolor{stringliteral}{"127.0.0.1"};
+131          Point2f vP[4], mP[4];
+132      Mat Hrv, Hmv, Maze;
+133 
+134          Maze = 255 * Mat::ones(Size(640,480), CV\_8UC3);
+135          \textcolor{keywordflow}{if} (\hyperlink{namespacetestClient_aad55a8f6b73a60a17d26dfc0d628f89a}{argc} < 2)
+136          \{
+137             cerr << \textcolor{stringliteral}{"Uso: imgServer camId ipAddress port Maze"} << endl;
+138             \textcolor{keywordflow}{return} -1;
+139      \}
+140      \textcolor{keywordflow}{else}
+141         camId = atoi(argv[1]);
+142          \textcolor{keywordflow}{if} (\hyperlink{namespacetestClient_aad55a8f6b73a60a17d26dfc0d628f89a}{argc} > 2)
+143          \{
+144                         strncpy (ipAddress, argv[2], 63);
+145                         \textcolor{keywordflow}{if} (\hyperlink{namespacetestClient_aad55a8f6b73a60a17d26dfc0d628f89a}{argc} > 3)
+146                         \{
+147                             port = atoi (argv[3]);
+148                             \textcolor{keywordflow}{if} (\hyperlink{namespacetestClient_aad55a8f6b73a60a17d26dfc0d628f89a}{argc} > 4)
+149                                 Maze = imread(argv[4]);
+150                 \}
+151         \}
+152     
+153      vP[0].x = 0; vP[0].y = 0;
+154      vP[1].x = 639; vP[1].y = 0;
+155      vP[2].x = 639; vP[2].y = 479;
+156      vP[3].x = 0; vP[3].y = 479;
+157      \hyperlink{imgServer_8cpp_ae6717d2afae0afa7db4f2fd217501ef4}{findMapping}(camId, vP, Hrv);
+158      cout << \textcolor{stringliteral}{"Calculamos la Hrv como:"}<< endl << Hrv << endl;
+159 
+160      mP[0].x = 0; mP[0].y = 0;
+161      mP[1].x = Maze.cols; mP[1].y = 0;
+162      mP[2].x = Maze.cols; mP[2].y = Maze.rows;
+163      mP[3].x = 0; mP[3].y = Maze.rows;
+164      Hmv = getPerspectiveTransform(mP, vP);
+165      cout << \textcolor{stringliteral}{"["} << Maze.cols << \textcolor{stringliteral}{", "} << Maze.rows << \textcolor{stringliteral}{"]"} << endl;
+166      cout << \textcolor{stringliteral}{"Calculamos la Hmv como:"}<< endl << Hmv << endl;
+167 
+168          \hyperlink{classImageServer}{ImageServer} *imS = \textcolor{keyword}{new} \hyperlink{classImageServer}{ImageServer} (camId, port, ipAddress, &Hrv, &Hmv, &
+      Maze);
+169 
+170          imS->\hyperlink{classImageServer_a60de64d75454385b23995437f1d72669}{start} ();
+171 
+172          sleep (3);                                                                             \textcolor{comment}{// wait for
+       server to init}
+173 
+174          \textcolor{keywordflow}{do}
+175          \{
+176 
+177          \}
+178          \textcolor{keywordflow}{while} (\textcolor{keyword}{true});
+179 
+180          \textcolor{keywordflow}{return} 0;
+181 \}
+\end{DoxyCode}
+\hypertarget{imgServer_8cpp_a7c3f9a47b1a00ee638ccc26d9f00be4f}{\index{img\+Server.\+cpp@{img\+Server.\+cpp}!on\+Mouse\+Event@{on\+Mouse\+Event}}
+\index{on\+Mouse\+Event@{on\+Mouse\+Event}!img\+Server.\+cpp@{img\+Server.\+cpp}}
+\subsubsection[{on\+Mouse\+Event}]{\setlength{\rightskip}{0pt plus 5cm}void on\+Mouse\+Event (
+\begin{DoxyParamCaption}
+\item[{int}]{event, }
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{int}]{flags, }
+\item[{void $\ast$}]{data}
+\end{DoxyParamCaption}
+)}}\label{imgServer_8cpp_a7c3f9a47b1a00ee638ccc26d9f00be4f}
+
+
+Funcion que atiende evantos generados por el ratón. Esta funcion es invocada automáticamnete por el sistema cuando se registra usando la función set\+Mouse\+Callback de la biblioteca highgui. 
+
+
+
+Definición en la línea 52 del archivo img\+Server.\+cpp.
+
+
+\begin{DoxyCode}
+53 \{
+54     \hyperlink{structcornerData}{cornerData} *cD;
+55 
+56     cD = (\hyperlink{structcornerData}{cornerData} *)data;
+57     \textcolor{keywordflow}{if} (event == CV\_EVENT\_LBUTTONDOWN)
+58     \{
+59         cD->\hyperlink{structcornerData_a6d9e631d38806edbc61499fd4794baea}{crn}[cD->\hyperlink{structcornerData_a961800bf60ff693820efbf7f4bc72788}{cont}].x = x;
+60         cD->\hyperlink{structcornerData_a6d9e631d38806edbc61499fd4794baea}{crn}[cD->\hyperlink{structcornerData_a961800bf60ff693820efbf7f4bc72788}{cont}].y = y;
+61         cD->\hyperlink{structcornerData_a961800bf60ff693820efbf7f4bc72788}{cont}++;
+62     \}
+63 \}
+\end{DoxyCode}
