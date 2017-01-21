@@ -167,15 +167,7 @@ int main (int argc, char **argv)
 
 	 ImageServer *imS = new ImageServer (camId, port, ipAddress, &Hrv, &Hmv, &Maze);
 
-	 imS->start ();
-
-	 sleep (3);										// wait for server to init
-
-	 do
-	 {
-
-	 }
-	 while (true);
+	 imS->start ();//Esta funcion bloquea la ejecución del programa. ¿debiera ocurrir?
 
 	 return 0;
 }
