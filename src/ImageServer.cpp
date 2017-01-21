@@ -30,6 +30,8 @@ ImageServer::ImageServer (int cid, int port, const char *inetAddress, Mat *hrv, 
     camId = cid;
     Mat tmp;
 
+    maxConnections = mxConn;
+
     // config Server
 	 this->port = port;
 
