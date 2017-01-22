@@ -1,6 +1,6 @@
 /*!
 \file structures.h
-\brief En este archivo se define la estructura ImageInfo, que se utiliza en el servidor de imagenes, así como se definen varios valores por defecto.
+\brief En este archivo se define la estructura ImageInfo, que se utiliza en el servidor de imágenes, así como se definen varios valores por defecto.
 */
 
 #ifndef STRUCTURES_H
@@ -16,12 +16,12 @@
 
 /*!
 \struct ImageInfo
-\brief Esta clase define la estructura ImagenInfo, que define el encabezado que se utiliza para la transmisión de imagenes.
+\brief Esta clase define la estructura ImagenInfo, que define el encabezado que se utiliza para la transmisión de imágenes.
 */
 struct ImageInfo
 {
 	 int rows; ///< Número de renglones en la imagen.
-	 int cols; ///< Numero de columnas en la imagen.
+	 int cols; ///< Número de columnas en la imagen.
 	 int type; ///< Tipo de la imagen (de acuerdo a la representación usada en openCV).
 	 int size; ///< El tamaño de la imagen.
 

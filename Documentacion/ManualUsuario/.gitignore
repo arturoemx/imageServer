@@ -1,0 +1,6 @@
+*.aux
+*.log
+*.blg
+*.bbl
+*~
+Manual_Usuario_imServer.tex
