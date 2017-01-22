@@ -1,0 +1,318 @@
+
+
+\documentclass[12pt,letterpaper,notitlepage]{report}
+
+\usepackage{graphicx}
+
+\usepackage{natbib}
+
+\usepackage[T1]{fontenc}
+
+\usepackage{ucs}
+
+\usepackage[utf8x]{inputenc}
+
+\usepackage[spanish]{babel}
+
+\usepackage{helvet}
+
+\usepackage{url}
+
+\usepackage{sectsty}
+
+\usepackage[small,sf]{caption}
+
+\setlength{\oddsidemargin}{0. true cm}
+
+\setlength{\evensidemargin}{0. true cm}
+
+\setlength{\protect\textwidth}{16.5 true cm}
+
+\setlength{\topmargin}{0.0 true cm}
+
+\setlength{\textheight}{20 true cm}
+
+\newcommand{\ie}{{\em   i.e.   }}    \newcommand{\eg}{{\em  e.g.    }}
+\newcommand{\txh}{\textheight}
+
+\newcommand{\txw}{\textwidth}
+
+\newcommand{\scrsz}{\scriptsize}
+
+\newcommand{\mc}[3]{\multicolumn{#1}{#2}{#3}}
+
+\newcommand{\Cpp}{{\bfseries C++}}
+
+
+
+% Some commands to handle linespacing
+
+\newlength{\spacing} \setlength{\spacing}{\baselineskip}
+
+\newcommand{\nspace}[1]{\setlength{\baselineskip}{#1\spacing}}
+\newenvironment{linespacing}[1]{\nspace{#1}}{}
+
+\newcommand{\SM}{{\bfseries\emph {SumCfsmplx}}}
+
+\allsectionsfont{\sffamily}
+
+\bibliographystyle{apalike}
+
+\title{Manual de usuario del Paquete\\ ``imageServer''.}
+
+\author{Dr. Arturo Espinosa Romero\\Dr. Carlos Brito Loeza\\Dr. Ricardo Legarda Saenz}
+
+\date{}
+
+\begin{document}
+
+ {\sffamily
+
+ \maketitle
+
+\begin{linespacing}{1.5}
+
+\section{Introducción.}
+
+El objetivo de este paquete es  el de proporcionar una herramienta que
+permita  la distribución de imágenes capturadas desde una cámara a multiples usuarios que se encuentran distribuidos en lugares diferentes, a traves de internet. Las imágenes transmitidas pueden sufrir previa a su transmisión transoformaciónes lineales de rectificación y enmascaramiento, así como proveer mecanismos que faciliten el el análisis temporal de las imágenes, esto es considerar transformaciones que consideren el flujo de imágenes y no sólo imagenes aisladas. 
+
+El paquete imageServer es importante en  en ámbitos de investigación aplicada asi como la docencia, en donde es necesario que mulitples actores, puedan acceder de manera simultanea a imágenes capturadas en un sitio. En particular este programa se aplica en dos actividades principalmente: en la captura y análisis de imagenes aéreas, y en la teleoperación de robots moviles en laboratorio. 
+
+La organización de  este documento es como  sigue: primero describimos
+las partes que constituyen el paquete computacional, a continuación se
+da una guía rápida de uso, para después presentar resultados obtenidos.
+
+Este  paquete fue  desarrollado como  parte  de la  segunda etapa  del
+proyecto "Sistema Automático de Bajo  Costo para la Captura y Análisis
+de Imágenes  Aéreas" que se  está realizando como  parte de la  red de
+Investigación  Conjunta para  Solución  de  Problemas en  Adquisición,
+Procesamiento  de Señales  y  Control Automáticos  de Dispositivos  de
+Sensado Remoto. apoyado por PRODEP.
+
+\section{Descripción.}
+
+El  paquete se construyo utilizando estructuras de datos y  métodos de la biblioteca openCV~\citep{opencv_library} principalmente y esta compuesto por un conjunto de módulos que se detallan a continuación:
+\begin{itemize}
+\item {\bfseries ImageServer:} Este modulo consiste en un conjunto de biblioteca de funciones que permiten construir un servidor capaz de atender múltiples clientes de manera concurrente, y atender solicitudes de éstos para enviar imágenes. El programa crea un stream socket, que se asocia a una dirección IP(v4). Cuando un cliente se conecta se crea una nueva hebra para atender dicho cliente, y permitirle acceder a imagenes capturadas.
+
+\item {\bfseries Camera} Este módulo captura imágenes de un dispositivos de captura y las almacena en una buffer (cola circular). Provee mecanismos de sincronización para controlar el acceso a los elementos de la cola.
+
+\item {\bfseries imgServer} Es el programa donde los diferentes componente necesarios para construir el servidor de imágenes se combinan. El programa recibe como parámetros las direccion IP(v4) y número de puerto que se va a asociar al servidor, y un archivo que contiene una mascara que se aplicara a las imagenes capturadas. Cada imagen capturada por el usuario se le somete a dos transformaciones geométricas. La primera sirve para rectificar la imagen, en caso necesario, y la segunda para ajustar el tamaño de la máscara al tamaño de la imagen capturada. El modelo de rectificación se calcula a partir de informacin que provee el usuario, seleccionando la region planar de la escena a observar. 
+
+\item {\bfseries Client} El cliente consiste de dos principales miembros. Una clase que provee de metodos que facilitan la conexión con el servidor de imñaganes, así como la descarga de imágenes de éste, y dos programas de ejemplo una escrito en C++, y el otro un script de python que sirven como guía para desarrollar programas mas complejos, y el uso del servicio en otros ámbitos. 
+\end{itemize}
+
+\end{enumerate}
+
+\section{Guía de uso.}
+ 
+El  código esta  preparado para  ser compilado  en una  computadora que
+tenga como  sistema operativo alguna  variante de Unix ({\emph  e.g. }
+Linux, MacOS),  aunque es posible  también compilarlo y  utilizarlo en
+otras plataformas.
+
+La interacción con el programa  se hace invocándolo desde una emulador
+de terminal.  Primero que hay que  ubicarse en el directorio  en donde
+está el  código y  compilarlo utilizando el  programa make\footnote{se
+asume que en  el sistema está instalado las  bibliotecas de desarrollo
+de \textbf{openCV}}.
+
+\smallskip
+
+
+\begin{verbatim}
+$ make
+\end{verbatim}
+
+
+\smallskip
+
+Un vez  que se  ha compilado  el código se  puede invocar  como sigue:
+{\small
+\begin{verbatim} 
+$ ./imgServer CamId IPAddres Puerto ArchivoMascara
+\end{verbatim} }
+
+El primero parámetro es el identificador de cámara que se va a utilizar (un numero entero, el segundo parámetro es una direccion IP(v4), el tercer parámetro es el numero de puerto y por último el último parámetro es el archivo que contiene la imagen que se va a usar como máscara. La máscara opera como sigue: en aquellos pixeles de la máscara que son diferentes a RGB[255,255,255] (color blanco), el pixel correspondiente de la imagen se sustituye por el valor de la máscara. De caso contrario, el valor original del pixel, se preserva,.
+
+Una vez que se invoca, el programa abre una ventana en donde se muestra la escena que esta siendo capturada por la cámara. Aqui el usuario puede seleccionar las cuatro esquinas de un paralelogramo contenido en algun plano de la imagen, con el fin de calcular la rectificación, en dado caso que ésto no sea necesario, solo hay que seleccionar las cuatro esquinas de la imagen, comenzado desde la esquina superior izquierda procediendo a favor de las manecillas del reloj.
+
+
+
+
+
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=\textwidth]{Imagenes/consola.png}
+  \caption{invocación del paquete desde una consola.}
+  \label{fig:consola}
+\end{figure}
+
+
+En la consola al ejecutar el programa se muestra información concerniente al proceso de cómputo que se lleva a cabo, como se muestra en la figura~\ref{fig:consola}, y se generan tres archivos:
+\begin{enumerate}
+\item {\bfseries Salida.png:} Muestra en una sola imagen todos los niveles de la pirámide de rasgos calculada. 
+\item {\bfseries Features.png:} Muestra en una imagen todas los grupos de descriptores encontrados en los diferentes niveles de la pirámide.
+\item {\bfseries out.xml:} Es un archivo en formato xml para ser procesados por el programa de visualización multidimensional ggobi.
+\end{enumerate}
+
+\section{Ejemplo del archivo de configuración}
+\label{sec:config++}
+
+\begin{verbatim}
+#Parámetros de operación.
+#
+#   Tipos de razgos permitidos
+#
+# Area                    => AREA 
+# Perímetro               => PER
+# CentroideX              >> CX
+# CentroideY              >> CY
+# Razon Perímetro/Area    => RPA
+# Orientacion             => ORI
+# Momentos:
+#
+# M00, M01, M10, M11, M21, M12, M30, M03
+#
+# Momentos Centrales:
+#
+# MC00, MC01, MC10, MC11, MC21, MC12, MC30, MC03
+#
+# Momentos Invariantes de Hu
+#
+# I1, I2, I3, I4, I5, I6, I7
+#
+# Otros Valores para construir el vector de rasgos.
+# 
+# Nivel en la pirámide donde fué encontrado => NV
+#
+
+
+
+# ImProc Settings.
+#
+# Filter: [NONE, LAPLACIAN]
+# Thesholding: [OTSU, ADAPTATIVE]
+# BlockSize: Tamaño del bloque usado para umbralizacion adaptaitva
+#
+#Embed: [NONE, SIMPLE, GP2]
+#  NONE:   
+#  SIMPLE: Inserta la imagen en una imagen 2 pixeles mas ancha y alta
+#  GP2:    Inserta la imagen en una imagen cuyos ancho y alto es una
+#           potencia de 2 mayor a las dimensiones actuales
+# BlockSize. El tamaño del bloque en el caso de umnralización adaptativa.
+
+
+
+ImProc:
+{
+
+    Filter:
+    {
+        FilterType = "LAPLACIAN";
+        KernelSize = 3
+    };
+    Embed = "SIMPLE";
+    Threshold = "OTSU"; 
+    BlockSize = 32;
+};
+
+Momentos:
+{
+    Rasgos = ["PER", "AREA", "RPA", "ORI"]; 
+    K = 5;
+};
+
+\end{verbatim}
+\newpage
+\section{Ejemplos.}
+
+En las siguientes páginas se muestran varios ejemplos de la salida de paquete antes varias condiciones. Cada ejemplo consta de tres imágenes: la primera muestra la representación gráficas de la pirámide de imágenes segmentadas. La segunda imágenes de cada grupo muestra la imagen original, y la última imagen de cada grupo muestra una representación gráficas en base a una codificación a colores de los cúmulos de descriptores; colores iguales codifican descriptores que pertenecen al mismo cúmulo, y el tamaño de los bloques de color indica la escala o nivel de la pirámide donde fueron encontrados, bloques grandes, indican niveles altos en la pirámide (bajas frecuencias espaciales,), mientras que bloques de color pequeños indican niveles bajos en la pirámide (altas frecuencias espaciales).
+
+Las imágenes originales están disponibles en la carpeta \verb!Experimentos!, junto con pequeños videos que muestran los resultados tal como se pueden apreciar con el paquete ggobi.
+
+%\subsection{Grava}
+
+\begin{figure}[!p]
+  \centering
+  \includegraphics[width=1.0\textwidth]{Imagenes/GRV_Salida.png}
+  \caption{Pirámide de imagen Grava\_1 segmentada usando una umbralización adaptativa.} 
+\end{figure}
+
+\begin{figure}[!p]
+  \centering
+  \begin{tabular}{c}
+    \includegraphics[height=0.45\textheight]{Imagenes/Grava_1.jpg}\\
+    \includegraphics[height=0.45\textheight]{Imagenes/GRV_Features.png} 
+  \end{tabular}
+  \caption{Imagen original y gráfica de cúmulos encontrados para la imagen Grava\_1 procesada con Filtrado Laplaciano y clasificando rasgos en 64 cúmulos.}
+\end{figure}
+
+%\subsection{Dálmata inverso, filtrado Laplaciano.}
+
+\begin{figure}[!p]
+  \centering
+  \includegraphics[width=1.0\textwidth]{Imagenes/iDlL_Salida.png}
+  \caption{Pirámide de imagen iDalamata segmentada usando un filtro Laplaciano.} 
+\end{figure}
+
+
+
+\begin{figure}[!p]
+  \centering
+  \begin{tabular}{c}
+    \includegraphics[height=0.45\textheight]{Imagenes/iDalmata.png} \\
+    \includegraphics[height=0.45\textheight]{Imagenes/iDlL_Features.png}
+  \end{tabular}
+  \caption{Imagen original y gráfica de cúmulos encontrados para la imagen iDalmata procesada con Filtrado Laplaciano y clasificando rasgos en 25 cúmulos.}
+\end{figure}
+
+%\subsection{Dálmata inverso, sin filtrado.}
+
+\begin{figure}[!p]
+  \centering
+  \includegraphics[width=1.0\textwidth]{Imagenes/iDlN_Salida.png}
+  \caption{Pirámide de imagen iDalamata segmentada sin utilizar ningún filtro.} 
+\end{figure}
+
+
+
+\begin{figure}[!p]
+  \centering
+  \begin{tabular}{c}
+    \includegraphics[height=0.45\textheight]{Imagenes/iDalmata.png}\\
+    \includegraphics[height=0.45\textheight]{Imagenes/iDlN_Features.png} 
+  \end{tabular}
+  \caption{Imagen original y gráfica de cúmulos encontrados para la imagen iDalmata procesada sin usar ningún filtro y clasificando rasgos en 25 cúmulos.}
+\end{figure}
+
+
+%\subsection{Tabby cat, filtrado Laplaciano.}
+
+\begin{figure}[!p]
+  \centering
+  \includegraphics[width=1.0\textwidth]{Imagenes/TbC_Salida.png}
+  \caption{Pirámide de imagen Tabby\_cat segmentada utilizando un filtrado Laplaciano.} 
+\end{figure}
+
+\begin{figure}[!p]
+  \centering
+  \begin{tabular}{c}
+    \includegraphics[height=0.45\textheight]{Imagenes/Tabby_cat.jpg}\\
+    \includegraphics[height=0.45\textheight]{Imagenes/TbC_Features.png} 
+  \end{tabular}
+  \caption{Imagen original y gráfica de cúmulos encontrados para la imagen Tabby\_cat procesada usando un filtrado Laplaciano y clasificando rasgos en 64 cúmulos.}
+\end{figure}
+
+\end{linespacing}
+
+
+
+\bibliography{biblio}
+
+}
+\end{document}
+
+%%% Local Variables: %%% mode: latex %%% TeX-master: t %%% End:
