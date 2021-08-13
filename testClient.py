@@ -21,7 +21,7 @@ if argc > 1:
 rF=remoteFrame(address, port, Mask)
 
 cv2.namedWindow('MyWindow')
-
+img =cv2.Mat()
 while cv2.waitKey(1) == -1: 
     img=rF.getFrame()
     cv2.imshow('MyWindow', img)
